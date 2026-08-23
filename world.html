@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worldbuilding & Military Regiments | Attack on Titan Compendium</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="index.html" class="brand">
+        <div class="brand-emblem"></div>
+        <div class="brand-text">
+          <h1>Attack on Titan</h1>
+          <span>Classified Archive</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
+        <li class="nav-item"><a href="world.html" class="active"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="sound-toggle-btn" id="sound-toggle-btn" title="Toggle Cinematic Sound & SFX">
+          <i class="fa-solid fa-volume-xmark"></i> <span>Sound: OFF</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Worldbuilding Main Content -->
+    <main class="section">
+      <!-- Section 1: The Three Walls -->
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-shield-cat"></i> Concentric Fortress</span>
+        <h2 class="section-title">The Three Concentric Walls</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Engineered by King Karl Fritz using millions of hardened 50-meter Colossal Titans to protect human civilization on Paradis Island from the outside world.
+        </p>
+      </div>
+
+      <div class="walls-visualizer-container reveal-on-scroll stagger-1">
+        <div class="radar-wrapper">
+          <div class="radar-circle wall-maria active" data-wall="wall-maria" title="Inspect Wall Maria">
+            <div class="radar-circle wall-rose" data-wall="wall-rose" title="Inspect Wall Rose">
+              <div class="radar-circle wall-sina" data-wall="wall-sina" title="Inspect Wall Sina">
+                <div class="radar-center" title="Mitras Royal Palace"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wall-info-display" id="wall-radar-info">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- Section 2: Military Regiments -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
+        <span class="section-tag"><i class="fa-solid fa-medal"></i> Paradis Military Branches</span>
+        <h2 class="section-title">The Three Military Regiments</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Following graduation from the Training Corps, recruits are assigned or choose between three distinct military branches based on merit and conviction.
+        </p>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom: 4rem;">
+        <!-- Survey Corps -->
+        <div class="regiment-card reveal-on-scroll stagger-1" style="--regiment-color: #1d3557;">
+          <span class="character-badge-ribbon"><i class="fa-solid fa-feather-pointed"></i> Wings of Freedom</span>
+          <h3 class="regiment-name">The Survey Corps (Scouts)</h3>
+          <div class="regiment-motto">"Shinzo wo Sasageyo! (Dedicate your hearts!)"</div>
+          <p class="regiment-duty">
+            The expeditionary arm of the military dedicated to venturing outside the Walls, reclaiming human territory, and engaging Titans in offensive 3D aerial combat.
+          </p>
+          <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 4px; border-left: 2px solid #1d3557; margin-bottom: 1rem;">
+            <strong style="color: var(--text-highlight); font-family: var(--font-tech); font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 0.2rem;">Casualty Rate:</strong>
+            <p style="font-size: 0.85rem; color: #ff4d6d;">Over 70% per expedition prior to Year 850.</p>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            <strong style="color: #fff;">Notable Commanders:</strong> Erwin Smith, Levi Ackerman, Hange Zoë, Keith Shadis
+          </div>
+        </div>
+
+        <!-- Garrison Regiment -->
+        <div class="regiment-card reveal-on-scroll stagger-2" style="--regiment-color: #d90429;">
+          <span class="character-badge-ribbon" style="color: #ff758f; border-color: #ff758f; background: rgba(255,117,143,0.1);"><i class="fa-solid fa-shield"></i> Twin Roses</span>
+          <h3 class="regiment-name">The Garrison Regiment</h3>
+          <div class="regiment-motto">"The Shield of the People"</div>
+          <p class="regiment-duty">
+            The largest military branch, tasked with maintaining and patrolling the 50-meter Wall defenses, operating heavy artillery, engineering fortifications, and preserving civil order during breaches.
+          </p>
+          <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 4px; border-left: 2px solid #d90429; margin-bottom: 1rem;">
+            <strong style="color: var(--text-highlight); font-family: var(--font-tech); font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 0.2rem;">Casualty Rate:</strong>
+            <p style="font-size: 0.85rem; color: #ff9e00;">Moderate to High during active gate incursions.</p>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            <strong style="color: #fff;">Notable Commanders:</strong> Dot Pyxis, Hannes, Rico Brzenska, Kitz Woermann
+          </div>
+        </div>
+
+        <!-- Military Police -->
+        <div class="regiment-card reveal-on-scroll stagger-3" style="--regiment-color: #2b9348;">
+          <span class="character-badge-ribbon" style="color: #55a630; border-color: #55a630; background: rgba(85,166,48,0.1);"><i class="fa-solid fa-horse-head"></i> Green Unicorn</span>
+          <h3 class="regiment-name">Military Police Brigade</h3>
+          <div class="regiment-motto">"In Service of the Crown"</div>
+          <p class="regiment-duty">
+            The elite branch stationed within Wall Sina to guard the royal crown, collect taxes, manage civilian law, and maintain internal security. Historically corrupted and detached from frontline combat.
+          </p>
+          <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 4px; border-left: 2px solid #2b9348; margin-bottom: 1rem;">
+            <strong style="color: var(--text-highlight); font-family: var(--font-tech); font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 0.2rem;">Casualty Rate:</strong>
+            <p style="font-size: 0.85rem; color: #55a630;">Near 0% during peacetime; high privilege.</p>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            <strong style="color: #fff;">Notable Figures:</strong> Nile Dok, Kenny Ackerman, Hitch Dreyse, Boris Feulner
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: ODM Gear & Titan Anatomy -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
+        <span class="section-tag"><i class="fa-solid fa-crosshairs"></i> Tactical Armament & Biology</span>
+        <h2 class="section-title">Omni-Directional Mobility (ODM) Gear</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Humanity's sole weapon for overcoming the physical disparity between soldiers and Titans in 3D urban and forest combat.
+        </p>
+      </div>
+
+      <div class="cards-grid" id="odm-components-grid" style="margin-bottom: 4rem;">
+        <!-- Injected dynamically by app.js with scroll trigger animations -->
+      </div>
+
+      <!-- Titan Fatal Weak Point Breakdown -->
+      <div class="reveal-on-scroll" style="background: var(--bg-card); border: 1px solid var(--accent-red); border-radius: 8px; padding: 2.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.7); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-red);"></div>
+        <span class="section-tag"><i class="fa-solid fa-skull-crossbones"></i> Fatal Target Specification</span>
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem; margin-bottom: 1rem;">The Nape of the Neck (Cervical Spine)</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px;">
+            <strong style="color: var(--text-highlight); font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.3rem;">Dimensions:</strong>
+            <p style="font-size: 1.1rem; color: #fff; font-weight: 700; font-family: var(--font-tech);">1 Meter (H) × 10 Centimeters (W)</p>
+          </div>
+          <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px;">
+            <strong style="color: var(--text-highlight); font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.3rem;">Fatal Mechanism:</strong>
+            <p style="font-size: 0.95rem; color: var(--text-secondary);">Direct excision of the human nervous coordinate prevents cellular regeneration.</p>
+          </div>
+        </div>
+        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Striking any other body part (limbs, throat, eyes) results in instantaneous steam generation and cellular regeneration within seconds. Only a clean, synchronized dual-blade diagonal slice across the 1m × 10cm nape will terminate a Pure Titan.
+        </p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <div class="brand-emblem"></div>
+            <div class="brand-text">
+              <h1>Attack on Titan</h1>
+              <span>Compendium</span>
+            </div>
+          </div>
+          <p>
+            Worldbuilding & tactical defense systems compendium.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans</a></li>
+            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Characters Archive</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>The Survey Corps Vow</h3>
+          <p style="font-style: italic; color: var(--text-highlight);">
+            "Humanity will never be defeated as long as we keep fighting!"
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Attack on Titan Compendium.</span>
+        <span class="tribute">FREEDOM • 自由</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

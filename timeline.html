@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Arcs & Historical Timeline | Attack on Titan Compendium</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="index.html" class="brand">
+        <div class="brand-emblem"></div>
+        <div class="brand-text">
+          <h1>Attack on Titan</h1>
+          <span>Classified Archive</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a href="timeline.html" class="active"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="sound-toggle-btn" id="sound-toggle-btn" title="Toggle Cinematic Sound & SFX">
+          <i class="fa-solid fa-volume-xmark"></i> <span>Sound: OFF</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Timeline Main Content -->
+    <main class="section">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-hourglass-half"></i> Chronological Codex</span>
+        <h2 class="section-title">2,000-Year Narrative Timeline</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          From the primeval bonding of Founder Ymir Fritz to the Fall of Shiganshina, the clandestine coup of the Scouts, and the apocalyptic conclusion of the Rumbling.
+        </p>
+      </div>
+
+      <!-- Filter & Search Bar -->
+      <div class="filter-bar reveal-on-scroll stagger-1">
+        <div class="search-input-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="timeline-search" class="search-input" placeholder="Search events, battles, figures, years..." autocomplete="off">
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-btn active" data-era="all">All Eras</button>
+          <button class="filter-btn" data-era="ancient">Ancient Origin</button>
+          <button class="filter-btn" data-era="pre-fall">Great Titan War</button>
+          <button class="filter-btn" data-era="paradis">Paradis Island (845-850)</button>
+          <button class="filter-btn" data-era="marley">Final War & Rumbling (854)</button>
+        </div>
+      </div>
+
+      <!-- Interactive Timeline Stream -->
+      <div class="timeline-container" id="timeline-feed">
+        <!-- Injected dynamically by app.js with scroll trigger animations -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <div class="brand-emblem"></div>
+            <div class="brand-text">
+              <h1>Attack on Titan</h1>
+              <span>Compendium</span>
+            </div>
+          </div>
+          <p>
+            Chronological documentation preserved by the Survey Corps Research & Intelligence Bureau.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans</a></li>
+            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Military Characters</a></li>
+            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Walls & ODM Technology</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Eldian Proverb</h3>
+          <p style="font-style: italic; color: var(--text-highlight);">
+            "Even if we die... even after we die... this is the story that you started."
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Attack on Titan Compendium.</span>
+        <span class="tribute">TATAKAE • 戦え</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

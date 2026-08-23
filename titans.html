@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Nine Titan Shifters & Variants | Attack on Titan Compendium</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="index.html" class="brand">
+        <div class="brand-emblem"></div>
+        <div class="brand-text">
+          <h1>Attack on Titan</h1>
+          <span>Classified Archive</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
+        <li class="nav-item"><a href="titans.html" class="active"><i class="fa-solid fa-skull"></i> The Titans</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="sound-toggle-btn" id="sound-toggle-btn" title="Toggle Cinematic Sound & SFX">
+          <i class="fa-solid fa-volume-xmark"></i> <span>Sound: OFF</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-dna"></i> Path of the Nine Shifters</span>
+        <h2 class="section-title">The Nine Titans & Special Variants</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Derived from the original power of Founder Ymir Fritz. Passed between the Subjects of Ymir through spinal fluid, subjected to the 13-year 'Curse of Ymir'.
+        </p>
+      </div>
+
+      <!-- Filter & Search Bar -->
+      <div class="filter-bar reveal-on-scroll stagger-1">
+        <div class="search-input-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="titans-search" class="search-input" placeholder="Search Titans by name, ability, inheritor..." autocomplete="off">
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-btn active" data-category="all">All Specimens</button>
+          <button class="filter-btn" data-category="nine">The Nine Shifters</button>
+          <button class="filter-btn" data-category="pure">Pure & Abnormals</button>
+          <button class="filter-btn" data-category="special">Special / Doomsday</button>
+        </div>
+      </div>
+
+      <!-- Titans Cards Grid -->
+      <div class="cards-grid" id="titans-grid">
+        <!-- Rendered dynamically by app.js with scroll trigger animations -->
+      </div>
+
+      <!-- Interactive Height Comparison Section -->
+      <div class="height-comparator-section reveal-on-scroll">
+        <div class="comparator-header">
+          <span class="section-tag"><i class="fa-solid fa-ruler-combined"></i> Biological Scale Visualizer</span>
+          <h3>Titan Height & Scale Comparison</h3>
+          <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 0.95rem;">
+            Comparative visual analysis showing scale disparity from a 1.7m human soldier up to the gargantuan 500m+ Doomsday Founding Titan.
+          </p>
+        </div>
+
+        <div class="comparator-chart" id="height-comparator-bars">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <div class="brand-emblem"></div>
+            <div class="brand-text">
+              <h1>Attack on Titan</h1>
+              <span>Compendium</span>
+            </div>
+          </div>
+          <p>
+            Titan biological intelligence maintained by Section Commander Hange Zoë's research squad.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline</a></li>
+            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Characters Archive</a></li>
+            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Walls & Defense</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Titan Principle</h3>
+          <p style="font-style: italic; color: var(--text-highlight);">
+            "All Titans were once human. All Eldians are connected by the invisible Paths."
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Attack on Titan Compendium.</span>
+        <span class="tribute">YURUSA NAI • 決して許さない</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

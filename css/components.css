@@ -1,0 +1,808 @@
+/* Attack on Titan Components: Timeline, Titans, Characters, Walls & Modal Styles */
+
+/* ==========================================================================
+   TIMELINE COMPONENT
+   ========================================================================== */
+.timeline-container {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    var(--accent-red) 10%, 
+    var(--accent-amber) 50%, 
+    var(--accent-red) 90%, 
+    transparent
+  );
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+}
+
+.timeline-node {
+  position: relative;
+  margin-bottom: 4rem;
+  width: 50%;
+  padding: 0 2.5rem;
+}
+
+.timeline-node:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-node:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 1.5rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #000;
+  border: 3px solid var(--accent-red);
+  box-shadow: 0 0 15px var(--accent-red), inset 0 0 8px var(--accent-red);
+  z-index: 5;
+  transition: all var(--transition-normal);
+}
+
+.timeline-node:nth-child(odd) .timeline-marker {
+  right: -11px;
+}
+
+.timeline-node:nth-child(even) .timeline-marker {
+  left: -11px;
+}
+
+.timeline-node:hover .timeline-marker {
+  transform: scale(1.4);
+  border-color: var(--accent-amber);
+  box-shadow: 0 0 25px var(--accent-amber);
+}
+
+.timeline-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 6px;
+  padding: 1.8rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-red);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.timeline-node:hover .timeline-card {
+  transform: translateY(-4px);
+  border-color: var(--accent-red);
+  box-shadow: 0 12px 40px rgba(230, 57, 70, 0.25);
+}
+
+.timeline-node:hover .timeline-card::before {
+  opacity: 1;
+}
+
+.timeline-era-badge {
+  display: inline-block;
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-highlight);
+  background: rgba(255, 186, 8, 0.1);
+  border: 1px solid rgba(255, 186, 8, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-year {
+  font-family: var(--font-tech);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+}
+
+.timeline-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.timeline-summary {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.timeline-quote {
+  border-left: 2px solid var(--accent-gold);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #f1faee;
+  font-size: 0.9rem;
+  background: rgba(212, 175, 55, 0.05);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0 4px 4px 0;
+  text-align: left;
+}
+
+.timeline-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.figure-tag {
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   TITANS COMPONENT & HEIGHT COMPARATOR
+   ========================================================================== */
+.titan-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.titan-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--titan-color, var(--accent-red));
+  box-shadow: 0 0 12px var(--titan-color, var(--accent-red));
+}
+
+.titan-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--titan-color, var(--accent-red));
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(230, 57, 70, 0.2);
+}
+
+.titan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+
+.titan-badge {
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  background: rgba(230, 57, 70, 0.15);
+  border: 1px solid var(--accent-red);
+  color: var(--accent-red);
+}
+
+.titan-height-pill {
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-highlight);
+  background: rgba(255, 186, 8, 0.1);
+  border: 1px solid rgba(255, 186, 8, 0.25);
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+}
+
+.titan-name {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+  letter-spacing: 1px;
+}
+
+.titan-japanese {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.titan-threat {
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  color: #ff4d6d;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.titan-threat i {
+  color: var(--accent-red);
+}
+
+.titan-inheritors-list {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border-left: 2px solid var(--titan-color, var(--accent-red));
+  margin-bottom: 1.2rem;
+  font-size: 0.85rem;
+}
+
+.titan-inheritors-list strong {
+  color: var(--text-primary);
+  display: block;
+  font-family: var(--font-tech);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+}
+
+.titan-abilities {
+  list-style: none;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.titan-abilities li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.titan-abilities li i {
+  color: var(--accent-amber);
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Height Comparison Interactive Chart */
+.height-comparator-section {
+  background: var(--bg-card);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  border-radius: 8px;
+  padding: 2.5rem;
+  margin-top: 4rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.comparator-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.comparator-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.comparator-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 1rem;
+  height: 380px;
+  padding: 2rem 1rem 0;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow-x: auto;
+}
+
+.comparator-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  min-width: 60px;
+}
+
+.comparator-bar {
+  width: 38px;
+  background: linear-gradient(to top, var(--accent-crimson), var(--bar-color, var(--accent-red)));
+  border-radius: 4px 4px 0 0;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+}
+
+.comparator-bar:hover {
+  filter: brightness(1.3);
+  box-shadow: 0 0 20px var(--bar-color, var(--accent-amber));
+}
+
+.comparator-bar-label {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.comparator-name {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.75rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   CHARACTERS COMPONENT
+   ========================================================================== */
+.character-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.character-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-red);
+  box-shadow: 0 12px 35px rgba(230, 57, 70, 0.25);
+}
+
+.character-badge-ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.8rem;
+  align-self: flex-start;
+}
+
+.character-name {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+  letter-spacing: 1px;
+}
+
+.character-role {
+  font-size: 0.85rem;
+  color: var(--text-highlight);
+  font-family: var(--font-tech);
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.character-quote {
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 2px solid var(--accent-red);
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1.2rem;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Character Stat Bars */
+.stat-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stat-name {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 90px;
+  text-transform: uppercase;
+}
+
+.stat-meter {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-crimson), var(--accent-amber));
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(255, 123, 0, 0.5);
+  transition: width 1s ease-out;
+}
+
+.stat-val {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  width: 28px;
+  text-align: right;
+}
+
+/* ==========================================================================
+   WORLDBUILDING & CONCENTRIC WALLS RADAR VISUALIZER
+   ========================================================================== */
+.walls-visualizer-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  border-radius: 8px;
+  padding: 3rem;
+  margin-bottom: 4rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.radar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.radar-circle.wall-maria {
+  width: 100%;
+  height: 100%;
+  border-color: #e63946;
+  background: rgba(230, 57, 70, 0.04);
+}
+
+.radar-circle.wall-rose {
+  width: 72%;
+  height: 72%;
+  border-color: #f77f00;
+  background: rgba(247, 127, 0, 0.06);
+}
+
+.radar-circle.wall-sina {
+  width: 44%;
+  height: 44%;
+  border-color: #2a9d8f;
+  background: rgba(42, 157, 143, 0.08);
+}
+
+.radar-center {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 15px var(--accent-gold);
+  z-index: 10;
+}
+
+.radar-circle:hover {
+  border-style: solid;
+  transform: scale(1.02);
+  box-shadow: 0 0 30px currentColor;
+}
+
+.radar-circle.active {
+  border-style: solid;
+  border-width: 3px;
+  box-shadow: 0 0 35px currentColor;
+}
+
+.wall-info-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wall-info-card {
+  background: rgba(7, 8, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 2rem;
+  border-left: 4px solid var(--accent-red);
+}
+
+.wall-badge-spec {
+  display: inline-block;
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.wall-title {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.wall-radius {
+  font-family: var(--font-tech);
+  font-size: 1.1rem;
+  color: var(--accent-amber);
+  margin-bottom: 1rem;
+}
+
+.wall-description {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.wall-districts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.district-tag {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-tech);
+}
+
+/* Regiments Grid */
+.regiment-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+}
+
+.regiment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--regiment-color, var(--accent-scout-blue));
+}
+
+.regiment-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--regiment-color, var(--accent-scout-blue));
+  box-shadow: 0 12px 35px rgba(0,0,0,0.8);
+}
+
+.regiment-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.regiment-motto {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+.regiment-duty {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   INTERACTIVE MODAL DOSSIER
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-red);
+  box-shadow: 0 0 50px rgba(230, 57, 70, 0.35);
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 2.5rem;
+  transform: scale(0.95);
+  transition: transform var(--transition-normal);
+}
+
+.modal-overlay.active .modal-box {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  transform: rotate(90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .timeline-container::before {
+    left: 20px;
+  }
+  .timeline-node {
+    width: 100%;
+    padding-left: 55px;
+    padding-right: 15px;
+    text-align: left !important;
+  }
+  .timeline-node:nth-child(even) {
+    left: 0;
+  }
+  .timeline-node:nth-child(odd) .timeline-marker,
+  .timeline-node:nth-child(even) .timeline-marker {
+    left: 9px;
+    right: auto;
+  }
+  .walls-visualizer-container {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+  .comparator-chart {
+    height: 300px;
+  }
+}

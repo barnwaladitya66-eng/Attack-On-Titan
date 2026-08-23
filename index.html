@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attack on Titan Compendium | 進撃の巨人 Archive</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- Canvas Embers & Steam FX -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="index.html" class="brand">
+        <div class="brand-emblem"></div>
+        <div class="brand-text">
+          <h1>Attack on Titan</h1>
+          <span>Classified Archive</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="sound-toggle-btn" id="sound-toggle-btn" title="Toggle Cinematic Sound & SFX">
+          <i class="fa-solid fa-volume-xmark"></i> <span>Sound: OFF</span>
+        </button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="hero-backdrop"></div>
+      <div class="hero-content">
+        <div class="hero-subtitle-badge reveal-on-scroll">
+          <i class="fa-solid fa-fire"></i> Eldian Global Archive & Lore Compendium
+        </div>
+        <h1 class="hero-title reveal-on-scroll stagger-1">
+          <span>Shinzo Wo Sasageyo</span>
+        </h1>
+        <div class="hero-japanese-title reveal-on-scroll stagger-2">心臓を捧げよ • 進撃の巨人</div>
+        <p class="hero-description reveal-on-scroll stagger-3">
+          A definitive, comprehensive tactical archive detailing the 2,000-year history of the Eldian Empire, the Nine Titan Shifters, the three concentric walls of Paradis Island, the Survey Corps dossiers, and the cataclysmic final march of the Rumbling.
+        </p>
+        <div class="hero-actions reveal-on-scroll stagger-4">
+          <a href="timeline.html" class="btn btn-primary">
+            <i class="fa-solid fa-timeline"></i> Explore 2,000-Year Timeline
+          </a>
+          <a href="titans.html" class="btn btn-secondary">
+            <i class="fa-solid fa-skull"></i> Inspect The Nine Titans
+          </a>
+          <a href="characters.html" class="btn btn-secondary">
+            <i class="fa-solid fa-id-card"></i> Military Personnel Dossiers
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Banner -->
+    <div class="stats-banner reveal-on-scroll">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">2,000+</span>
+          <span class="stat-label">Years of History</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">9</span>
+          <span class="stat-label">Titan Shifters</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Concentric Defensive Walls</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">80%</span>
+          <span class="stat-label">Global Rumbling Impact</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Walls Section -->
+    <section class="section">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-shield-halved"></i> Territorial Defense Grid</span>
+        <h2 class="section-title">The Three Concentric Walls</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Constructed by the 145th King Karl Fritz utilizing millions of crystallized 50-meter Colossal Titans. Select any defensive ring to inspect radius, districts, and tactical status.
+        </p>
+      </div>
+
+      <div class="walls-visualizer-container reveal-on-scroll stagger-1">
+        <div class="radar-wrapper">
+          <div class="radar-circle wall-maria active" data-wall="wall-maria" title="Click to inspect Wall Maria">
+            <div class="radar-circle wall-rose" data-wall="wall-rose" title="Click to inspect Wall Rose">
+              <div class="radar-circle wall-sina" data-wall="wall-sina" title="Click to inspect Wall Sina">
+                <div class="radar-center" title="Mitras / Royal Capital"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wall-info-display" id="wall-radar-info">
+          <!-- Dynamic Wall Radar Information Populated by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Titan Shifters -->
+    <section class="section" style="background: rgba(10, 13, 18, 0.5);">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-dna"></i> Biological Superweapons</span>
+        <h2 class="section-title">Apex Titan Shifters</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Split from the soul of Founder Ymir Fritz into nine distinct entities passed down through spinal fluid and the Paths.
+        </p>
+      </div>
+
+      <div class="cards-grid" id="featured-titans-grid">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;" class="reveal-on-scroll">
+        <a href="titans.html" class="btn btn-primary">
+          <i class="fa-solid fa-list-check"></i> View Complete Titans Catalog & Height Visualizer
+        </a>
+      </div>
+    </section>
+
+    <!-- Exploration Portals -->
+    <section class="section">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="fa-solid fa-compass"></i> Archive Navigation</span>
+        <h2 class="section-title">Classified Divisions</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="titan-card reveal-on-scroll stagger-1" style="--titan-color: var(--accent-red);">
+          <div class="titan-header">
+            <span class="titan-badge">Chronicle</span>
+            <span class="titan-height-pill">Year 845 - 854</span>
+          </div>
+          <h3 class="titan-name">Story Arcs & Timeline</h3>
+          <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
+            From the 2,000-year-old organic genesis of Founder Ymir to the Fall of Shiganshina, the Uprising, and the final Battle of Heaven and Earth.
+          </p>
+          <a href="timeline.html" class="btn btn-secondary" style="margin-top: auto;">
+            <i class="fa-solid fa-arrow-right"></i> Open Story Timeline
+          </a>
+        </div>
+
+        <div class="titan-card reveal-on-scroll stagger-2" style="--titan-color: var(--accent-scout-blue);">
+          <div class="titan-header">
+            <span class="titan-badge">Personnel</span>
+            <span class="titan-height-pill">Classified Records</span>
+          </div>
+          <h3 class="titan-name">Scouts & Warriors Archive</h3>
+          <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
+            Explore tactical dossiers on Eren Yeager, Levi Ackerman, Erwin Smith, Mikasa, Reiner, Zeke, and the military elite of Paradis and Marley.
+          </p>
+          <a href="characters.html" class="btn btn-secondary" style="margin-top: auto;">
+            <i class="fa-solid fa-arrow-right"></i> Access Characters
+          </a>
+        </div>
+
+        <div class="titan-card reveal-on-scroll stagger-3" style="--titan-color: var(--accent-gold);">
+          <div class="titan-header">
+            <span class="titan-badge">Technology & Lore</span>
+            <span class="titan-height-pill">Military Tech</span>
+          </div>
+          <h3 class="titan-name">ODM Gear & Regiments</h3>
+          <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
+            Deep-dive into Omni-Directional Mobility mechanics, Thunder Spear ballistics, Titan nape anatomy, and the three branches of the military.
+          </p>
+          <a href="world.html" class="btn btn-secondary" style="margin-top: auto;">
+            <i class="fa-solid fa-arrow-right"></i> Inspect Technology
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <div class="brand-emblem"></div>
+            <div class="brand-text">
+              <h1>Attack on Titan</h1>
+              <span>Compendium</span>
+            </div>
+          </div>
+          <p>
+            A tribute to Hajime Isayama's legendary masterpiece <em>Shingeki no Kyojin</em>. Crafted with dark cinematic atmosphere, authentic military lore, and interactive data visualization.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Core Archive</h3>
+          <ul class="footer-links">
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Narrative Timeline</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titan Shifters</a></li>
+            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Scout & Warrior Dossiers</a></li>
+            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Wall Maria, Rose & Sina</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Oath of the Scouts</h3>
+          <p style="font-style: italic; color: var(--text-highlight); margin-bottom: 0.5rem;">
+            "We offer up our hearts in pursuit of truth and human freedom!"
+          </p>
+          <p>
+            Survey Corps • Special Operations Unit
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Attack on Titan Compendium. Fan tribute project.</span>
+        <span class="tribute">SHINZO WO SASAGEYO • 心臓を捧げよ</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
