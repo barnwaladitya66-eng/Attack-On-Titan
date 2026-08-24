@@ -834,26 +834,39 @@ function initCharactersPage() {
   renderCharacters();
 }
 
-// Feature 6: Quote Soundboard Implementation with Anime Voice Engine
+// Feature 6: Quote Soundboard Implementation with Anime Voice Actor Profiles & Audio Controls
 function initQuotesSoundboard() {
   const container = document.getElementById('quotes-soundboard-grid');
   if (!container || typeof AOT_DATA === 'undefined') return;
 
   container.innerHTML = AOT_DATA.quotesSoundboard.map(q => `
     <div class="soundboard-card reveal-on-scroll" style="--card-theme: ${q.themeColor}" id="soundcard-${q.id}">
-      <h4 class="soundboard-speaker">${q.speaker}</h4>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+        <h4 class="soundboard-speaker">${q.speaker}</h4>
+        <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); padding: 0.2rem 0.5rem; border-radius: 3px;">
+          <i class="fa-solid fa-microphone-lines"></i> ${q.cv}
+        </span>
+      </div>
       <div class="soundboard-japanese" style="font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.3rem;">${q.japanese}</div>
       <div style="font-family: var(--font-tech); font-size: 0.82rem; color: #00f5d4; margin-bottom: 0.8rem; letter-spacing: 0.5px;">
-        <i class="fa-solid fa-microphone"></i> <em>${q.romanji || ''}</em>
+        <em>${q.romanji || ''}</em>
       </div>
       <div class="soundboard-quote-box">"${q.quote}"</div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><strong>Context:</strong> ${q.context}</p>
-      <button class="soundboard-play-btn" data-id="${q.id}">
-        <i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE
-      </button>
+      
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto;">
+        <button class="soundboard-play-btn" data-id="${q.id}" style="flex: 1 1 180px;">
+          <i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE
+        </button>
+        <label class="btn btn-secondary" style="padding: 0.6rem 0.8rem; font-size: 0.8rem; cursor: pointer;" title="Upload your own custom anime voice clip">
+          <i class="fa-solid fa-upload"></i> Custom MP3
+          <input type="file" accept="audio/*" class="custom-audio-input" data-id="${q.id}" style="display: none;">
+        </label>
+      </div>
     </div>
   `).join('');
 
+  // Handle Play Button Click
   container.querySelectorAll('.soundboard-play-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
@@ -864,7 +877,7 @@ function initQuotesSoundboard() {
       if (card) card.style.borderColor = '#00f5d4';
 
       btn.classList.add('playing');
-      btn.innerHTML = '<i class="fa-solid fa-volume-high fa-beat"></i> SPEAKING JAPANESE VOICE...';
+      btn.innerHTML = '<i class="fa-solid fa-volume-high fa-beat"></i> PLAYING VOICE...';
 
       if (window.aotSound) {
         window.aotSound.playAnimeVoice(quoteObj, () => {
@@ -872,6 +885,28 @@ function initQuotesSoundboard() {
           btn.innerHTML = '<i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE';
           if (card) card.style.borderColor = '';
         });
+      }
+    });
+  });
+
+  // Handle Custom Audio Upload
+  container.querySelectorAll('.custom-audio-input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const id = input.dataset.id;
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        const quoteObj = AOT_DATA.quotesSoundboard.find(q => q.id === id);
+        if (quoteObj) {
+          quoteObj.audioSrc = url;
+          const playBtn = container.querySelector(`.soundboard-play-btn[data-id="${id}"]`);
+          if (playBtn) {
+            playBtn.innerHTML = '<i class="fa-solid fa-check"></i> CUSTOM VOICE LOADED!';
+            setTimeout(() => {
+              playBtn.innerHTML = '<i class="fa-solid fa-play"></i> PLAY CUSTOM VOICE';
+            }, 2000);
+          }
+        }
       }
     });
   });

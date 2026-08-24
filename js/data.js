@@ -904,6 +904,7 @@ const AOT_DATA = {
     {
       id: "erwin-rage",
       speaker: "Commander Erwin Smith",
+      cv: "Daisuke Ono (小野大輔)",
       japanese: "進撃せよ！我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！",
       romanji: "Shingeki seyo! Waga heishi yo ikare! Waga heishi yo sakebe! Waga heishi yo tatakae!",
       quote: "My soldiers, do not buckle or yield when facing the cruelty of this world! My soldiers, rage! My soldiers, scream! My soldiers, fight!",
@@ -914,6 +915,7 @@ const AOT_DATA = {
     {
       id: "eren-tatakae",
       speaker: "Eren Yeager",
+      cv: "Yuki Kaji (梶裕貴)",
       japanese: "勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！",
       romanji: "Kateba ikiru, makeba shinu. Tatakawanakereba katenai. Tatakae! Tatakae!",
       quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae! Tatakae!",
@@ -924,6 +926,7 @@ const AOT_DATA = {
     {
       id: "levi-lunatic",
       speaker: "Captain Levi Ackerman",
+      cv: "Hiroshi Kamiya (神谷浩史)",
       japanese: "おい…ガキ共…心臓を捧げよ。悔いなき選択をしろ。",
       romanji: "Oi... gaki-domo... Shinzō o sasageyo. Kuinaki sentaku o shiro.",
       quote: "I'm fine playing the role of the lunatic who kills people like that. I've got to ensure the choices I make leave no regrets.",
@@ -934,6 +937,7 @@ const AOT_DATA = {
     {
       id: "mikasa-cruel",
       speaker: "Mikasa Ackerman",
+      cv: "Yui Ishikawa (石川由依)",
       japanese: "この世界は残酷だ…そして、とても美しい。戦え！",
       romanji: "Kono sekai wa zankoku da... Soshite, totemo utsukushii. Tatakae!",
       quote: "This world is cruel, but it's also very beautiful. Even if the enemy is overwhelmingly stronger, I will fight.",
@@ -944,6 +948,7 @@ const AOT_DATA = {
     {
       id: "armin-sacrifice",
       speaker: "Armin Arlert",
+      cv: "Marina Inoue (井上麻里奈)",
       japanese: "何かを捨てることができない人には、何も変えることはできない。",
       romanji: "Nanika o suteru koto ga dekinai hito ni wa, nanimo kaeru koto wa dekinai.",
       quote: "Someone who cannot sacrifice anything can never change anything. To defeat a monster, you must be willing to abandon your humanity.",
@@ -954,6 +959,7 @@ const AOT_DATA = {
     {
       id: "reiner-warrior",
       speaker: "Reiner Braun",
+      cv: "Yoshimasa Hosoya (細谷佳正)",
       japanese: "俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！",
       romanji: "Ore ga Yoroi no Kyojin de, koitsu ga Chōōgata Kyojin da! Senshi toshite saigo made sekinin o hatasu!",
       quote: "I don't know what's right anymore... But the only choice for me now is to face the consequences of my actions and fulfill my duty as a warrior!",
