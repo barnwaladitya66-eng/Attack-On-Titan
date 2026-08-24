@@ -907,7 +907,7 @@ const AOT_DATA = {
       japanese: "進撃せよ！我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！",
       romanji: "Shingeki seyo! Waga heishi yo ikare! Waga heishi yo sakebe! Waga heishi yo tatakae!",
       quote: "My soldiers, do not buckle or yield when facing the cruelty of this world! My soldiers, rage! My soldiers, scream! My soldiers, fight!",
-      speechText: "進撃せよ！我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！",
+      audioSrc: "assets/audio/erwin.mp3",
       context: "The legendary suicide cavalry charge against the Beast Titan's bombardment in Shiganshina.",
       themeColor: "#1d3557"
     },
@@ -917,7 +917,7 @@ const AOT_DATA = {
       japanese: "勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！",
       romanji: "Kateba ikiru, makeba shinu. Tatakawanakereba katenai. Tatakae! Tatakae!",
       quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae! Tatakae!",
-      speechText: "勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！",
+      audioSrc: "assets/audio/eren.mp3",
       context: "Eren's sacred core philosophy of unrelenting forward momentum for Eldian freedom.",
       themeColor: "#e63946"
     },
@@ -927,7 +927,7 @@ const AOT_DATA = {
       japanese: "おい…ガキ共…心臓を捧げよ。悔いなき選択をしろ。",
       romanji: "Oi... gaki-domo... Shinzō o sasageyo. Kuinaki sentaku o shiro.",
       quote: "I'm fine playing the role of the lunatic who kills people like that. I've got to ensure the choices I make leave no regrets.",
-      speechText: "おい、ガキ共。心臓を捧げよ。悔いなき選択をしろ。",
+      audioSrc: "assets/audio/levi.mp3",
       context: "Levi's pragmatic resolve facing corrupt interior military police and Titans alike.",
       themeColor: "#2a9d8f"
     },
@@ -937,7 +937,7 @@ const AOT_DATA = {
       japanese: "この世界は残酷だ…そして、とても美しい。戦え！",
       romanji: "Kono sekai wa zankoku da... Soshite, totemo utsukushii. Tatakae!",
       quote: "This world is cruel, but it's also very beautiful. Even if the enemy is overwhelmingly stronger, I will fight.",
-      speechText: "この世界は残酷だ。そして、とても美しい。戦え！",
+      audioSrc: "assets/audio/mikasa.mp3",
       context: "Mikasa's awakening during the defense of Trost District.",
       themeColor: "#d90429"
     },
@@ -947,7 +947,7 @@ const AOT_DATA = {
       japanese: "何かを捨てることができない人には、何も変えることはできない。",
       romanji: "Nanika o suteru koto ga dekinai hito ni wa, nanimo kaeru koto wa dekinai.",
       quote: "Someone who cannot sacrifice anything can never change anything. To defeat a monster, you must be willing to abandon your humanity.",
-      speechText: "何かを捨てることができない人には、何も変えることはできない。",
+      audioSrc: "assets/audio/armin.mp3",
       context: "Armin's tactical deduction justifying extreme military maneuvers to secure victory.",
       themeColor: "#f77f00"
     },
@@ -957,7 +957,7 @@ const AOT_DATA = {
       japanese: "俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！",
       romanji: "Ore ga Yoroi no Kyojin de, koitsu ga Chōōgata Kyojin da! Senshi toshite saigo made sekinin o hatasu!",
       quote: "I don't know what's right anymore... But the only choice for me now is to face the consequences of my actions and fulfill my duty as a warrior!",
-      speechText: "俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！",
+      audioSrc: "assets/audio/reiner.mp3",
       context: "Reiner's psychological breaking point atop Wall Rose revealing his Armored Titan identity.",
       themeColor: "#f15bb5"
     }

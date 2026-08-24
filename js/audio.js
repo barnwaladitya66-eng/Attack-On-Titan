@@ -1,4 +1,4 @@
-// Attack on Titan Web Audio Synthesizer: Ambient Drone & Tactical Sound Effects
+// Attack on Titan Web Audio & Voice Engine: Real Japanese Anime Speech & Ambient SFX
 class AOTSoundEngine {
   constructor() {
     this.ctx = null;
@@ -7,8 +7,7 @@ class AOTSoundEngine {
     this.ambientOsc1 = null;
     this.ambientOsc2 = null;
     this.droneRunning = false;
-    this.japaneseVoice = null;
-    this.initSpeechVoices();
+    this.currentVoiceAudio = null;
   }
 
   init() {
@@ -16,20 +15,6 @@ class AOTSoundEngine {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (AudioContext) {
       this.ctx = new AudioContext();
-    }
-  }
-
-  initSpeechVoices() {
-    if ('speechSynthesis' in window) {
-      const loadVoices = () => {
-        const voices = window.speechSynthesis.getVoices();
-        // Look for Japanese voices
-        this.japaneseVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP') || v.name.toLowerCase().includes('japanese')) || null;
-      };
-      loadVoices();
-      if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-      }
     }
   }
 
@@ -294,92 +279,45 @@ class AOTSoundEngine {
   }
 
   // =========================================================================
-  // ANIME BATTLE VOICE ENGINE (Web Speech API + Battle Horn Resonance)
+  // AUTHENTIC ANIME JAPANESE VOICE ENGINE (Real Audio MP3 Files)
   // =========================================================================
   playAnimeVoice(quoteObj, onComplete) {
-    this.init();
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+    // 1. Stop any currently playing voice audio
+    if (this.currentVoiceAudio) {
+      try {
+        this.currentVoiceAudio.pause();
+        this.currentVoiceAudio.currentTime = 0;
+      } catch (e) {}
+      this.currentVoiceAudio = null;
     }
 
-    // 1. Play Epic Brass Battle Horn Fanfare in Background
-    try {
-      if (this.ctx) {
-        const now = this.ctx.currentTime;
-        const horn = this.ctx.createOscillator();
-        const hornGain = this.ctx.createGain();
-        horn.type = 'sawtooth';
-        
-        const base = quoteObj.id.includes('erwin') ? 220 : (quoteObj.id.includes('levi') ? 261.63 : 196);
-        horn.frequency.setValueAtTime(base, now);
-        horn.frequency.exponentialRampToValueAtTime(base * 1.5, now + 0.35);
+    if (!quoteObj || !quoteObj.audioSrc) {
+      if (onComplete) onComplete();
+      return;
+    }
 
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(600, now);
+    // 2. Play the high-fidelity Japanese MP3 audio file
+    const audio = new Audio(quoteObj.audioSrc);
+    this.currentVoiceAudio = audio;
+    audio.volume = 1.0;
 
-        hornGain.gain.setValueAtTime(0.18, now);
-        hornGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+    audio.onended = () => {
+      this.currentVoiceAudio = null;
+      if (onComplete) onComplete();
+    };
 
-        horn.connect(filter);
-        filter.connect(hornGain);
-        hornGain.connect(this.ctx.destination);
+    audio.onerror = (err) => {
+      console.warn("Audio playback error:", err);
+      this.currentVoiceAudio = null;
+      if (onComplete) onComplete();
+    };
 
-        horn.start(now);
-        horn.stop(now + 1.7);
-      }
-    } catch (e) {}
-
-    // 2. Play Anime Japanese Vocal Speech Line via Web Speech API
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Stop any pending speech
-
-      const textToSpeak = quoteObj.speechText || quoteObj.japanese;
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
-
-      // Set Japanese locale
-      utterance.lang = 'ja-JP';
-
-      // Find best Japanese voice
-      const voices = window.speechSynthesis.getVoices();
-      const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP') || v.name.toLowerCase().includes('japanese'));
-      if (jaVoice) {
-        utterance.voice = jaVoice;
-      }
-
-      // Customize cadence per character
-      if (quoteObj.id.includes('erwin')) {
-        utterance.rate = 1.05; // Commander urgent pacing
-        utterance.pitch = 0.95; // Authoritative deep tone
-        utterance.volume = 1.0;
-      } else if (quoteObj.id.includes('levi')) {
-        utterance.rate = 0.95; // Calm, menacing
-        utterance.pitch = 0.85; // Low rasp
-        utterance.volume = 1.0;
-      } else if (quoteObj.id.includes('eren')) {
-        utterance.rate = 1.15; // Intense shouting
-        utterance.pitch = 1.05;
-        utterance.volume = 1.0;
-      } else if (quoteObj.id.includes('mikasa')) {
-        utterance.rate = 1.0;
-        utterance.pitch = 1.15;
-        utterance.volume = 1.0;
-      } else {
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-      }
-
-      utterance.onend = () => {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((e) => {
+        console.warn("Autoplay blocked or audio load error:", e);
         if (onComplete) onComplete();
-      };
-      utterance.onerror = () => {
-        if (onComplete) onComplete();
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } else {
-      if (onComplete) setTimeout(onComplete, 1200);
+      });
     }
   }
 }
