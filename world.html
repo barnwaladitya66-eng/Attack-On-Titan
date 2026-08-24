@@ -24,10 +24,10 @@
 
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
-        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
-        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
-        <li class="nav-item"><a href="world.html" class="active"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Timeline & Paths</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> Titans & Battles</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters & Quotes</a></li>
+        <li class="nav-item"><a href="world.html" class="active"><i class="fa-solid fa-shield-halved"></i> World & Intel</a></li>
       </ul>
 
       <div class="nav-controls">
@@ -42,28 +42,78 @@
 
     <!-- Worldbuilding Main Content -->
     <main class="section">
-      <!-- Section 1: The Three Walls -->
+      <!-- Section 1: The Three Walls (Fixed High Precision Radar) -->
       <div class="section-header reveal-on-scroll">
         <span class="section-tag"><i class="fa-solid fa-shield-cat"></i> Concentric Fortress</span>
         <h2 class="section-title">The Three Concentric Walls</h2>
         <div class="section-divider"></div>
         <p class="section-subtitle">
-          Engineered by King Karl Fritz using millions of hardened 50-meter Colossal Titans to protect human civilization on Paradis Island from the outside world.
+          Engineered by King Karl Fritz using millions of hardened 50-meter Colossal Titans. Select any defensive ring or tab below to inspect tactical specs, districts, and historical events.
         </p>
       </div>
 
       <div class="walls-visualizer-container reveal-on-scroll stagger-1">
-        <div class="radar-wrapper">
-          <div class="radar-circle wall-maria active" data-wall="wall-maria" title="Inspect Wall Maria">
-            <div class="radar-circle wall-rose" data-wall="wall-rose" title="Inspect Wall Rose">
-              <div class="radar-circle wall-sina" data-wall="wall-sina" title="Inspect Wall Sina">
-                <div class="radar-center" title="Mitras Royal Palace"></div>
-              </div>
-            </div>
+        <div class="radar-interactive-box">
+          <div class="radar-svg-wrapper">
+            <svg class="radar-svg" viewBox="0 0 300 300">
+              <!-- Wall Maria Outer Ring -->
+              <circle class="radar-ring active" data-wall="wall-maria" cx="150" cy="150" r="135" stroke="#e63946" stroke-width="2.5" fill="#e63946" />
+              <!-- Wall Rose Middle Ring -->
+              <circle class="radar-ring" data-wall="wall-rose" cx="150" cy="150" r="95" stroke="#f77f00" stroke-width="2.5" fill="#f77f00" />
+              <!-- Wall Sina Inner Ring -->
+              <circle class="radar-ring" data-wall="wall-sina" cx="150" cy="150" r="55" stroke="#2a9d8f" stroke-width="2.5" fill="#2a9d8f" />
+              
+              <!-- Mitras Center Core -->
+              <circle cx="150" cy="150" r="10" fill="#ffd166" filter="drop-shadow(0 0 6px #ffd166)" />
+              
+              <!-- District Markers -->
+              <circle class="radar-district-dot" cx="150" cy="285" r="4" fill="#fff" title="Shiganshina District" />
+              <circle class="radar-district-dot" cx="150" cy="245" r="4" fill="#fff" title="Trost District" />
+              <circle class="radar-district-dot" cx="205" cy="150" r="4" fill="#fff" title="Stohess District" />
+            </svg>
+          </div>
+
+          <div class="wall-selector-tabs">
+            <button class="wall-tab-btn active" data-wall="wall-maria"><i class="fa-solid fa-shield"></i> Wall Maria (480 km)</button>
+            <button class="wall-tab-btn" data-wall="wall-rose"><i class="fa-solid fa-shield-virus"></i> Wall Rose (380 km)</button>
+            <button class="wall-tab-btn" data-wall="wall-sina"><i class="fa-solid fa-crown"></i> Wall Sina (250 km)</button>
           </div>
         </div>
 
         <div class="wall-info-display" id="wall-radar-info">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- FEATURE 3: INFORMATION AVAILABLE FOR PUBLIC DISCLOSURE (MID-EPISODE CARDS) -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
+        <span class="section-tag"><i class="fa-solid fa-scroll"></i> 現在公開可能な情報</span>
+        <h2 class="section-title">Information Available for Public Disclosure</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          The iconic mid-episode tactical intelligence dossiers. Click any card to inspect classified research on Iceburst Stone, Ultra-Hard Steel, and Titan anomalies.
+        </p>
+      </div>
+
+      <div class="disclosure-grid" id="public-disclosure-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- FEATURE 4: TACTICAL MAP EXPLORER -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
+        <span class="section-tag"><i class="fa-solid fa-map-location-dot"></i> Paradis & Marley Theaters</span>
+        <h2 class="section-title">Tactical Military Map Explorer</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          Interactive satellite intelligence across major battle sites from the Shiganshina breach to the clifftops of Fort Salta.
+        </p>
+      </div>
+
+      <div class="tactical-map-container reveal-on-scroll stagger-1">
+        <div class="tactical-pins-list" id="tactical-pins-list">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+        <div class="tactical-intel-screen" id="tactical-screen-content">
           <!-- Populated dynamically by app.js -->
         </div>
       </div>
@@ -178,7 +228,7 @@
             </div>
           </div>
           <p>
-            Worldbuilding & tactical defense systems compendium.
+            Worldbuilding, military tactical systems & classified disclosures.
           </p>
           <div style="margin-top: 1.2rem;">
             <span class="footer-creator-signature">
@@ -191,8 +241,8 @@
           <h3>Quick Links</h3>
           <ul class="footer-links">
             <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
-            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline</a></li>
-            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans</a></li>
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline & Paths</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> Titans & Battle Matrix</a></li>
             <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Characters Archive</a></li>
           </ul>
         </div>

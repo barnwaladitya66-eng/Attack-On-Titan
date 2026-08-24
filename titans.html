@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Nine Titan Shifters & Variants | Attack on Titan Compendium</title>
+  <title>The Nine Titan Shifters & Battle Matrix | Attack on Titan Compendium</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
@@ -24,10 +24,10 @@
 
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
-        <li class="nav-item"><a href="titans.html" class="active"><i class="fa-solid fa-skull"></i> The Titans</a></li>
-        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
-        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Timeline & Paths</a></li>
+        <li class="nav-item"><a href="titans.html" class="active"><i class="fa-solid fa-skull"></i> Titans & Battles</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters & Quotes</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Intel</a></li>
       </ul>
 
       <div class="nav-controls">
@@ -73,8 +73,28 @@
         </div>
       </div>
 
+      <!-- FEATURE 2: BATTLE MATCHUP SIMULATOR ("BATTLE MATRIX") -->
+      <div class="battle-matrix-section reveal-on-scroll">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <span class="section-tag"><i class="fa-solid fa-swords"></i> Tactical Duel Simulator</span>
+          <h2 class="section-title" style="font-size: 2rem;">Titan & Scout Battle Matrix</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">
+            Simulate historical tactical engagements. Inspect combat advantage percentages, critical factor breakdowns, and canonical outcomes.
+          </p>
+        </div>
+
+        <div class="matrix-duel-selector" id="battle-duel-selector">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <div class="battle-arena-display" id="battle-arena-content">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
       <!-- Filter & Search Bar -->
-      <div class="filter-bar reveal-on-scroll stagger-1">
+      <div class="filter-bar reveal-on-scroll stagger-1" style="margin-top: 5rem;">
         <div class="search-input-box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" id="titans-search" class="search-input" placeholder="Search Titans by name, ability, inheritor..." autocomplete="off">
@@ -93,11 +113,25 @@
         <!-- Rendered dynamically by app.js with scroll trigger animations -->
       </div>
 
+      <!-- FEATURE 5: SHIFTER LINEAGE & INHERITANCE FLOWCHART -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
+        <span class="section-tag"><i class="fa-solid fa-sitemap"></i> Chronological Succession</span>
+        <h2 class="section-title" style="font-size: 2rem;">Titan Shifter Inheritance Lineage</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">
+          How the nine Titan superweapons passed through historical vessels across centuries of war.
+        </p>
+      </div>
+
+      <div class="lineage-grid" id="shifter-lineage-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
       <!-- Interactive Height Comparison Section -->
       <div class="height-comparator-section reveal-on-scroll">
-        <div class="comparator-header">
+        <div class="comparator-header" style="text-align: center; margin-bottom: 2rem;">
           <span class="section-tag"><i class="fa-solid fa-ruler-combined"></i> Biological Scale Visualizer</span>
-          <h3>Titan Height & Scale Comparison</h3>
+          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem;">Titan Height & Scale Comparison</h3>
           <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 0.95rem;">
             Comparative visual analysis showing scale disparity from a 1.7m human soldier up to the gargantuan 500m+ Doomsday Founding Titan.
           </p>
@@ -134,9 +168,9 @@
           <h3>Quick Links</h3>
           <ul class="footer-links">
             <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
-            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline</a></li>
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Story Timeline & Paths</a></li>
             <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Characters Archive</a></li>
-            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Walls & Defense</a></li>
+            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Walls & Defense Radar</a></li>
           </ul>
         </div>
 

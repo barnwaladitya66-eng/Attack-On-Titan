@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Story Arcs & Historical Timeline | Attack on Titan Compendium</title>
+  <title>Story Arcs, Paths & Timeline | Attack on Titan Compendium</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
@@ -24,10 +24,10 @@
 
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li class="nav-item"><a href="timeline.html" class="active"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
-        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
-        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
-        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+        <li class="nav-item"><a href="timeline.html" class="active"><i class="fa-solid fa-timeline"></i> Timeline & Paths</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> Titans & Battles</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters & Quotes</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Intel</a></li>
       </ul>
 
       <div class="nav-controls">
@@ -42,7 +42,71 @@
 
     <!-- Timeline Main Content -->
     <main class="section">
-      <div class="section-header reveal-on-scroll">
+      <!-- FEATURE 1: INTERACTIVE "PATHS" (道) ANCESTRAL TREE VISUALIZER -->
+      <div class="paths-section-container reveal-on-scroll">
+        <div class="paths-header">
+          <span class="section-tag" style="color: #00f5d4;"><i class="fa-solid fa-tree"></i> Metaphysical Coordinate Nexus</span>
+          <h3>The Paths (道) • Ancestral Network</h3>
+          <div class="section-divider" style="background: linear-gradient(90deg, transparent, #00f5d4, transparent);"></div>
+          <p class="section-subtitle">
+            An invisible spiritual dimension where all Eldians, Titan Shifters, and royal bloodlines connect across time and space. Click on Founder Ymir or any branch to transmit memories.
+          </p>
+        </div>
+
+        <div class="paths-tree-canvas-box">
+          <button class="paths-trunk-node" id="paths-trunk-btn">
+            <i class="fa-solid fa-crown" style="color: #ffd166; margin-right: 0.5rem;"></i> Founder Ymir Fritz (The Coordinate Trunk)
+          </button>
+
+          <div class="paths-branches-grid" id="paths-branches-list">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURE 7: "THE RUMBLING" GLOBAL IMPACT SIMULATOR -->
+      <div class="rumbling-simulator-card reveal-on-scroll">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <span class="section-tag"><i class="fa-solid fa-volcano"></i> Cataclysmic March</span>
+          <h2 class="section-title" style="font-size: 2rem;">The Rumbling Impact Simulator</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">
+            Simulate the final march of millions of 50-meter Colossal Titans unhardened from the three walls of Paradis.
+          </p>
+        </div>
+
+        <div class="rumbling-stats-row">
+          <div class="rumbling-metric-box">
+            <div class="rumbling-metric-val">Millions</div>
+            <div class="rumbling-metric-label">50M Wall Titans</div>
+          </div>
+          <div class="rumbling-metric-box">
+            <div class="rumbling-metric-val">80%</div>
+            <div class="rumbling-metric-label">Global Humanity Annihilated</div>
+          </div>
+          <div class="rumbling-metric-box">
+            <div class="rumbling-metric-val">50 km/h</div>
+            <div class="rumbling-metric-label">Synchronized Trampling Speed</div>
+          </div>
+          <div class="rumbling-metric-box">
+            <div class="rumbling-metric-val">600°C+</div>
+            <div class="rumbling-metric-label">Ambient Thermal Steam Wave</div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <button class="btn btn-primary" id="trigger-rumbling-audio-btn">
+            <i class="fa-solid fa-volcano"></i> INITIATE RUMBLING MARCH SFX
+          </button>
+        </div>
+
+        <div class="rumbling-phases-timeline" id="rumbling-phases-box">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- Section: 2,000-Year Narrative Timeline -->
+      <div class="section-header reveal-on-scroll" style="margin-top: 5rem;">
         <span class="section-tag"><i class="fa-solid fa-hourglass-half"></i> Chronological Codex</span>
         <h2 class="section-title">2,000-Year Narrative Timeline</h2>
         <div class="section-divider"></div>
@@ -98,7 +162,7 @@
           <h3>Quick Links</h3>
           <ul class="footer-links">
             <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home Overview</a></li>
-            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans & Battle Matrix</a></li>
             <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Military Characters</a></li>
             <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Walls & ODM Technology</a></li>
           </ul>

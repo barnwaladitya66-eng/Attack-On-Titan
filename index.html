@@ -26,10 +26,10 @@
 
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Story Timeline</a></li>
-        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> The Titans</a></li>
-        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters</a></li>
-        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Walls</a></li>
+        <li class="nav-item"><a href="timeline.html"><i class="fa-solid fa-timeline"></i> Timeline & Paths</a></li>
+        <li class="nav-item"><a href="titans.html"><i class="fa-solid fa-skull"></i> Titans & Battles</a></li>
+        <li class="nav-item"><a href="characters.html"><i class="fa-solid fa-users"></i> Characters & Quotes</a></li>
+        <li class="nav-item"><a href="world.html"><i class="fa-solid fa-shield-halved"></i> World & Intel</a></li>
       </ul>
 
       <div class="nav-controls">
@@ -54,17 +54,17 @@
         </h1>
         <div class="hero-japanese-title reveal-on-scroll stagger-2">心臓を捧げよ • 進撃の巨人</div>
         <p class="hero-description reveal-on-scroll stagger-3">
-          A definitive, comprehensive tactical archive detailing the 2,000-year history of the Eldian Empire, the Nine Titan Shifters, the three concentric walls of Paradis Island, the Survey Corps dossiers, and the cataclysmic final march of the Rumbling.
+          A definitive tactical archive detailing the 2,000-year history of the Eldian Empire, the Nine Titan Shifters, the Three Concentric Walls of Paradis, the Paths ancestral network, Scout combat dossiers, and the apocalyptic Rumbling.
         </p>
         <div class="hero-actions reveal-on-scroll stagger-4">
           <a href="timeline.html" class="btn btn-primary">
-            <i class="fa-solid fa-timeline"></i> Explore 2,000-Year Timeline
+            <i class="fa-solid fa-timeline"></i> Explore Timeline & Paths
           </a>
           <a href="titans.html" class="btn btn-secondary">
-            <i class="fa-solid fa-skull"></i> Inspect The Nine Titans
+            <i class="fa-solid fa-skull"></i> Inspect Titans & Battle Matrix
           </a>
           <a href="characters.html" class="btn btn-secondary">
-            <i class="fa-solid fa-id-card"></i> Military Personnel Dossiers
+            <i class="fa-solid fa-id-card"></i> Personnel & Quote Soundboard
           </a>
         </div>
       </div>
@@ -92,25 +92,42 @@
       </div>
     </div>
 
-    <!-- Interactive Walls Section -->
+    <!-- Fixed Interactive Concentric Walls Section -->
     <section class="section">
       <div class="section-header reveal-on-scroll">
         <span class="section-tag"><i class="fa-solid fa-shield-halved"></i> Territorial Defense Grid</span>
         <h2 class="section-title">The Three Concentric Walls</h2>
         <div class="section-divider"></div>
         <p class="section-subtitle">
-          Constructed by the 145th King Karl Fritz utilizing millions of crystallized 50-meter Colossal Titans. Select any defensive ring to inspect radius, districts, and tactical status.
+          Constructed by the 145th King Karl Fritz utilizing millions of crystallized 50-meter Colossal Titans. Select any defensive ring or tab below to inspect tactical radius, defensive districts, and historical status.
         </p>
       </div>
 
       <div class="walls-visualizer-container reveal-on-scroll stagger-1">
-        <div class="radar-wrapper">
-          <div class="radar-circle wall-maria active" data-wall="wall-maria" title="Click to inspect Wall Maria">
-            <div class="radar-circle wall-rose" data-wall="wall-rose" title="Click to inspect Wall Rose">
-              <div class="radar-circle wall-sina" data-wall="wall-sina" title="Click to inspect Wall Sina">
-                <div class="radar-center" title="Mitras / Royal Capital"></div>
-              </div>
-            </div>
+        <div class="radar-interactive-box">
+          <div class="radar-svg-wrapper">
+            <svg class="radar-svg" viewBox="0 0 300 300">
+              <!-- Wall Maria Outer Ring -->
+              <circle class="radar-ring" data-wall="wall-maria" cx="150" cy="150" r="135" stroke="#e63946" stroke-width="2.5" fill="#e63946" />
+              <!-- Wall Rose Middle Ring -->
+              <circle class="radar-ring" data-wall="wall-rose" cx="150" cy="150" r="95" stroke="#f77f00" stroke-width="2.5" fill="#f77f00" />
+              <!-- Wall Sina Inner Ring -->
+              <circle class="radar-ring" data-wall="wall-sina" cx="150" cy="150" r="55" stroke="#2a9d8f" stroke-width="2.5" fill="#2a9d8f" />
+              
+              <!-- Mitras Center Core -->
+              <circle cx="150" cy="150" r="10" fill="#ffd166" filter="drop-shadow(0 0 6px #ffd166)" />
+              
+              <!-- District Markers -->
+              <circle class="radar-district-dot" cx="150" cy="285" r="4" fill="#fff" title="Shiganshina District" />
+              <circle class="radar-district-dot" cx="150" cy="245" r="4" fill="#fff" title="Trost District" />
+              <circle class="radar-district-dot" cx="205" cy="150" r="4" fill="#fff" title="Stohess District" />
+            </svg>
+          </div>
+
+          <div class="wall-selector-tabs">
+            <button class="wall-tab-btn active" data-wall="wall-maria"><i class="fa-solid fa-shield"></i> Wall Maria (480 km)</button>
+            <button class="wall-tab-btn" data-wall="wall-rose"><i class="fa-solid fa-shield-virus"></i> Wall Rose (380 km)</button>
+            <button class="wall-tab-btn" data-wall="wall-sina"><i class="fa-solid fa-crown"></i> Wall Sina (250 km)</button>
           </div>
         </div>
 
@@ -159,7 +176,7 @@
 
       <div style="text-align: center; margin-top: 3rem;" class="reveal-on-scroll">
         <a href="titans.html" class="btn btn-primary">
-          <i class="fa-solid fa-list-check"></i> View Complete Titans Catalog & Height Visualizer
+          <i class="fa-solid fa-list-check"></i> View Complete Titans Catalog & Battle Matrix
         </a>
       </div>
     </section>
@@ -168,50 +185,50 @@
     <section class="section">
       <div class="section-header reveal-on-scroll">
         <span class="section-tag"><i class="fa-solid fa-compass"></i> Archive Navigation</span>
-        <h2 class="section-title">Classified Divisions</h2>
+        <h2 class="section-title">Interactive Systems & Features</h2>
         <div class="section-divider"></div>
       </div>
 
       <div class="cards-grid">
-        <div class="titan-card reveal-on-scroll stagger-1" style="--titan-color: var(--accent-red);">
+        <div class="titan-card reveal-on-scroll stagger-1" style="--titan-color: #9b5de5;">
           <div class="titan-header">
-            <span class="titan-badge">Chronicle</span>
-            <span class="titan-height-pill">Year 845 - 854</span>
+            <span class="titan-badge">Ancestral Dimension</span>
+            <span class="titan-height-pill">Paths (道)</span>
           </div>
-          <h3 class="titan-name">Story Arcs & Timeline</h3>
+          <h3 class="titan-name">The Paths Tree Visualizer</h3>
           <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
-            From the 2,000-year-old organic genesis of Founder Ymir to the Fall of Shiganshina, the Uprising, and the final Battle of Heaven and Earth.
+            Explore the metaphysical dimension connecting all Subjects of Ymir and tap into past and future memory streams.
           </p>
           <a href="timeline.html" class="btn btn-secondary" style="margin-top: auto;">
-            <i class="fa-solid fa-arrow-right"></i> Open Story Timeline
+            <i class="fa-solid fa-arrow-right"></i> Open Paths & Timeline
           </a>
         </div>
 
-        <div class="titan-card reveal-on-scroll stagger-2" style="--titan-color: var(--accent-scout-blue);">
+        <div class="titan-card reveal-on-scroll stagger-2" style="--titan-color: var(--accent-red);">
           <div class="titan-header">
-            <span class="titan-badge">Personnel</span>
-            <span class="titan-height-pill">Classified Records</span>
+            <span class="titan-badge">Combat Simulator</span>
+            <span class="titan-height-pill">Battle Matrix</span>
           </div>
-          <h3 class="titan-name">Scouts & Warriors Archive</h3>
+          <h3 class="titan-name">Titan & Scout Matchup Arena</h3>
           <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
-            Explore tactical dossiers on Eren Yeager, Levi Ackerman, Erwin Smith, Mikasa, Reiner, Zeke, and the military elite of Paradis and Marley.
+            Simulate historical tactical duels: Levi vs. Beast Titan, Eren vs. Armored, Armin vs. Marley Fleet, and War Hammer battle analytics.
           </p>
-          <a href="characters.html" class="btn btn-secondary" style="margin-top: auto;">
-            <i class="fa-solid fa-arrow-right"></i> Access Characters
+          <a href="titans.html" class="btn btn-secondary" style="margin-top: auto;">
+            <i class="fa-solid fa-arrow-right"></i> Access Battle Arena
           </a>
         </div>
 
         <div class="titan-card reveal-on-scroll stagger-3" style="--titan-color: var(--accent-gold);">
           <div class="titan-header">
-            <span class="titan-badge">Technology & Lore</span>
-            <span class="titan-height-pill">Military Tech</span>
+            <span class="titan-badge">Mid-Episode Lore</span>
+            <span class="titan-height-pill">Public Disclosure</span>
           </div>
-          <h3 class="titan-name">ODM Gear & Regiments</h3>
+          <h3 class="titan-name">Classified Info & Tactical Map</h3>
           <p style="color: var(--text-secondary); margin: 1rem 0; font-size: 0.95rem;">
-            Deep-dive into Omni-Directional Mobility mechanics, Thunder Spear ballistics, Titan nape anatomy, and the three branches of the military.
+            Inspect Iceburst Stone, Ultra-Hard Steel, Thunder Spears, the 13-Year Curse, and explore the interactive military map of Paradis & Marley.
           </p>
           <a href="world.html" class="btn btn-secondary" style="margin-top: auto;">
-            <i class="fa-solid fa-arrow-right"></i> Inspect Technology
+            <i class="fa-solid fa-arrow-right"></i> Open World Intel
           </a>
         </div>
       </div>
@@ -241,10 +258,10 @@
         <div class="footer-col">
           <h3>Core Archive</h3>
           <ul class="footer-links">
-            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Narrative Timeline</a></li>
-            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titan Shifters</a></li>
-            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Scout & Warrior Dossiers</a></li>
-            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Wall Maria, Rose & Sina</a></li>
+            <li><a href="timeline.html"><i class="fa-solid fa-angle-right"></i> Narrative Timeline & Paths</a></li>
+            <li><a href="titans.html"><i class="fa-solid fa-angle-right"></i> The Nine Titans & Battle Matrix</a></li>
+            <li><a href="characters.html"><i class="fa-solid fa-angle-right"></i> Scout Dossiers & Quotes</a></li>
+            <li><a href="world.html"><i class="fa-solid fa-angle-right"></i> Wall Maria, Rose & Sina Radar</a></li>
           </ul>
         </div>
 

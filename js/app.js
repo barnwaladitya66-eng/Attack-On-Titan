@@ -1,4 +1,4 @@
-// Attack on Titan Compendium - Core Application Controller
+// Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initSoundControls();
@@ -51,7 +51,7 @@ function initSoundControls() {
   }
 
   // Add click sound to interactive buttons
-  document.querySelectorAll('button, .btn, .nav-item a, .filter-btn').forEach(btn => {
+  document.querySelectorAll('button, .btn, .nav-item a, .filter-btn, .wall-tab-btn, .map-pin-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (window.aotSound && !window.aotSound.isMuted) {
         window.aotSound.playBladeSlice();
@@ -71,7 +71,6 @@ function initNavigation() {
     });
   }
 
-  // Highlight active page link based on URL
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href');
@@ -164,70 +163,120 @@ function initHomePage() {
     bindTitanCardEvents();
   }
 
-  initHomeWallRadar();
+  initInteractiveWallRadar();
   if (window.reobserveScrollElements) window.reobserveScrollElements();
 }
 
-function initHomeWallRadar() {
-  const circles = document.querySelectorAll('.radar-circle');
+// --------------------------------------------------------------------------
+// INTERACTIVE CONCENTRIC WALLS RADAR CONTROLLER (FIXED & HIGH-PRECISION)
+// --------------------------------------------------------------------------
+function initInteractiveWallRadar() {
+  const rings = document.querySelectorAll('.radar-ring');
+  const tabs = document.querySelectorAll('.wall-tab-btn');
   const infoDisplay = document.getElementById('wall-radar-info');
   
-  if (!circles.length || !infoDisplay || typeof AOT_DATA === 'undefined') return;
+  if (!infoDisplay || typeof AOT_DATA === 'undefined') return;
 
-  function updateWallDisplay(wallId) {
+  function selectWall(wallId) {
     const wall = AOT_DATA.worldbuilding.walls.find(w => w.id === wallId) || AOT_DATA.worldbuilding.walls[0];
-    circles.forEach(c => {
-      if (c.dataset.wall === wall.id) {
-        c.classList.add('active');
+    
+    // Highlight SVG ring
+    rings.forEach(r => {
+      if (r.dataset.wall === wall.id) {
+        r.classList.add('active');
       } else {
-        c.classList.remove('active');
+        r.classList.remove('active');
       }
     });
 
+    // Highlight Tab button
+    tabs.forEach(t => {
+      if (t.dataset.wall === wall.id) {
+        t.classList.add('active');
+      } else {
+        t.classList.remove('active');
+      }
+    });
+
+    // Update Detailed Tactical Screen
     infoDisplay.innerHTML = `
       <div class="wall-info-card reveal-on-scroll is-revealed" style="border-left-color: ${wall.color}">
-        <span class="wall-badge-spec"><i class="fa-solid fa-shield-halved"></i> ${wall.height} Height</span>
+        <span class="wall-badge-spec"><i class="fa-solid fa-shield-halved"></i> 50M HEIGHT • ${wall.garrisonForce}</span>
         <h3 class="wall-title">${wall.name}</h3>
         <p class="wall-radius"><i class="fa-solid fa-arrows-left-right"></i> Radius: ${wall.radius}</p>
         <p class="wall-description">${wall.description}</p>
-        <div style="margin-bottom: 1rem;">
-          <strong style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--text-highlight); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">Defensive Districts:</strong>
+        <div style="margin-bottom: 1.2rem;">
+          <strong style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--text-highlight); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">
+            <i class="fa-solid fa-location-crosshairs"></i> Defensive Bastions & Districts (Click to inspect):
+          </strong>
           <div class="wall-districts-list">
-            ${wall.districts.map(d => `<span class="district-tag"><i class="fa-solid fa-location-dot"></i> ${d}</span>`).join('')}
+            ${wall.districts.map(d => `<span class="district-tag" data-district="${d}"><i class="fa-solid fa-location-dot"></i> ${d}</span>`).join('')}
           </div>
         </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong style="color: var(--accent-red);">Status:</strong> ${wall.status}</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong style="color: var(--accent-red);">Historical Status:</strong> ${wall.status}</p>
       </div>
     `;
+
+    // Bind district tag clicks
+    infoDisplay.querySelectorAll('.district-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const districtName = tag.dataset.district;
+        window.aotModal.open(`${districtName} - Tactical Garrison`, `
+          <div style="color: var(--text-secondary); line-height: 1.8;">
+            <p style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;"><i class="fa-solid fa-fort-awesome" style="color: var(--accent-red); margin-right: 0.5rem;"></i> Perimeter defense sector for ${wall.name}.</p>
+            <p>Designed with specialized dual heavy gates to lure Titans toward fixed artillery cannons while providing civilian evacuation corridors into the interior rings.</p>
+            <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid ${wall.color}; margin-top: 1.2rem;">
+              <strong style="color: var(--accent-gold); font-family: var(--font-tech); text-transform: uppercase;">Defense Protocol:</strong>
+              <p style="font-size: 0.95rem; margin-top: 0.3rem;">Garrison cannons loaded with grapeshot cartridges and emergency iron portcullis drops.</p>
+            </div>
+          </div>
+        `);
+      });
+    });
 
     if (window.aotSound && !window.aotSound.isMuted) {
       window.aotSound.playBladeSlice();
     }
   }
 
-  circles.forEach(c => {
-    c.addEventListener('click', () => {
-      updateWallDisplay(c.dataset.wall);
+  rings.forEach(r => {
+    r.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectWall(r.dataset.wall);
     });
   });
 
-  updateWallDisplay('wall-maria');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      selectWall(t.dataset.wall);
+    });
+  });
+
+  // Default select Wall Maria
+  selectWall('wall-maria');
 }
 
 // --------------------------------------------------------------------------
-// TIMELINE PAGE CONTROLLER
+// TIMELINE PAGE CONTROLLER (+ FEATURE 1: PATHS & FEATURE 7: RUMBLING)
 // --------------------------------------------------------------------------
 function initTimelinePage() {
   const container = document.getElementById('timeline-feed');
   const filterBtns = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('timeline-search');
 
-  if (!container || typeof AOT_DATA === 'undefined') return;
+  if (typeof AOT_DATA === 'undefined') return;
+
+  // Initialize Feature 1: Paths Tree
+  initPathsVisualizer();
+
+  // Initialize Feature 7: Rumbling Simulator
+  initRumblingSimulator();
 
   let currentEra = 'all';
   let searchQuery = '';
 
   function renderTimeline() {
+    if (!container) return;
     const filtered = AOT_DATA.timeline.filter(item => {
       const matchesEra = currentEra === 'all' || item.era === currentEra;
       const matchesSearch = !searchQuery || 
@@ -280,7 +329,6 @@ function initTimelinePage() {
       </div>
     `).join('');
 
-    // Bind inspect buttons
     container.querySelectorAll('.timeline-inspect-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.dataset.id;
@@ -336,20 +384,115 @@ function initTimelinePage() {
   renderTimeline();
 }
 
+// Feature 1: Paths Visualizer Implementation
+function initPathsVisualizer() {
+  const branchesBox = document.getElementById('paths-branches-list');
+  const trunkBtn = document.getElementById('paths-trunk-btn');
+
+  if (!branchesBox || typeof AOT_DATA === 'undefined') return;
+
+  const paths = AOT_DATA.pathsTree;
+
+  branchesBox.innerHTML = paths.nodes.map(node => `
+    <div class="paths-node-card reveal-on-scroll" data-id="${node.id}">
+      <h4><i class="fa-solid fa-code-branch" style="color: #9b5de5; margin-right: 0.4rem;"></i> ${node.name}</h4>
+      <span><i class="fa-solid fa-bolt"></i> ${node.branch} • ${node.inheritor}</span>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">${node.power}</p>
+    </div>
+  `).join('');
+
+  branchesBox.querySelectorAll('.paths-node-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      const node = paths.nodes.find(n => n.id === id);
+      if (node) {
+        if (window.aotSound) window.aotSound.playPathsPulse();
+        window.aotModal.open(`Paths Stream: ${node.name}`, `
+          <div style="color: var(--text-secondary); line-height: 1.8;">
+            <p style="font-size: 1.15rem; color: #00f5d4; font-family: var(--font-tech); text-transform: uppercase;"><i class="fa-solid fa-dna"></i> Branch of ${node.branch}</p>
+            <p style="font-size: 1.05rem; color: #fff; margin: 1rem 0;"><strong>Active Inheritors:</strong> ${node.inheritor}</p>
+            <div style="background: rgba(155, 93, 229, 0.15); border-left: 3px solid #00f5d4; padding: 1.2rem; border-radius: 4px; margin-bottom: 1.2rem;">
+              <strong style="color: #fff; font-family: var(--font-tech); text-transform: uppercase;">Temporal Memory Transmitted:</strong>
+              <p style="font-style: italic; color: #f1faee; margin-top: 0.4rem;">"${node.memorySnippet}"</p>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">All Subjects of Ymir are linked via invisible Paths of light that transcend physical space and mortal time.</p>
+          </div>
+        `);
+      }
+    });
+  });
+
+  if (trunkBtn) {
+    trunkBtn.addEventListener('click', () => {
+      if (window.aotSound) window.aotSound.playPathsPulse();
+      window.aotModal.open("The Coordinate - Founder Ymir", `
+        <div style="color: var(--text-secondary); line-height: 1.8;">
+          <h3 style="color: #00f5d4; font-family: var(--font-heading); margin-bottom: 0.8rem;">The Sacred Nexus of All Eldian Souls</h3>
+          <p style="font-size: 1rem; color: #fff; margin-bottom: 1.2rem;">${paths.center.desc}</p>
+          <div style="background: rgba(0,0,0,0.6); padding: 1.2rem; border-radius: 6px; border-left: 3px solid #ff0054;">
+            <strong style="color: var(--accent-gold); font-family: var(--font-tech); text-transform: uppercase;">The 2,000-Year Memory:</strong>
+            <p style="font-style: italic; color: #fff; margin-top: 0.3rem;">"${paths.center.memories}"</p>
+          </div>
+        </div>
+      `);
+    });
+  }
+}
+
+// Feature 7: Rumbling Simulator Implementation
+function initRumblingSimulator() {
+  const container = document.getElementById('rumbling-phases-box');
+  if (!container || typeof AOT_DATA === 'undefined') return;
+
+  const sim = AOT_DATA.rumblingSim;
+
+  container.innerHTML = sim.phases.map(p => `
+    <div class="rumbling-phase-block reveal-on-scroll">
+      <h5><i class="fa-solid fa-clock-rotate-left"></i> ${p.hour}</h5>
+      <h4>${p.title}</h4>
+      <p>${p.desc}</p>
+    </div>
+  `).join('');
+
+  const triggerRumblingBtn = document.getElementById('trigger-rumbling-audio-btn');
+  if (triggerRumblingBtn) {
+    triggerRumblingBtn.addEventListener('click', () => {
+      if (window.aotSound) {
+        window.aotSound.playRumblingMarch();
+        window.aotSound.playTitanLightning();
+      }
+      if (window.aotParticles) {
+        window.aotParticles.triggerLightning();
+      }
+      triggerRumblingBtn.innerHTML = '<i class="fa-solid fa-fire"></i> RUMBLING SIMULATING...';
+      setTimeout(() => {
+        triggerRumblingBtn.innerHTML = '<i class="fa-solid fa-volcano"></i> INITIATE RUMBLING MARCH SFX';
+      }, 3000);
+    });
+  }
+}
+
 // --------------------------------------------------------------------------
-// TITANS PAGE CONTROLLER & HEIGHT COMPARATOR
+// TITANS PAGE CONTROLLER (+ FEATURE 2: BATTLE MATRIX & FEATURE 5: LINEAGE)
 // --------------------------------------------------------------------------
 function initTitansPage() {
   const container = document.getElementById('titans-grid');
   const filterBtns = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('titans-search');
 
-  if (!container || typeof AOT_DATA === 'undefined') return;
+  if (typeof AOT_DATA === 'undefined') return;
+
+  // Initialize Feature 2: Battle Matrix Matchup Simulator
+  initBattleMatrixSimulator();
+
+  // Initialize Feature 5: Shifter Lineage Flowchart
+  initShifterLineageFlowchart();
 
   let currentCategory = 'all';
   let searchQuery = '';
 
   function renderTitans() {
+    if (!container) return;
     const filtered = AOT_DATA.titans.filter(t => {
       const matchesCategory = currentCategory === 'all' || t.category === currentCategory;
       const matchesSearch = !searchQuery ||
@@ -399,6 +542,90 @@ function initTitansPage() {
 
   renderTitans();
   renderHeightComparator();
+}
+
+// Feature 2: Battle Matrix Simulator Implementation
+function initBattleMatrixSimulator() {
+  const selectorBox = document.getElementById('battle-duel-selector');
+  const arenaDisplay = document.getElementById('battle-arena-content');
+
+  if (!selectorBox || !arenaDisplay || typeof AOT_DATA === 'undefined') return;
+
+  const duels = AOT_DATA.battleMatrix;
+
+  selectorBox.innerHTML = duels.map((d, idx) => `
+    <button class="matrix-duel-btn ${idx === 0 ? 'active' : ''}" data-id="${d.id}">
+      ${d.fighterA} vs. ${d.fighterB}
+    </button>
+  `).join('');
+
+  function renderDuel(duelId) {
+    const duel = duels.find(d => d.id === duelId) || duels[0];
+    
+    selectorBox.querySelectorAll('.matrix-duel-btn').forEach(btn => {
+      if (btn.dataset.id === duel.id) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+
+    arenaDisplay.innerHTML = `
+      <div class="arena-versus-header">
+        <div class="fighter-pod">
+          <h4>${duel.fighterA}</h4>
+          <div class="win-rate-pill">Advantage: ${duel.winRateA}%</div>
+        </div>
+        <div class="versus-badge">VS</div>
+        <div class="fighter-pod">
+          <h4>${duel.fighterB}</h4>
+          <div class="win-rate-pill">Advantage: ${duel.winRateB}%</div>
+        </div>
+      </div>
+
+      <div class="matrix-progress-bar">
+        <div class="matrix-progress-fill-a" style="width: ${duel.winRateA}%;"></div>
+        <div class="matrix-progress-fill-b" style="width: ${duel.winRateB}%;"></div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.5); padding: 1.5rem; border-radius: 6px; border-left: 3px solid var(--accent-red); margin-bottom: 1.2rem;">
+        <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">${duel.title}</h4>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;"><strong><i class="fa-solid fa-location-dot" style="color: var(--accent-red);"></i> Battlefield:</strong> ${duel.location}</p>
+        <p style="font-size: 1rem; color: var(--text-primary); line-height: 1.7; margin-bottom: 1rem;">${duel.summary}</p>
+        <p style="font-size: 0.9rem; color: var(--text-highlight);"><strong><i class="fa-solid fa-crosshairs"></i> Critical Tactical Factor:</strong> ${duel.tacticalFactor}</p>
+      </div>
+
+      <div style="background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--accent-gold); padding: 1rem; border-radius: 0 4px 4px 0;">
+        <strong style="color: #fff; font-family: var(--font-tech); text-transform: uppercase;">Canonical Historical Verdict:</strong>
+        <p style="color: var(--text-primary); font-size: 0.95rem; margin-top: 0.3rem;">${duel.canonOutcome}</p>
+      </div>
+    `;
+
+    if (window.aotSound) window.aotSound.playBattleClash();
+  }
+
+  selectorBox.querySelectorAll('.matrix-duel-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      renderDuel(btn.dataset.id);
+    });
+  });
+
+  renderDuel(duels[0].id);
+}
+
+// Feature 5: Shifter Lineage Flowchart Implementation
+function initShifterLineageFlowchart() {
+  const container = document.getElementById('shifter-lineage-grid');
+  if (!container || typeof AOT_DATA === 'undefined') return;
+
+  container.innerHTML = AOT_DATA.shifterLineages.map(item => `
+    <div class="lineage-card reveal-on-scroll">
+      <h4 class="lineage-title"><i class="fa-solid fa-dna" style="color: var(--accent-gold); margin-right: 0.5rem;"></i> ${item.titan}</h4>
+      <div class="lineage-chain">
+        ${item.path.map((p, idx) => `
+          <span class="lineage-step">${p}</span>
+          ${idx < item.path.length - 1 ? '<span class="lineage-arrow"><i class="fa-solid fa-arrow-right"></i></span>' : ''}
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
 }
 
 function renderTitanCardHtml(t) {
@@ -507,19 +734,23 @@ function renderHeightComparator() {
 }
 
 // --------------------------------------------------------------------------
-// CHARACTERS PAGE CONTROLLER
+// CHARACTERS PAGE CONTROLLER (+ FEATURE 6: QUOTE SOUNDBOARD)
 // --------------------------------------------------------------------------
 function initCharactersPage() {
   const container = document.getElementById('characters-grid');
   const filterBtns = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('characters-search');
 
-  if (!container || typeof AOT_DATA === 'undefined') return;
+  if (typeof AOT_DATA === 'undefined') return;
+
+  // Initialize Feature 6: Quote Soundboard
+  initQuotesSoundboard();
 
   let currentAllegiance = 'all';
   let searchQuery = '';
 
   function renderCharacters() {
+    if (!container) return;
     const filtered = AOT_DATA.characters.filter(c => {
       const matchesAllegiance = currentAllegiance === 'all' || c.allegiance.toLowerCase().includes(currentAllegiance.toLowerCase());
       const matchesSearch = !searchQuery ||
@@ -603,6 +834,37 @@ function initCharactersPage() {
   renderCharacters();
 }
 
+// Feature 6: Quote Soundboard Implementation
+function initQuotesSoundboard() {
+  const container = document.getElementById('quotes-soundboard-grid');
+  if (!container || typeof AOT_DATA === 'undefined') return;
+
+  container.innerHTML = AOT_DATA.quotesSoundboard.map(q => `
+    <div class="soundboard-card reveal-on-scroll" style="--card-theme: ${q.themeColor}">
+      <h4 class="soundboard-speaker">${q.speaker}</h4>
+      <div class="soundboard-japanese">${q.japanese}</div>
+      <div class="soundboard-quote-box">"${q.quote}"</div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><strong>Context:</strong> ${q.context}</p>
+      <button class="soundboard-play-btn" data-id="${q.id}">
+        <i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE
+      </button>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.soundboard-play-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      if (window.aotSound) {
+        window.aotSound.playQuoteAudio(id);
+      }
+      btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> PLAYING TONE...';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE';
+      }, 1000);
+    });
+  });
+}
+
 function bindCharacterCardEvents() {
   document.querySelectorAll('.character-dossier-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -643,10 +905,16 @@ function bindCharacterCardEvents() {
 }
 
 // --------------------------------------------------------------------------
-// WORLDBUILDING & LORE PAGE CONTROLLER
+// WORLDBUILDING & LORE PAGE CONTROLLER (+ FEATURE 3: DISCLOSURES & FEATURE 4: MAP)
 // --------------------------------------------------------------------------
 function initWorldPage() {
-  initHomeWallRadar();
+  initInteractiveWallRadar();
+
+  // Initialize Feature 3: Public Disclosure Mid-Episode Cards
+  initPublicDisclosureCards();
+
+  // Initialize Feature 4: Tactical Map Explorer
+  initTacticalMapExplorer();
 
   const odmContainer = document.getElementById('odm-components-grid');
   if (odmContainer && typeof AOT_DATA !== 'undefined') {
@@ -660,4 +928,102 @@ function initWorldPage() {
   }
 
   if (window.reobserveScrollElements) window.reobserveScrollElements();
+}
+
+// Feature 3: Public Disclosure Cards Implementation
+function initPublicDisclosureCards() {
+  const grid = document.getElementById('public-disclosure-grid');
+  if (!grid || typeof AOT_DATA === 'undefined') return;
+
+  grid.innerHTML = AOT_DATA.publicDisclosures.map(item => `
+    <div class="disclosure-card reveal-on-scroll" data-id="${item.id}">
+      <div class="disclosure-japanese">${item.japanese}</div>
+      <h4 class="disclosure-title">${item.title}</h4>
+      <p class="disclosure-summary">${item.summary}</p>
+      <div style="margin-top: 1rem; font-family: var(--font-tech); font-size: 0.8rem; color: var(--accent-gold);">
+        <i class="fa-solid fa-lock-open"></i> ${item.classification}
+      </div>
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('.disclosure-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      const item = AOT_DATA.publicDisclosures.find(d => d.id === id);
+      if (item) {
+        if (window.aotSound) window.aotSound.playPublicDisclosureEyecatcher();
+        window.aotModal.open(item.title, `
+          <div style="color: var(--text-secondary); line-height: 1.8;">
+            <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.8rem;">${item.japanese}</div>
+            <p style="font-size: 1.05rem; color: #fff; margin-bottom: 1.2rem;">${item.summary}</p>
+            <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
+              <strong style="color: var(--text-highlight); font-family: var(--font-tech); text-transform: uppercase;">Military Classification:</strong>
+              <p style="font-size: 0.95rem; margin-top: 0.3rem;">${item.classification} — Verified by Survey Corps Research Division.</p>
+            </div>
+          </div>
+        `);
+      }
+    });
+  });
+}
+
+// Feature 4: Tactical Map Explorer Implementation
+function initTacticalMapExplorer() {
+  const pinsBox = document.getElementById('tactical-pins-list');
+  const screenBox = document.getElementById('tactical-screen-content');
+
+  if (!pinsBox || !screenBox || typeof AOT_DATA === 'undefined') return;
+
+  const locs = AOT_DATA.tacticalMapLocations;
+
+  pinsBox.innerHTML = locs.map((loc, idx) => `
+    <button class="map-pin-btn ${idx === 0 ? 'active' : ''}" data-id="${loc.id}">
+      <div class="map-pin-name"><i class="fa-solid fa-location-crosshairs" style="color: var(--accent-red); margin-right: 0.4rem;"></i> ${loc.name}</div>
+      <div class="map-pin-coords">${loc.coords}</div>
+    </button>
+  `).join('');
+
+  function renderPinIntel(locId) {
+    const loc = locs.find(l => l.id === locId) || locs[0];
+    
+    pinsBox.querySelectorAll('.map-pin-btn').forEach(btn => {
+      if (btn.dataset.id === loc.id) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+
+    screenBox.innerHTML = `
+      <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1.2rem;">
+        <span style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">
+          <i class="fa-solid fa-satellite-dish"></i> SATELLITE TACTICAL INTEL
+        </span>
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.5rem; margin-top: 0.3rem;">${loc.name}</h3>
+        <p style="font-family: var(--font-tech); color: var(--accent-red); font-size: 0.9rem;">${loc.coords}</p>
+      </div>
+
+      <div style="margin-bottom: 1.2rem;">
+        <strong style="color: #fff; font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.3rem;">Strategic Significance:</strong>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${loc.importance}</p>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.5); padding: 1rem 1.2rem; border-radius: 4px; border-left: 3px solid var(--accent-red); margin-bottom: 1.2rem;">
+        <strong style="color: #ff4d6d; font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.2rem;">Casualties & Sacrifices:</strong>
+        <p style="color: var(--text-primary); font-size: 0.9rem;">${loc.casualties}</p>
+      </div>
+
+      <div>
+        <strong style="color: var(--accent-gold); font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.2rem;">Pivotal Military Engagement:</strong>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">${loc.keyEvent}</p>
+      </div>
+    `;
+
+    if (window.aotSound) window.aotSound.playBladeSlice();
+  }
+
+  pinsBox.querySelectorAll('.map-pin-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      renderPinIntel(btn.dataset.id);
+    });
+  });
+
+  renderPinIntel(locs[0].id);
 }

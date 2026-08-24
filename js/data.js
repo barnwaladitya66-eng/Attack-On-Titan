@@ -1,4 +1,4 @@
-// Attack on Titan Compendium - Complete Structured Knowledge Base
+// Attack on Titan Compendium - Complete Structured Knowledge Base & Interactive Systems
 const AOT_DATA = {
   stats: {
     wallsCount: 3,
@@ -283,7 +283,6 @@ const AOT_DATA = {
       iconColor: "#e63946",
       badge: "Architect of War"
     },
-    // Pure & Abnormal Titans
     {
       id: "smiling-titan",
       category: "pure",
@@ -600,35 +599,41 @@ const AOT_DATA = {
       {
         id: "wall-maria",
         name: "Wall Maria",
-        radius: "480 km",
+        radius: "480 km (Circumference ~3,000 km)",
         height: "50 meters",
-        districts: ["Shiganshina District (South)", "Quinta District (West)", "Holst District (North)", "Dormer District (East)"],
-        population: "Working class, farmers, pastoral communities",
-        status: "Breached in 845 by Colossal & Armored Titans; Liberated in 850; Unhardened in 854",
-        description: "The outermost perimeter protecting human civilization. It enclosed vast fertile lands, agricultural settlements, and outer gate bait-districts designed to lure Titans toward fixed artillery bastions.",
-        color: "#e63946"
+        districts: ["Shiganshina (South Outskirt)", "Quinta (West Gate)", "Holst (North Gate)", "Dormer (East Gate)"],
+        population: "Working-class agrarians, farming villages, livestock settlements",
+        status: "Breached in 845 by Colossal & Armored Titans; Liberated in 850; Wall Titans unhardened in 854",
+        description: "The outermost ring spanning vast fertile valleys. King Karl Fritz established bait districts at the cardinal points to attract roaming Pure Titans to fixed cannon bastions.",
+        color: "#e63946",
+        garrisonForce: "4,200 Soldiers (Prior to 845)",
+        titanDensity: "High (External Roaming Swarms)"
       },
       {
         id: "wall-rose",
         name: "Wall Rose",
         radius: "380 km (100 km inward from Maria)",
         height: "50 meters",
-        districts: ["Trost District (South)", "Karanes District (East)", "Nedlay District (North)", "Utopia District (West)"],
-        population: "Tradesmen, middle-tier merchants, military garrisons, displaced refugees",
-        status: "Breached in 850 at Trost (Sealed by Eren Yeager); Unhardened in 854",
-        description: "The middle ring of defense. When Wall Maria fell, Wall Rose absorbed hundreds of thousands of refugees, causing severe food shortages until the failed reclamation campaign.",
-        color: "#f77f00"
+        districts: ["Trost (South Barrier)", "Karanes (East Hub)", "Nedlay (North Stronghold)", "Utopia (West Valley)"],
+        population: "Displaced refugees, tradesmen, manufacturing guilds, mid-tier military garrisons",
+        status: "Breached in 850 by Colossal Titan; Sealed by Eren Yeager with a massive boulder; Unhardened in 854",
+        description: "The middle ring of humanity's sanctuary. When Maria collapsed, Rose absorbed 250,000 starving refugees, triggering famine and severe internal unrest until the failed government reclamation campaign.",
+        color: "#f77f00",
+        garrisonForce: "7,800 Soldiers & Heavy Cannons",
+        titanDensity: "Zero Internal (Defended perimeter)"
       },
       {
         id: "wall-sina",
         name: "Wall Sina",
         radius: "250 km (130 km inward from Rose)",
         height: "50 meters",
-        districts: ["Stohess District (East)", "Mitras (Royal Capital)", "Hermiha District (South)", "Yarckel District (West)", "Underground City"],
-        population: "The King, elite nobility, wealthy merchants, high military brass, Church of the Walls",
-        status: "Stohess damaged during Female Titan battle; Entire wall unhardened during Rumbling",
-        description: "The innermost sanctum. Highly protected, affluent, and sheltered from the horrors of Titan incursions. Contains the lavish Royal Capital of Mitras and the grim Underground District.",
-        color: "#2a9d8f"
+        districts: ["Mitras (Royal Capital & Throne)", "Stohess (East Hub & Crystal Prison)", "Hermiha (South Citadel)", "Yarckel (West Gate)", "Underground Slums"],
+        population: "The King, wealthy nobility, high-ranking military brass, merchants, Church of the Walls",
+        status: "Stohess damaged during Female Titan battle; Royal government overthrown in 850; Unhardened in 854",
+        description: "The opulent, highly fortified center. Sheltered entirely from the terror of Titan attacks. Houses the lavish Palace of Mitras and the crime-ridden subterranean Underground District.",
+        color: "#2a9d8f",
+        garrisonForce: "12,000 Troops (Military Police & Garrison)",
+        titanDensity: "Zero (Heavily Protected Sanctuary)"
       }
     ],
 
@@ -677,7 +682,7 @@ const AOT_DATA = {
       components: [
         {
           part: "Gas Propulsion Cylinders",
-          desc: "Compressed gas canisters mounted along hips providing high-velocity multidirectional thrust and mid-air maneuvering."
+          desc: "Compressed gas canisters fueled by refined Iceburst Stone mounted along hips providing high-velocity multidirectional thrust."
         },
         {
           part: "Grappling Hook Anchors & Wire Drums",
@@ -702,5 +707,290 @@ const AOT_DATA = {
         lethality: "Severing this specific tissue volume severs the central human nervous hub, immediately killing the Titan before cell regeneration can trigger."
       }
     }
+  },
+
+  // ------------------------------------------------------------------------
+  // FEATURE 1: INTERACTIVE "PATHS" (道) NETWORK DATA
+  // ------------------------------------------------------------------------
+  pathsTree: {
+    center: {
+      id: "founder-ymir",
+      name: "Founder Ymir Fritz (The Trunk)",
+      desc: "The nexus where all coordinate branches of light converge. A slave girl who spent 2,000 years sculpting Titans out of sand in timeless eternity.",
+      memories: "2,000 years of bondage under the Fritz royal decree until Eren Yeager gave her the choice to be free."
+    },
+    nodes: [
+      { id: "attack-branch", name: "Attack Titan", branch: "Freedom", inheritor: "Eren Yeager", power: "Future Memory Streams", memorySnippet: "Perceiving memories of the future to orchestrate the liberation of Eldia." },
+      { id: "founder-branch", name: "Founding Titan", branch: "The Coordinate", inheritor: "Karl / Frieda / Eren", power: "Universal Eldian Command", memorySnippet: "Memory alteration and biological rewriting of all Subjects of Ymir." },
+      { id: "colossal-branch", name: "Colossal Titan", branch: "Destruction", inheritor: "Bertholdt / Armin", power: "Nuclear Thermal Detonation", memorySnippet: "Sacrificing muscle tissue to generate devastating thermal screen explosions." },
+      { id: "armored-branch", name: "Armored Titan", branch: "Fortress", inheritor: "Reiner Braun", power: "Hardened Bone Plating", memorySnippet: "Carrying the torment and trauma of Marley's child warrior program." },
+      { id: "female-branch", name: "Female Titan", branch: "Adaptation", inheritor: "Annie Leonhart", power: "Selective Hardening & Roar", memorySnippet: "Versatile martial combat and sonic Titan aggregation roars." },
+      { id: "beast-branch", name: "Beast Titan", branch: "Command", inheritor: "Zeke Yeager", power: "Spinal Fluid Roar & Artillery", memorySnippet: "Royal blood converting injected Eldians into subservient nocturnal Titans." },
+      { id: "jaw-branch", name: "Jaw Titan", branch: "Agility", inheritor: "Porco / Falco", power: "Armor-Crushing Jaws & Flight", memorySnippet: "Manifesting avian wings via Zeke's Beast spinal fluid consumption." },
+      { id: "cart-branch", name: "Cart Titan", branch: "Endurance", inheritor: "Pieck Finger", power: "Months-Long Shift Stamina", memorySnippet: "Mobile artillery mount support and rapid consecutive transformations." },
+      { id: "warhammer-branch", name: "War Hammer Titan", branch: "Creation", inheritor: "Lara Tybur / Eren", power: "Subterranean Structural Hardening", memorySnippet: "Manipulating ground spikes and weaponry via remote crystal umbilical tether." }
+    ]
+  },
+
+  // ------------------------------------------------------------------------
+  // FEATURE 2: BATTLE MATCHUP SIMULATOR DATA
+  // ------------------------------------------------------------------------
+  battleMatrix: [
+    {
+      id: "levi-vs-beast",
+      fighterA: "Levi Ackerman",
+      fighterB: "Beast Titan (Zeke)",
+      title: "Humanity's Strongest vs. Marley's War Chief",
+      location: "Shiganshina District (850) & Giant Forest (854)",
+      winRateA: 95,
+      winRateB: 5,
+      summary: "Levi utilizes smoke screens, blinding speed, and 3D rotational blade slices to slice the Beast Titan's optic nerves, tendons, and nape before Zeke can react.",
+      tacticalFactor: "Ackerman awakened reaction speed nullifies Zeke's long-range rock artillery at close range.",
+      canonOutcome: "Levi single-handedly shredded the Beast Titan twice, extracting Zeke from the nape in seconds."
+    },
+    {
+      id: "eren-vs-reiner",
+      fighterA: "Attack Titan (Eren)",
+      fighterB: "Armored Titan (Reiner)",
+      title: "Brawler of Freedom vs. The Shield of Marley",
+      location: "Wall Rose, Shiganshina, Liberio, & Final War",
+      winRateA: 75,
+      winRateB: 25,
+      summary: "While Reiner has superior armor, Eren combines martial grappling (learned from Annie) and diamond hardening on his fists to crack and shatter Reiner's armor plates.",
+      tacticalFactor: "Thunder Spears and focused knuckle hardening render Reiner's passive bone armor obsolete.",
+      canonOutcome: "Eren repeatedly defeated Reiner in hand-to-hand combat across all major battles."
+    },
+    {
+      id: "armin-vs-marley-fleet",
+      fighterA: "Colossal Titan (Armin)",
+      fighterB: "Marley Naval Fleet (Liberio)",
+      title: "Tactical Nuclear Transformation vs. Imperial Navy",
+      location: "Liberio Port (854)",
+      winRateA: 100,
+      winRateB: 0,
+      summary: "Armin triggers his transformation at point-blank range over the harbor, releasing a catastrophic kinetic fireball that disintegrates dozens of warships instantly.",
+      tacticalFactor: "Colossal nuclear transformation shockwave generates impossible thermal kinetic energy.",
+      canonOutcome: "Entire Marleyan imperial fleet wiped out in a single second."
+    },
+    {
+      id: "eren-vs-warhammer",
+      fighterA: "Attack Titan (Eren)",
+      fighterB: "War Hammer Titan (Lara Tybur)",
+      title: "Eren Yeager vs. Tybur Subterranean Cocoon",
+      location: "Liberio Internment Plaza (854)",
+      winRateA: 80,
+      winRateB: 20,
+      summary: "The War Hammer dominates initial clash with pikes and hammers, until Eren deduces the pilot is not in the nape, using the Jaw Titan's hardened jaws as a nutcracker.",
+      tacticalFactor: "Remote cable vulnerability: severing the fleshy umbilical tether paralyzes the War Hammer.",
+      canonOutcome: "Eren severed the cable and crushed Lara's crystal cocoon using Porco's Jaw Titan, devouring her."
+    }
+  ],
+
+  // ------------------------------------------------------------------------
+  // FEATURE 3: "INFORMATION AVAILABLE FOR PUBLIC DISCLOSURE" MID-EPISODE CARDS
+  // ------------------------------------------------------------------------
+  publicDisclosures: [
+    {
+      id: "iceburst-stone",
+      title: "Iceburst Stone & Compressed Gas",
+      japanese: "現在公開可能な情報 • 氷爆石",
+      category: "Resource Technology",
+      summary: "A unique volatile crystal formed deep within the volcanic caves of Paradis Island. When vaporized, it releases vast volumes of compressed gas utilized to fuel the high-pressure propulsion jets of ODM gear.",
+      classification: "Classified Military Resource"
+    },
+    {
+      id: "ultra-hard-steel",
+      title: "Ultra-Hard Steel Blades",
+      japanese: "現在公開可能な情報 • 超硬質ブレード",
+      category: "Weapon Metallurgy",
+      summary: "Forged in blast furnaces using rare Paradis iron and organic additives. The blades combine high elasticity and extreme diamond-dense hardness, designed specifically to slice Titan flesh without snapping under high tension.",
+      classification: "Standard Issue Scout Weaponry"
+    },
+    {
+      id: "curse-of-ymir",
+      title: "The Curse of Ymir (13-Year Lifespan)",
+      japanese: "現在公開可能な情報 • ユミルの呪い",
+      category: "Biological Law",
+      summary: "Because Founder Ymir died 13 years after awakening her Titan power, no subsequent inheritor of the Nine Titans may live past 13 years. In their final years, the inheritor's body rapidly weakens until death transfers the power to a newborn Eldian.",
+      classification: "Biological Constraint of the Paths"
+    },
+    {
+      id: "spinal-fluid-gas",
+      title: "Zeke's Spinal Fluid Weaponization",
+      japanese: "現在公開可能な情報 • 脊髄液ガス",
+      category: "Chemical Superweapon",
+      summary: "Zeke Yeager's royal Beast Titan spinal fluid was aerosolized into gas or mixed into military wine. Eldians who ingest it experience a temporary paralysis, followed by instant transformation into Titans upon Zeke's vocal roar.",
+      classification: "Marley High Command Classified"
+    },
+    {
+      id: "thunder-spears",
+      title: "Thunder Spears (Anti-Titan Rockets)",
+      japanese: "現在公開可能な情報 • 雷槍",
+      category: "Ordnance Engineering",
+      summary: "Invented by Hange Zoë and Scout engineers to counter the Armored Titan. Operates as a pole-mounted rocket carrying a shaped explosive charge that is driven into armor and detonated via wire cord.",
+      classification: "Anti-Armor Special Munition"
+    },
+    {
+      id: "wall-titan-hardening",
+      title: "Wall Titan Encapsulation & Sunlight",
+      japanese: "現在公開可能な情報 • 壁の巨人と日光",
+      category: "Wall Architecture",
+      summary: "The Three Walls are formed of millions of 50-meter Colossal Titans linked by hardened crystal skins. Without sunlight, these dormant Titans remain paralyzed, but will instantly reactivate if exposed to solar rays.",
+      classification: "Secret of the Church of the Walls"
+    }
+  ],
+
+  // ------------------------------------------------------------------------
+  // FEATURE 4: TACTICAL MAP EXPLORER LOCATIONS
+  // ------------------------------------------------------------------------
+  tacticalMapLocations: [
+    {
+      id: "shiganshina",
+      name: "Shiganshina District (Wall Maria South)",
+      coords: "Grid South-01 • Paradis Outer Gate",
+      importance: "Birthplace of Eren, Mikasa, & Armin. Site of the original 845 Breach and the climactic Return to Shiganshina in 850.",
+      casualties: "Over 250,000 indirect civilian and military losses in 845.",
+      keyEvent: "Erwin Smith's suicide cavalry charge against the Beast Titan and discovery of Grisha's basement truth."
+    },
+    {
+      id: "giant-forest",
+      name: "The Forest of Giant Trees",
+      coords: "Paradis Interior Territory • Sector 04",
+      importance: "Ancient forest featuring 80-meter trees, ideal for high-speed ODM 3D mobility maneuvers.",
+      casualties: "Special Operations Squad (Petra, Oluo, Eld, Gunther) wiped out by the Female Titan.",
+      keyEvent: "Commander Erwin's high-tension wire trap ambush against Annie Leonhart."
+    },
+    {
+      id: "utgard-castle",
+      name: "Utgard Castle Ruins",
+      coords: "Wall Rose Perimeter • Sector 07",
+      importance: "Ancient abandoned fortress where 104th Scout trainees were surrounded by nocturnal Titans commanded by the Beast Titan.",
+      casualties: "Senior Scouts Gelgar and Nanaba killed.",
+      keyEvent: "Ymir reveals her Jaw Titan form to defend Krista Lenz (Historia Reiss)."
+    },
+    {
+      id: "reiss-cavern",
+      name: "Reiss Underground Crystal Cavern",
+      coords: "Beneath Chapel near Wall Rose • Sector 03",
+      importance: "Sacred luminous subterranean cavern where the Reiss royal family passed down the Founding Titan across generations.",
+      casualties: "Entire Reiss royal family (except Rod and Historia) slaughtered by Grisha Yeager.",
+      keyEvent: "Historia defies her father, shattering the Titan serum syringe and freeing Eren."
+    },
+    {
+      id: "liberio",
+      name: "Liberio Internment Zone (Marley)",
+      coords: "Mainland Marley • Eldian Ghetto Sector",
+      importance: "Walled ghetto where Eldians in Marley are imprisoned. Site of Willy Tybur's declaration of war festival.",
+      casualties: "Devastation of Marley military high command, destruction of naval fleet, loss of Sasha Braus.",
+      keyEvent: "Eren's surprise Attack Titan ambush from beneath the stage and consumption of the War Hammer Titan."
+    },
+    {
+      id: "fort-salta",
+      name: "Fort Salta (The Final Clifftop)",
+      coords: "Southern Marley Mountains • Final Line",
+      importance: "The last remaining military stronghold of humanity where refugee airships and surviving Marleyan/Eldian soldiers witnessed the Rumbling.",
+      casualties: "80% of global humanity eradicated before the march stopped.",
+      keyEvent: "The Battle of Heaven and Earth: Mikasa Ackerman enters the Colossal Titan's mouth and decapitates Eren."
+    }
+  ],
+
+  // ------------------------------------------------------------------------
+  // FEATURE 5: SHIFTER LINEAGE FLOWCHART
+  // ------------------------------------------------------------------------
+  shifterLineages: [
+    { titan: "Attack Titan", path: ["Eren Kruger ('The Owl')", "Grisha Yeager", "Eren Yeager"] },
+    { titan: "Founding Titan", path: ["Founder Ymir", "King Karl Fritz", "Uri Reiss", "Frieda Reiss", "Grisha Yeager", "Eren Yeager"] },
+    { titan: "Colossal Titan", path: ["Ancient Inheritors", "Bertholdt Hoover", "Armin Arlert"] },
+    { titan: "Armored Titan", path: ["Ancient Inheritors", "Reiner Braun"] },
+    { titan: "Female Titan", path: ["Ancient Inheritors", "Annie Leonhart"] },
+    { titan: "Beast Titan", path: ["Tom Ksaver (Bighorn)", "Zeke Yeager (Ape)"] },
+    { titan: "Jaw Titan", path: ["Marcel Galliard", "Ymir", "Porco Galliard", "Falco Grice (Winged)"] },
+    { titan: "Cart Titan", path: ["Ancient Inheritors", "Pieck Finger"] },
+    { titan: "War Hammer Titan", path: ["Tybur Family Ancestors", "Lara Tybur", "Eren Yeager"] }
+  ],
+
+  // ------------------------------------------------------------------------
+  // FEATURE 6: "VOICES OF HUMANITY" ICONIC QUOTE SOUNDBOARD
+  // ------------------------------------------------------------------------
+  quotesSoundboard: [
+    {
+      id: "erwin-rage",
+      speaker: "Commander Erwin Smith",
+      japanese: "進撃せよ！",
+      quote: "My soldiers, do not buckle or yield when facing the cruelty of this world! My soldiers, rage! My soldiers, scream! My soldiers, fight!",
+      context: "The legendary suicide cavalry charge against the Beast Titan's bombardment in Shiganshina.",
+      themeColor: "#1d3557"
+    },
+    {
+      id: "eren-tatakae",
+      speaker: "Eren Yeager",
+      japanese: "戦え！戦え！",
+      quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae! Tatakae!",
+      context: "Eren's sacred core philosophy of unrelenting forward momentum for Eldian freedom.",
+      themeColor: "#e63946"
+    },
+    {
+      id: "levi-lunatic",
+      speaker: "Captain Levi Ackerman",
+      japanese: "心臓を捧げよ",
+      quote: "I'm fine playing the role of the lunatic who kills people like that. I've got to ensure the choices I make leave no regrets.",
+      context: "Levi's pragmatic resolve facing corrupt interior military police and Titans alike.",
+      themeColor: "#2a9d8f"
+    },
+    {
+      id: "mikasa-cruel",
+      speaker: "Mikasa Ackerman",
+      japanese: "世界は残酷だ",
+      quote: "This world is cruel, but it's also very beautiful. Even if the enemy is overwhelmingly stronger, I will fight.",
+      context: "Mikasa's awakening during the defense of Trost District.",
+      themeColor: "#d90429"
+    },
+    {
+      id: "armin-sacrifice",
+      speaker: "Armin Arlert",
+      japanese: "何かを捨てることが",
+      quote: "Someone who cannot sacrifice anything can never change anything. To defeat a monster, you must be willing to abandon your humanity.",
+      context: "Armin's tactical deduction justifying extreme military maneuvers to secure victory.",
+      themeColor: "#f77f00"
+    },
+    {
+      id: "reiner-warrior",
+      speaker: "Reiner Braun",
+      japanese: "戦士として",
+      quote: "I don't know what's right anymore... But the only choice for me now is to face the consequences of my actions and fulfill my duty as a warrior!",
+      context: "Reiner's psychological breaking point atop Wall Rose revealing his Armored Titan identity.",
+      themeColor: "#f15bb5"
+    }
+  ],
+
+  // ------------------------------------------------------------------------
+  // FEATURE 7: "THE RUMBLING" GLOBAL IMPACT SIMULATOR
+  // ------------------------------------------------------------------------
+  rumblingSim: {
+    totalWallTitans: "Millions of 50m Colossals",
+    globalCasualtiesPct: 80,
+    marchingSpeedKmH: 50,
+    phases: [
+      {
+        hour: "00:00 - The Awakening",
+        title: "All Walls Unhardened",
+        desc: "Eren connects with Founder Ymir in the Paths. The hardened skins of Wall Maria, Rose, and Sina crumble simultaneously, releasing millions of dormant 50-meter Colossals."
+      },
+      {
+        hour: "12:00 - Coastal Landfall",
+        title: "Steam & Continental Advance",
+        desc: "Wall Titans march through the oceans, boiling coastal waters and incinerating naval defense fleets through intense radiant steam clouds."
+      },
+      {
+        hour: "48:00 - Mainland Obliteration",
+        title: "Global Flattening",
+        desc: "Titans trample cities, forests, and mountain ranges in synchronized columns, leaving behind barren flattened earth and thermal ash."
+      },
+      {
+        hour: "96:00 - Fort Salta",
+        title: "The Battle of Heaven and Earth",
+        desc: "Surviving humanity and refugee airships make a final stand on the clifftops of Fort Salta before the alliance slays Eren and terminates Titan power forever."
+      }
+    ]
   }
 };
