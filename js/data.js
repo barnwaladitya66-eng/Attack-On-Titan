@@ -1,4 +1,4 @@
-// Attack on Titan Compendium - Complete Structured Knowledge Base & Interactive Systems
+// Attack on Titan Compendium - Complete Structured Knowledge Base
 const AOT_DATA = {
   stats: {
     wallsCount: 3,
@@ -20,7 +20,8 @@ const AOT_DATA = {
       impact: "Birth of the Nine Titans, absolute Eldian imperial rule, and centuries of global subjugation.",
       keyFigures: ["Ymir Fritz", "King Fritz (1st)", "Maria", "Rose", "Sheena"],
       badge: "Origin Era",
-      quote: "To you, 2,000 years from now..."
+      quote: "To you, 2,000 years from now...",
+      quoteJapanese: "「二千年後の君へ…」"
     },
     {
       id: "great-titan-war",
@@ -33,7 +34,8 @@ const AOT_DATA = {
       impact: "Creation of the Three Walls, isolation of Paradis, and Marley's weaponization of the remaining seven Titan powers.",
       keyFigures: ["King Karl Fritz (145th King)", "Tybur Family Ancestor", "Wall Titans"],
       badge: "Cataclysm",
-      quote: "If Eldia is to perish, I will accept it without resistance."
+      quote: "If Eldia is to perish, I will accept it without resistance.",
+      quoteJapanese: "「エルディアが滅びるというのなら、それを受け入れよう。」"
     },
     {
       id: "fall-of-shiganshina",
@@ -46,7 +48,8 @@ const AOT_DATA = {
       impact: "Loss of Wall Maria, 250,000 Eldian casualties in the reclamation attempt, and Eren's sacred vow to exterminate every last Titan.",
       keyFigures: ["Eren Yeager", "Mikasa Ackerman", "Armin Arlert", "Bertholdt Hoover", "Reiner Braun", "Grisha Yeager", "Carla Yeager"],
       badge: "The Breach",
-      quote: "On that day, mankind received a grim reminder. We lived in fear of the Titans and were disgraced to live in these cages we called walls."
+      quote: "On that day, mankind received a grim reminder. We lived in fear of the Titans and were disgraced to live in these cages we called walls.",
+      quoteJapanese: "「その日 人類は思い出した ヤツらに支配されていた恐怖を…鳥籠の中に囚われていた屈辱を…」"
     },
     {
       id: "trost-and-female-titan",
@@ -59,7 +62,8 @@ const AOT_DATA = {
       impact: "Discovery of Titan Shifters within the military ranks, establishment of Special Operations Squad (Levi), and revelation of Titans inside the walls.",
       keyFigures: ["Eren Yeager", "Levi Ackerman", "Annie Leonhart", "Erwin Smith", "Dot Pyxis", "Hange Zoë"],
       badge: "First Victory",
-      quote: "If you don't fight, you can't win. Fight! Fight!"
+      quote: "If you don't fight, you can't win. Fight! Fight!",
+      quoteJapanese: "「戦わなければ勝てない。戦え！戦え！」"
     },
     {
       id: "uprising-and-shiganshina",
@@ -72,7 +76,8 @@ const AOT_DATA = {
       impact: "Liberation of Wall Maria, extermination of almost the entire Survey Corps (9 survivors), Armin gains Colossal Titan, and the reality of the global conflict is revealed.",
       keyFigures: ["Erwin Smith", "Levi Ackerman", "Historia Reiss", "Kenny Ackerman", "Zeke Yeager", "Armin Arlert", "Eren Yeager"],
       badge: "The Truth",
-      quote: "My soldiers, rage! My soldiers, scream! My soldiers, fight!"
+      quote: "My soldiers, rage! My soldiers, scream! My soldiers, fight!",
+      quoteJapanese: "「我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！」"
     },
     {
       id: "marley-and-war-for-paradis",
@@ -85,7 +90,8 @@ const AOT_DATA = {
       impact: "Paradis seizes the War Hammer Titan, death of Sasha Braus, military leadership paralyzed by spinal fluid wine, and Eren and Zeke establishing physical contact to enter the Paths.",
       keyFigures: ["Eren Yeager", "Reiner Braun", "Zeke Yeager", "Lara Tybur", "Pieck Finger", "Floch Forster", "Sasha Braus"],
       badge: "Global War",
-      quote: "I will keep moving forward... until all my enemies are destroyed."
+      quote: "I will keep moving forward... until all my enemies are destroyed.",
+      quoteJapanese: "「オレは進み続ける…敵を駆逐するまで。」"
     },
     {
       id: "the-rumbling",
@@ -98,7 +104,8 @@ const AOT_DATA = {
       impact: "80% of global humanity eradicated, eradication of Titan power from the world, Paradis transitions into a militarized nation, and Eren's friends are granted long lives.",
       keyFigures: ["Eren Yeager", "Mikasa Ackerman", "Armin Arlert", "Levi Ackerman", "Reiner Braun", "Founder Ymir"],
       badge: "The Finale",
-      quote: "To you, 2,000 years... or... 20,000 years from now."
+      quote: "To you, 2,000 years... or... 20,000 years from now.",
+      quoteJapanese: "「二千年…若しくは…二万年後の君へ…」"
     }
   ],
 
@@ -371,7 +378,9 @@ const AOT_DATA = {
       status: "Deceased (Year 854)",
       titansHeld: ["Attack Titan", "Founding Titan", "War Hammer Titan"],
       combatStats: { combat: 98, intellect: 92, agility: 90, ruthlessness: 99 },
-      quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae!",
+      quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae! Tatakae!",
+      quoteJapanese: "「勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！」",
+      quoteRomanji: "Kateba ikiru, makeba shinu. Tatakawanakereba katenai. Tatakae! Tatakae!",
       bio: "Born in Shiganshina District, Eren witnessed his mother eaten during the fall of Wall Maria. Fueled by boundless hatred for Titans, he enlisted in the 104th Training Corps. Upon learning the true nature of the world, his drive evolved from exterminating Titans to annihilating all threats against the island of Paradis through the Rumbling.",
       pivotalMoments: [
         "Sealing the Trost District breach with a giant boulder (850)",
@@ -391,7 +400,9 @@ const AOT_DATA = {
       status: "Alive",
       titansHeld: ["None (Ackerman Combat Power)"],
       combatStats: { combat: 99, intellect: 82, agility: 98, ruthlessness: 85 },
-      quote: "The world is cruel, but it's also very beautiful.",
+      quote: "This world is cruel, but it's also very beautiful. Even if the enemy is overwhelmingly stronger, I will fight.",
+      quoteJapanese: "「この世界は残酷だ…そして、とても美しい。」",
+      quoteRomanji: "Kono sekai wa zankoku da... Soshite, totemo utsukushii.",
       bio: "After Eren saved her from human traffickers in childhood, Mikasa dedicated her life to protecting him. As a member of the awakened Ackerman clan, she possesses instincts and physical prowess equivalent to a Titan in human form. Ranked 1st in the 104th Training Corps, she ultimately made the agonizing choice to kill Eren to save humanity.",
       pivotalMoments: [
         "Solo neutralization of multiple Titans during the defense of Trost",
@@ -410,7 +421,9 @@ const AOT_DATA = {
       status: "Alive",
       titansHeld: ["Colossal Titan"],
       combatStats: { combat: 78, intellect: 100, agility: 80, ruthlessness: 75 },
-      quote: "Someone who cannot sacrifice anything can never change anything.",
+      quote: "Someone who cannot sacrifice anything can never change anything. To defeat a monster, you must be willing to abandon your humanity.",
+      quoteJapanese: "「何かを捨てることができない人には、何も変えることはできない。」",
+      quoteRomanji: "Nanika o suteru koto ga dekinai hito ni wa, nanimo kaeru koto wa dekinai.",
       bio: "A frail but brilliant boy who showed Eren a book about the outside world. Armin's tactical deductions repeatedly saved humanity—deducing the identities of the Female, Armored, and Colossal Titans. After inheriting the Colossal Titan, he succeeded Hange as the 15th Commander of the Survey Corps.",
       pivotalMoments: [
         "Deducing Annie Leonhart's identity as the Female Titan",
@@ -430,7 +443,9 @@ const AOT_DATA = {
       status: "Alive (Severely Injured)",
       titansHeld: ["None (Ackerman Bloodline Awakening)"],
       combatStats: { combat: 100, intellect: 90, agility: 100, ruthlessness: 94 },
-      quote: "I want to put an end to that recurring nightmare, right now. I'm fine playing the role of the lunatic who kills people like that.",
+      quote: "I'm fine playing the role of the lunatic who kills people like that. I've got to ensure the choices I make leave no regrets.",
+      quoteJapanese: "「おい…ガキ共…心臓を捧げよ。悔いなき選択をしろ。」",
+      quoteRomanji: "Oi... gaki-domo... Shinzō o sasageyo. Kuinaki sentaku o shiro.",
       bio: "Born in the Underground District, Levi was trained in combat by his uncle Kenny Ackerman before being recruited by Erwin Smith. Revered as humanity's strongest soldier, a single squad under his command is said to equal an entire brigade. Levi neutralized the Beast Titan multiple times and fulfilled his oath to Erwin.",
       pivotalMoments: [
         "Annihilating the Female Titan's muscle structure in seconds",
@@ -450,6 +465,8 @@ const AOT_DATA = {
       titansHeld: ["None"],
       combatStats: { combat: 90, intellect: 99, agility: 86, ruthlessness: 96 },
       quote: "My soldiers, do not buckle or yield when facing the cruelty of this world! My soldiers, rage! My soldiers, scream! My soldiers, fight!",
+      quoteJapanese: "「我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！進撃せよ！」",
+      quoteRomanji: "Waga heishi yo ikare! Waga heishi yo sakebe! Waga heishi yo tatakae! Shingeki seyo!",
       bio: "A visionary commander who revolutionized Scout tactics with the Long-Distance Scouting Formation. Driven by his father's theory that humanity's memories were manipulated, Erwin gambled his life and his troops' lives to uncover the truth of the world. He led the legendary suicidal charge into the Beast Titan's bombardment.",
       pivotalMoments: [
         "Orchestrating the trap to capture the Female Titan in the Titan Forest",
@@ -469,6 +486,8 @@ const AOT_DATA = {
       titansHeld: ["Armored Titan"],
       combatStats: { combat: 91, intellect: 83, agility: 82, ruthlessness: 84 },
       quote: "I don't know what's right anymore... But the only choice for me now is to face the consequences of my actions and fulfill my duty as a warrior!",
+      quoteJapanese: "「俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！」",
+      quoteRomanji: "Ore ga Yoroi no Kyojin de, koitsu ga Chōōgata Kyojin da! Senshi toshite saigo made sekinin o hatasu!",
       bio: "Sent to Paradis as a child warrior to breach the walls. Years of living among the Eldians as a 'soldier' fractured his psyche into dual identities: the loyal protector soldier and the guilt-ridden Marleyan warrior. Haunted by severe PTSD, he fought tenaciously to protect the younger generation.",
       pivotalMoments: [
         "Breaching Wall Maria's inner gate at Shiganshina in 845",
@@ -488,6 +507,8 @@ const AOT_DATA = {
       titansHeld: ["Beast Titan"],
       combatStats: { combat: 94, intellect: 98, agility: 75, ruthlessness: 95 },
       quote: "What a beautiful day it is. If only I had realized that earlier... Well, considering the life I've lived, asking for that much is greedy.",
+      quoteJapanese: "「なんて…いい天気じゃないか。もっと早く気づいていれば…」",
+      quoteRomanji: "Nante... ii tenki ja nai ka. Motto hayaku kizuite ireba...",
       bio: "Son of Grisha Yeager and Dina Fritz, bearing royal blood. Betraying his parents to save himself and his grandparents, he rose to become Marley's War Chief. Zeke secretly formulated the 'Euthanasia Plan' to painlessly sterilize the Eldian race, but was outmaneuvered by Eren in the Paths.",
       pivotalMoments: [
         "Transforming the entire village of Ragako into Titans with gas",
@@ -506,7 +527,9 @@ const AOT_DATA = {
       status: "Alive",
       titansHeld: ["None"],
       combatStats: { combat: 80, intellect: 88, agility: 85, ruthlessness: 80 },
-      quote: "I may be humanity's enemy, but I'm your friend, Eren.",
+      quote: "I may be humanity's enemy, but I'm your friend, Eren. I can't be a good girl, and I don't want to be a god either.",
+      quoteJapanese: "「私は人類の敵だけど、エレンの味方だよ。いい子にもなれないし、神様にもなりたくない。」",
+      quoteRomanji: "Watashi wa jinrui no teki dakedo, Eren no mikata da yo.",
       bio: "The illegitimate daughter of nobleman Rod Reiss. Originally hiding under the false identity 'Krista Lenz', she embraced her true identity under Ymir's influence. She rejected her father's demand to eat Eren, struck the final blow against Rod Reiss' 120-meter Titan, and ascended as Queen of the Walls.",
       pivotalMoments: [
         "Shattering the syringe and defying her father in the Crystal Caverns",
@@ -526,6 +549,8 @@ const AOT_DATA = {
       titansHeld: ["None"],
       combatStats: { combat: 90, intellect: 98, agility: 92, ruthlessness: 82 },
       quote: "Titans are really incredible! There is so much we don't know about them!",
+      quoteJapanese: "「やっぱり巨人って…本当に素晴らしいよ！」",
+      quoteRomanji: "Yappari Kyojin tte... hontō ni subarashii yo!",
       bio: "An eccentric genius driven by an obsessive curiosity regarding Titan biology. Hange invented the executioner artillery and Thunder Spears. Succeeded Erwin as 14th Commander and sacrificed their life in a blaze of glory holding off the Wall Titans so the flying boat could launch.",
       pivotalMoments: [
         "Breakthrough experiments on captured Titans Sawney and Bean",
@@ -545,6 +570,8 @@ const AOT_DATA = {
       titansHeld: ["Female Titan"],
       combatStats: { combat: 96, intellect: 90, agility: 95, ruthlessness: 86 },
       quote: "I just want the weak who do get swept along with the flow to be considered human too.",
+      quoteJapanese: "「私はただ、流されるような弱い人間でも、人間らしく生きたいだけ。」",
+      quoteRomanji: "Watashi wa tada, nagasareru yō na yowai ningen demo, ningenrashiku ikitai dake.",
       bio: "Raised by her adoptive father in Liberio to be a lethal martial artist. Annie infiltrated the Military Police inside Wall Sina. After being captured by the Scouts, she encased herself in hardened crystal for four years until the Rumbling unhardened all titan crystal.",
       pivotalMoments: [
         "Decimating Levi's Special Operations Squad in the Giant Forest",
@@ -564,6 +591,8 @@ const AOT_DATA = {
       titansHeld: ["None"],
       combatStats: { combat: 89, intellect: 94, agility: 90, ruthlessness: 79 },
       quote: "I know what my duty is! I won't let another one of my comrades die in vain!",
+      quoteJapanese: "「オレは何をすべきか分かってる！もう誰の骨も燃えかすにしたくない！」",
+      quoteRomanji: "Ore wa nani o subeki ka wakatteru! Mō dare no hone mo moekasu ni shitakunai!",
       bio: "Initially aiming for a comfortable life in the Military Police, Marco Bott's death inspired Jean to join the Survey Corps. He developed into an exceptional tactical field leader with an acute understanding of human vulnerability and battle conditions.",
       pivotalMoments: [
         "Leading the diversion against the Armored Titan in Shiganshina",
@@ -583,6 +612,8 @@ const AOT_DATA = {
       titansHeld: ["Cart Titan"],
       combatStats: { combat: 85, intellect: 97, agility: 91, ruthlessness: 80 },
       quote: "I don't trust Marley. But I trust the comrades who have fought alongside me.",
+      quoteJapanese: "「私はマーレを信じてない。でも、共に戦った仲間を信じてる。」",
+      quoteRomanji: "Watashi wa Māre o shinjitenai. Demo, tomo ni tatakatta nakama o shinjiteru.",
       bio: "Highly intelligent and observant, Pieck served as the tactical spine of the Marleyan Warrior unit. Her mastery of the Cart Titan allowed multiple rapid shifts and lethal coordination with Marley's heavy artillery units.",
       pivotalMoments: [
         "Rescuing Zeke and Reiner from Levi's blades in Shiganshina",

@@ -275,8 +275,12 @@ function initTimelinePage() {
           <p class="timeline-summary">${item.summary}</p>
           
           <div class="timeline-quote">
-            <i class="fa-solid fa-quote-left" style="color: var(--accent-gold); margin-right: 0.5rem;"></i>
-            ${item.quote}
+            <div style="font-family: var(--font-heading); font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.3rem;">
+              ${item.quoteJapanese || ''}
+            </div>
+            <div style="font-size: 0.88rem; color: #f1faee;">
+              "${item.quote}"
+            </div>
           </div>
 
           <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
@@ -720,8 +724,10 @@ function initCharactersPage() {
         <h3 class="character-name">${c.name}</h3>
         <div class="character-role">${c.role}</div>
         
-        <div class="character-quote">
-          "${c.quote}"
+        <div class="character-quote-box">
+          <div class="quote-japanese-text">${c.quoteJapanese || ''}</div>
+          <div class="quote-romanji-text"><em>${c.quoteRomanji || ''}</em></div>
+          <div class="quote-english-text">"${c.quote}"</div>
         </div>
 
         <div class="stat-bars-container">
@@ -792,8 +798,16 @@ function bindCharacterCardEvents() {
 
             <p style="font-size: 1.05rem; color: #fff; margin-bottom: 1.2rem;">${character.bio}</p>
 
-            <div style="background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--accent-gold); padding: 1rem; border-radius: 0 4px 4px 0; margin-bottom: 1.2rem; font-style: italic; color: #fff;">
-              "${character.quote}"
+            <div style="background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--accent-gold); padding: 1.2rem; border-radius: 0 6px 6px 0; margin-bottom: 1.2rem;">
+              <div style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.05rem; margin-bottom: 0.3rem;">
+                ${character.quoteJapanese || ''}
+              </div>
+              <div style="font-family: var(--font-tech); font-size: 0.85rem; color: #00f5d4; margin-bottom: 0.5rem;">
+                <em>${character.quoteRomanji || ''}</em>
+              </div>
+              <div style="font-style: italic; color: #fff; font-size: 0.95rem;">
+                "${character.quote}"
+              </div>
             </div>
 
             <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid var(--accent-red); margin-bottom: 1.2rem;">

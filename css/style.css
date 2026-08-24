@@ -616,6 +616,47 @@ body::before {
   position: relative;
 }
 
+.character-quote {
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  border-left: 2px solid var(--accent-gold);
+  padding-left: 0.75rem;
+}
+
+.character-quote-box {
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 4px 4px 0;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.quote-japanese-text {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.quote-romanji-text {
+  font-family: var(--font-tech);
+  font-size: 0.78rem;
+  color: #00f5d4;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+.quote-english-text {
+  font-style: italic;
+  color: #f1faee;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
 .section-tag {
   font-family: var(--font-tech);
   font-size: 0.9rem;
