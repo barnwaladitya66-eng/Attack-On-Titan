@@ -1,7 +1,6 @@
 // Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
-  initSoundControls();
   initScrollObserver();
   initPageControllers();
 });
@@ -32,32 +31,6 @@ function initScrollObserver() {
       observer.observe(el);
     });
   };
-}
-
-// Sound controls & SFX
-function initSoundControls() {
-  const soundBtn = document.getElementById('sound-toggle-btn');
-  if (soundBtn) {
-    soundBtn.addEventListener('click', () => {
-      const active = window.aotSound.toggleSound();
-      if (active) {
-        soundBtn.classList.add('active');
-        soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Sound: ON</span>';
-      } else {
-        soundBtn.classList.remove('active');
-        soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> <span>Sound: OFF</span>';
-      }
-    });
-  }
-
-  // Add click sound to interactive buttons
-  document.querySelectorAll('button, .btn, .nav-item a, .filter-btn, .wall-tab-btn, .map-pin-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (window.aotSound && !window.aotSound.isMuted) {
-        window.aotSound.playBladeSlice();
-      }
-    });
-  });
 }
 
 // Navigation & Mobile Menu
@@ -117,9 +90,6 @@ window.aotModal = {
     overlay.classList.add('active');
     if (window.aotParticles) {
       window.aotParticles.triggerLightning();
-    }
-    if (window.aotSound && !window.aotSound.isMuted) {
-      window.aotSound.playTitanLightning();
     }
   },
 
@@ -233,10 +203,6 @@ function initInteractiveWallRadar() {
         `);
       });
     });
-
-    if (window.aotSound && !window.aotSound.isMuted) {
-      window.aotSound.playBladeSlice();
-    }
   }
 
   rings.forEach(r => {
@@ -406,7 +372,6 @@ function initPathsVisualizer() {
       const id = card.dataset.id;
       const node = paths.nodes.find(n => n.id === id);
       if (node) {
-        if (window.aotSound) window.aotSound.playPathsPulse();
         window.aotModal.open(`Paths Stream: ${node.name}`, `
           <div style="color: var(--text-secondary); line-height: 1.8;">
             <p style="font-size: 1.15rem; color: #00f5d4; font-family: var(--font-tech); text-transform: uppercase;"><i class="fa-solid fa-dna"></i> Branch of ${node.branch}</p>
@@ -424,7 +389,6 @@ function initPathsVisualizer() {
 
   if (trunkBtn) {
     trunkBtn.addEventListener('click', () => {
-      if (window.aotSound) window.aotSound.playPathsPulse();
       window.aotModal.open("The Coordinate - Founder Ymir", `
         <div style="color: var(--text-secondary); line-height: 1.8;">
           <h3 style="color: #00f5d4; font-family: var(--font-heading); margin-bottom: 0.8rem;">The Sacred Nexus of All Eldian Souls</h3>
@@ -453,23 +417,6 @@ function initRumblingSimulator() {
       <p>${p.desc}</p>
     </div>
   `).join('');
-
-  const triggerRumblingBtn = document.getElementById('trigger-rumbling-audio-btn');
-  if (triggerRumblingBtn) {
-    triggerRumblingBtn.addEventListener('click', () => {
-      if (window.aotSound) {
-        window.aotSound.playRumblingMarch();
-        window.aotSound.playTitanLightning();
-      }
-      if (window.aotParticles) {
-        window.aotParticles.triggerLightning();
-      }
-      triggerRumblingBtn.innerHTML = '<i class="fa-solid fa-fire"></i> RUMBLING SIMULATING...';
-      setTimeout(() => {
-        triggerRumblingBtn.innerHTML = '<i class="fa-solid fa-volcano"></i> INITIATE RUMBLING MARCH SFX';
-      }, 3000);
-    });
-  }
 }
 
 // --------------------------------------------------------------------------
@@ -597,8 +544,6 @@ function initBattleMatrixSimulator() {
         <p style="color: var(--text-primary); font-size: 0.95rem; margin-top: 0.3rem;">${duel.canonOutcome}</p>
       </div>
     `;
-
-    if (window.aotSound) window.aotSound.playBattleClash();
   }
 
   selectorBox.querySelectorAll('.matrix-duel-btn').forEach(btn => {
@@ -734,7 +679,7 @@ function renderHeightComparator() {
 }
 
 // --------------------------------------------------------------------------
-// CHARACTERS PAGE CONTROLLER (+ FEATURE 6: QUOTE SOUNDBOARD)
+// CHARACTERS PAGE CONTROLLER
 // --------------------------------------------------------------------------
 function initCharactersPage() {
   const container = document.getElementById('characters-grid');
@@ -742,9 +687,6 @@ function initCharactersPage() {
   const searchInput = document.getElementById('characters-search');
 
   if (typeof AOT_DATA === 'undefined') return;
-
-  // Initialize Feature 6: Quote Soundboard
-  initQuotesSoundboard();
 
   let currentAllegiance = 'all';
   let searchQuery = '';
@@ -834,84 +776,6 @@ function initCharactersPage() {
   renderCharacters();
 }
 
-// Feature 6: Quote Soundboard Implementation with Anime Voice Actor Profiles & Audio Controls
-function initQuotesSoundboard() {
-  const container = document.getElementById('quotes-soundboard-grid');
-  if (!container || typeof AOT_DATA === 'undefined') return;
-
-  container.innerHTML = AOT_DATA.quotesSoundboard.map(q => `
-    <div class="soundboard-card reveal-on-scroll" style="--card-theme: ${q.themeColor}" id="soundcard-${q.id}">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
-        <h4 class="soundboard-speaker">${q.speaker}</h4>
-        <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); padding: 0.2rem 0.5rem; border-radius: 3px;">
-          <i class="fa-solid fa-microphone-lines"></i> ${q.cv}
-        </span>
-      </div>
-      <div class="soundboard-japanese" style="font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.3rem;">${q.japanese}</div>
-      <div style="font-family: var(--font-tech); font-size: 0.82rem; color: #00f5d4; margin-bottom: 0.8rem; letter-spacing: 0.5px;">
-        <em>${q.romanji || ''}</em>
-      </div>
-      <div class="soundboard-quote-box">"${q.quote}"</div>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><strong>Context:</strong> ${q.context}</p>
-      
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto;">
-        <button class="soundboard-play-btn" data-id="${q.id}" style="flex: 1 1 180px;">
-          <i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE
-        </button>
-        <label class="btn btn-secondary" style="padding: 0.6rem 0.8rem; font-size: 0.8rem; cursor: pointer;" title="Upload your own custom anime voice clip">
-          <i class="fa-solid fa-upload"></i> Custom MP3
-          <input type="file" accept="audio/*" class="custom-audio-input" data-id="${q.id}" style="display: none;">
-        </label>
-      </div>
-    </div>
-  `).join('');
-
-  // Handle Play Button Click
-  container.querySelectorAll('.soundboard-play-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      const quoteObj = AOT_DATA.quotesSoundboard.find(q => q.id === id);
-      if (!quoteObj) return;
-
-      const card = document.getElementById(`soundcard-${id}`);
-      if (card) card.style.borderColor = '#00f5d4';
-
-      btn.classList.add('playing');
-      btn.innerHTML = '<i class="fa-solid fa-volume-high fa-beat"></i> PLAYING VOICE...';
-
-      if (window.aotSound) {
-        window.aotSound.playAnimeVoice(quoteObj, () => {
-          btn.classList.remove('playing');
-          btn.innerHTML = '<i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE';
-          if (card) card.style.borderColor = '';
-        });
-      }
-    });
-  });
-
-  // Handle Custom Audio Upload
-  container.querySelectorAll('.custom-audio-input').forEach(input => {
-    input.addEventListener('change', (e) => {
-      const id = input.dataset.id;
-      const file = e.target.files[0];
-      if (file) {
-        const url = URL.createObjectURL(file);
-        const quoteObj = AOT_DATA.quotesSoundboard.find(q => q.id === id);
-        if (quoteObj) {
-          quoteObj.audioSrc = url;
-          const playBtn = container.querySelector(`.soundboard-play-btn[data-id="${id}"]`);
-          if (playBtn) {
-            playBtn.innerHTML = '<i class="fa-solid fa-check"></i> CUSTOM VOICE LOADED!';
-            setTimeout(() => {
-              playBtn.innerHTML = '<i class="fa-solid fa-play"></i> PLAY CUSTOM VOICE';
-            }, 2000);
-          }
-        }
-      }
-    });
-  });
-}
-
 function bindCharacterCardEvents() {
   document.querySelectorAll('.character-dossier-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -998,7 +862,6 @@ function initPublicDisclosureCards() {
       const id = card.dataset.id;
       const item = AOT_DATA.publicDisclosures.find(d => d.id === id);
       if (item) {
-        if (window.aotSound) window.aotSound.playPublicDisclosureEyecatcher();
         window.aotModal.open(item.title, `
           <div style="color: var(--text-secondary); line-height: 1.8;">
             <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.8rem;">${item.japanese}</div>
@@ -1062,8 +925,6 @@ function initTacticalMapExplorer() {
         <p style="color: var(--text-secondary); font-size: 0.95rem;">${loc.keyEvent}</p>
       </div>
     `;
-
-    if (window.aotSound) window.aotSound.playBladeSlice();
   }
 
   pinsBox.querySelectorAll('.map-pin-btn').forEach(btn => {
