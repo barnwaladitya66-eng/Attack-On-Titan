@@ -834,15 +834,18 @@ function initCharactersPage() {
   renderCharacters();
 }
 
-// Feature 6: Quote Soundboard Implementation
+// Feature 6: Quote Soundboard Implementation with Anime Voice Engine
 function initQuotesSoundboard() {
   const container = document.getElementById('quotes-soundboard-grid');
   if (!container || typeof AOT_DATA === 'undefined') return;
 
   container.innerHTML = AOT_DATA.quotesSoundboard.map(q => `
-    <div class="soundboard-card reveal-on-scroll" style="--card-theme: ${q.themeColor}">
+    <div class="soundboard-card reveal-on-scroll" style="--card-theme: ${q.themeColor}" id="soundcard-${q.id}">
       <h4 class="soundboard-speaker">${q.speaker}</h4>
-      <div class="soundboard-japanese">${q.japanese}</div>
+      <div class="soundboard-japanese" style="font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.3rem;">${q.japanese}</div>
+      <div style="font-family: var(--font-tech); font-size: 0.82rem; color: #00f5d4; margin-bottom: 0.8rem; letter-spacing: 0.5px;">
+        <i class="fa-solid fa-microphone"></i> <em>${q.romanji || ''}</em>
+      </div>
       <div class="soundboard-quote-box">"${q.quote}"</div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><strong>Context:</strong> ${q.context}</p>
       <button class="soundboard-play-btn" data-id="${q.id}">
@@ -854,13 +857,22 @@ function initQuotesSoundboard() {
   container.querySelectorAll('.soundboard-play-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
+      const quoteObj = AOT_DATA.quotesSoundboard.find(q => q.id === id);
+      if (!quoteObj) return;
+
+      const card = document.getElementById(`soundcard-${id}`);
+      if (card) card.style.borderColor = '#00f5d4';
+
+      btn.classList.add('playing');
+      btn.innerHTML = '<i class="fa-solid fa-volume-high fa-beat"></i> SPEAKING JAPANESE VOICE...';
+
       if (window.aotSound) {
-        window.aotSound.playQuoteAudio(id);
+        window.aotSound.playAnimeVoice(quoteObj, () => {
+          btn.classList.remove('playing');
+          btn.innerHTML = '<i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE';
+          if (card) card.style.borderColor = '';
+        });
       }
-      btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> PLAYING TONE...';
-      setTimeout(() => {
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> TRIGGER BATTLE VOICE';
-      }, 1000);
     });
   });
 }

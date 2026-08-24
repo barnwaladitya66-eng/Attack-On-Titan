@@ -7,6 +7,8 @@ class AOTSoundEngine {
     this.ambientOsc1 = null;
     this.ambientOsc2 = null;
     this.droneRunning = false;
+    this.japaneseVoice = null;
+    this.initSpeechVoices();
   }
 
   init() {
@@ -14,6 +16,20 @@ class AOTSoundEngine {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (AudioContext) {
       this.ctx = new AudioContext();
+    }
+  }
+
+  initSpeechVoices() {
+    if ('speechSynthesis' in window) {
+      const loadVoices = () => {
+        const voices = window.speechSynthesis.getVoices();
+        // Look for Japanese voices
+        this.japaneseVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP') || v.name.toLowerCase().includes('japanese')) || null;
+      };
+      loadVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+      }
     }
   }
 
@@ -45,14 +61,13 @@ class AOTSoundEngine {
       // Low ominous brass drone (D2 note ~ 73.4Hz)
       this.ambientOsc1 = this.ctx.createOscillator();
       this.ambientOsc1.type = 'sawtooth';
-      this.ambientOsc1.frequency.setValueAtTime(55, this.ctx.currentTime); // Low A
+      this.ambientOsc1.frequency.setValueAtTime(55, this.ctx.currentTime);
 
       // Sub-bass rumble
       this.ambientOsc2 = this.ctx.createOscillator();
       this.ambientOsc2.type = 'sine';
       this.ambientOsc2.frequency.setValueAtTime(36.7, this.ctx.currentTime);
 
-      // Low pass filter to give dark muffled rumble
       const filter = this.ctx.createBiquadFilter();
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(140, this.ctx.currentTime);
@@ -86,7 +101,10 @@ class AOTSoundEngine {
 
   // Blade unsheath metallic slash
   playBladeSlice() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();
@@ -110,7 +128,10 @@ class AOTSoundEngine {
 
   // Titan Transformation Lightning Crackle / Thunder
   playTitanLightning() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
       
@@ -158,10 +179,12 @@ class AOTSoundEngine {
 
   // Public Disclosure Mid-Episode Eyecatcher Chime
   playPublicDisclosureEyecatcher() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
-      // D minor dramatic bell sequence (D5, F5, A5, D6)
       const notes = [587.33, 698.46, 880.00, 1174.66];
       notes.forEach((freq, i) => {
         const osc = this.ctx.createOscillator();
@@ -169,7 +192,7 @@ class AOTSoundEngine {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(freq, now + i * 0.1);
 
-        gain.gain.setValueAtTime(0.15, now + i * 0.1);
+        gain.gain.setValueAtTime(0.18, now + i * 0.1);
         gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 1.2);
 
         osc.connect(gain);
@@ -183,7 +206,10 @@ class AOTSoundEngine {
 
   // Paths Cosmic Shimmer
   playPathsPulse() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();
@@ -192,7 +218,7 @@ class AOTSoundEngine {
       osc.frequency.setValueAtTime(520, now);
       osc.frequency.exponentialRampToValueAtTime(1400, now + 0.6);
 
-      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.setValueAtTime(0.15, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
 
       osc.connect(gain);
@@ -205,7 +231,10 @@ class AOTSoundEngine {
 
   // Heavy Battle Clash & Armor Spark
   playBattleClash() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
       const osc1 = this.ctx.createOscillator();
@@ -219,7 +248,7 @@ class AOTSoundEngine {
       osc2.frequency.setValueAtTime(880, now);
       osc2.frequency.exponentialRampToValueAtTime(180, now + 0.15);
 
-      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.setValueAtTime(0.25, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
 
       osc1.connect(gain);
@@ -235,7 +264,10 @@ class AOTSoundEngine {
 
   // Rumbling Deep Earthquake Sub-Bass
   playRumblingMarch() {
-    if (this.isMuted || !this.ctx) return;
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+
     try {
       const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();
@@ -249,7 +281,7 @@ class AOTSoundEngine {
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(90, now);
 
-      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.setValueAtTime(0.3, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
 
       osc.connect(filter);
@@ -261,28 +293,94 @@ class AOTSoundEngine {
     } catch (e) {}
   }
 
-  // Character Quote Battle Cry Tone
-  playQuoteAudio(speakerId) {
-    if (this.isMuted || !this.ctx) return;
+  // =========================================================================
+  // ANIME BATTLE VOICE ENGINE (Web Speech API + Battle Horn Resonance)
+  // =========================================================================
+  playAnimeVoice(quoteObj, onComplete) {
+    this.init();
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+
+    // 1. Play Epic Brass Battle Horn Fanfare in Background
     try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      if (this.ctx) {
+        const now = this.ctx.currentTime;
+        const horn = this.ctx.createOscillator();
+        const hornGain = this.ctx.createGain();
+        horn.type = 'sawtooth';
+        
+        const base = quoteObj.id.includes('erwin') ? 220 : (quoteObj.id.includes('levi') ? 261.63 : 196);
+        horn.frequency.setValueAtTime(base, now);
+        horn.frequency.exponentialRampToValueAtTime(base * 1.5, now + 0.35);
 
-      osc.type = 'triangle';
-      const baseFreq = speakerId.includes('erwin') ? 330 : (speakerId.includes('levi') ? 440 : 392);
-      osc.frequency.setValueAtTime(baseFreq, now);
-      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, now + 0.2);
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(600, now);
 
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+        hornGain.gain.setValueAtTime(0.18, now);
+        hornGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
 
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
+        horn.connect(filter);
+        filter.connect(hornGain);
+        hornGain.connect(this.ctx.destination);
 
-      osc.start(now);
-      osc.stop(now + 0.85);
+        horn.start(now);
+        horn.stop(now + 1.7);
+      }
     } catch (e) {}
+
+    // 2. Play Anime Japanese Vocal Speech Line via Web Speech API
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Stop any pending speech
+
+      const textToSpeak = quoteObj.speechText || quoteObj.japanese;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+      // Set Japanese locale
+      utterance.lang = 'ja-JP';
+
+      // Find best Japanese voice
+      const voices = window.speechSynthesis.getVoices();
+      const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP') || v.name.toLowerCase().includes('japanese'));
+      if (jaVoice) {
+        utterance.voice = jaVoice;
+      }
+
+      // Customize cadence per character
+      if (quoteObj.id.includes('erwin')) {
+        utterance.rate = 1.05; // Commander urgent pacing
+        utterance.pitch = 0.95; // Authoritative deep tone
+        utterance.volume = 1.0;
+      } else if (quoteObj.id.includes('levi')) {
+        utterance.rate = 0.95; // Calm, menacing
+        utterance.pitch = 0.85; // Low rasp
+        utterance.volume = 1.0;
+      } else if (quoteObj.id.includes('eren')) {
+        utterance.rate = 1.15; // Intense shouting
+        utterance.pitch = 1.05;
+        utterance.volume = 1.0;
+      } else if (quoteObj.id.includes('mikasa')) {
+        utterance.rate = 1.0;
+        utterance.pitch = 1.15;
+        utterance.volume = 1.0;
+      } else {
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+      }
+
+      utterance.onend = () => {
+        if (onComplete) onComplete();
+      };
+      utterance.onerror = () => {
+        if (onComplete) onComplete();
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } else {
+      if (onComplete) setTimeout(onComplete, 1200);
+    }
   }
 }
 

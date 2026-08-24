@@ -709,9 +709,7 @@ const AOT_DATA = {
     }
   },
 
-  // ------------------------------------------------------------------------
   // FEATURE 1: INTERACTIVE "PATHS" (道) NETWORK DATA
-  // ------------------------------------------------------------------------
   pathsTree: {
     center: {
       id: "founder-ymir",
@@ -732,9 +730,7 @@ const AOT_DATA = {
     ]
   },
 
-  // ------------------------------------------------------------------------
   // FEATURE 2: BATTLE MATCHUP SIMULATOR DATA
-  // ------------------------------------------------------------------------
   battleMatrix: [
     {
       id: "levi-vs-beast",
@@ -786,9 +782,7 @@ const AOT_DATA = {
     }
   ],
 
-  // ------------------------------------------------------------------------
   // FEATURE 3: "INFORMATION AVAILABLE FOR PUBLIC DISCLOSURE" MID-EPISODE CARDS
-  // ------------------------------------------------------------------------
   publicDisclosures: [
     {
       id: "iceburst-stone",
@@ -840,9 +834,7 @@ const AOT_DATA = {
     }
   ],
 
-  // ------------------------------------------------------------------------
   // FEATURE 4: TACTICAL MAP EXPLORER LOCATIONS
-  // ------------------------------------------------------------------------
   tacticalMapLocations: [
     {
       id: "shiganshina",
@@ -894,9 +886,7 @@ const AOT_DATA = {
     }
   ],
 
-  // ------------------------------------------------------------------------
   // FEATURE 5: SHIFTER LINEAGE FLOWCHART
-  // ------------------------------------------------------------------------
   shifterLineages: [
     { titan: "Attack Titan", path: ["Eren Kruger ('The Owl')", "Grisha Yeager", "Eren Yeager"] },
     { titan: "Founding Titan", path: ["Founder Ymir", "King Karl Fritz", "Uri Reiss", "Frieda Reiss", "Grisha Yeager", "Eren Yeager"] },
@@ -909,63 +899,71 @@ const AOT_DATA = {
     { titan: "War Hammer Titan", path: ["Tybur Family Ancestors", "Lara Tybur", "Eren Yeager"] }
   ],
 
-  // ------------------------------------------------------------------------
-  // FEATURE 6: "VOICES OF HUMANITY" ICONIC QUOTE SOUNDBOARD
-  // ------------------------------------------------------------------------
+  // FEATURE 6: "VOICES OF HUMANITY" ICONIC ANIME BATTLE QUOTE SOUNDBOARD
   quotesSoundboard: [
     {
       id: "erwin-rage",
       speaker: "Commander Erwin Smith",
-      japanese: "進撃せよ！",
+      japanese: "進撃せよ！我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！",
+      romanji: "Shingeki seyo! Waga heishi yo ikare! Waga heishi yo sakebe! Waga heishi yo tatakae!",
       quote: "My soldiers, do not buckle or yield when facing the cruelty of this world! My soldiers, rage! My soldiers, scream! My soldiers, fight!",
+      speechText: "進撃せよ！我が兵士よ怒れ！我が兵士よ叫べ！我が兵士よ戦え！",
       context: "The legendary suicide cavalry charge against the Beast Titan's bombardment in Shiganshina.",
       themeColor: "#1d3557"
     },
     {
       id: "eren-tatakae",
       speaker: "Eren Yeager",
-      japanese: "戦え！戦え！",
+      japanese: "勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！",
+      romanji: "Kateba ikiru, makeba shinu. Tatakawanakereba katenai. Tatakae! Tatakae!",
       quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win. Tatakae! Tatakae!",
+      speechText: "勝てば生きる、負ければ死ぬ。戦わなければ勝てない。戦え！戦え！",
       context: "Eren's sacred core philosophy of unrelenting forward momentum for Eldian freedom.",
       themeColor: "#e63946"
     },
     {
       id: "levi-lunatic",
       speaker: "Captain Levi Ackerman",
-      japanese: "心臓を捧げよ",
+      japanese: "おい…ガキ共…心臓を捧げよ。悔いなき選択をしろ。",
+      romanji: "Oi... gaki-domo... Shinzō o sasageyo. Kuinaki sentaku o shiro.",
       quote: "I'm fine playing the role of the lunatic who kills people like that. I've got to ensure the choices I make leave no regrets.",
+      speechText: "おい、ガキ共。心臓を捧げよ。悔いなき選択をしろ。",
       context: "Levi's pragmatic resolve facing corrupt interior military police and Titans alike.",
       themeColor: "#2a9d8f"
     },
     {
       id: "mikasa-cruel",
       speaker: "Mikasa Ackerman",
-      japanese: "世界は残酷だ",
+      japanese: "この世界は残酷だ…そして、とても美しい。戦え！",
+      romanji: "Kono sekai wa zankoku da... Soshite, totemo utsukushii. Tatakae!",
       quote: "This world is cruel, but it's also very beautiful. Even if the enemy is overwhelmingly stronger, I will fight.",
+      speechText: "この世界は残酷だ。そして、とても美しい。戦え！",
       context: "Mikasa's awakening during the defense of Trost District.",
       themeColor: "#d90429"
     },
     {
       id: "armin-sacrifice",
       speaker: "Armin Arlert",
-      japanese: "何かを捨てることが",
+      japanese: "何かを捨てることができない人には、何も変えることはできない。",
+      romanji: "Nanika o suteru koto ga dekinai hito ni wa, nanimo kaeru koto wa dekinai.",
       quote: "Someone who cannot sacrifice anything can never change anything. To defeat a monster, you must be willing to abandon your humanity.",
+      speechText: "何かを捨てることができない人には、何も変えることはできない。",
       context: "Armin's tactical deduction justifying extreme military maneuvers to secure victory.",
       themeColor: "#f77f00"
     },
     {
       id: "reiner-warrior",
       speaker: "Reiner Braun",
-      japanese: "戦士として",
+      japanese: "俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！",
+      romanji: "Ore ga Yoroi no Kyojin de, koitsu ga Chōōgata Kyojin da! Senshi toshite saigo made sekinin o hatasu!",
       quote: "I don't know what's right anymore... But the only choice for me now is to face the consequences of my actions and fulfill my duty as a warrior!",
+      speechText: "俺が鎧の巨人で、こいつが超大型巨人だ！戦士として最後まで責任を果たす！",
       context: "Reiner's psychological breaking point atop Wall Rose revealing his Armored Titan identity.",
       themeColor: "#f15bb5"
     }
   ],
 
-  // ------------------------------------------------------------------------
   // FEATURE 7: "THE RUMBLING" GLOBAL IMPACT SIMULATOR
-  // ------------------------------------------------------------------------
   rumblingSim: {
     totalWallTitans: "Millions of 50m Colossals",
     globalCasualtiesPct: 80,
