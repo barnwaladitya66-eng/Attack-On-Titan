@@ -1,103 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <!-- Background Radial Gradient -->
-    <radialGradient id="titanBg" cx="50%" cy="40%" r="60%">
-      <stop offset="0%" stop-color="#1e0a0d" />
-      <stop offset="70%" stop-color="#0a0305" />
-      <stop offset="100%" stop-color="#020102" />
+    <!-- Background Gradient -->
+    <radialGradient id="shieldBg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#182232" />
+      <stop offset="100%" stop-color="#080b10" />
     </radialGradient>
 
-    <!-- Crimson Outer Rim -->
-    <linearGradient id="titanRim" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff0054" />
-      <stop offset="50%" stop-color="#e63946" />
-      <stop offset="100%" stop-color="#9d0208" />
+    <!-- Gold Metallic Border Gradient -->
+    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe885" />
+      <stop offset="45%" stop-color="#d4af37" />
+      <stop offset="80%" stop-color="#aa820a" />
+      <stop offset="100%" stop-color="#ffd166" />
     </linearGradient>
 
-    <!-- Hair Shadow / Highlight -->
-    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#2c3038" />
-      <stop offset="60%" stop-color="#14171c" />
-      <stop offset="100%" stop-color="#08090b" />
+    <!-- Scout Blue Wing Gradient -->
+    <linearGradient id="scoutBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a528a" />
+      <stop offset="50%" stop-color="#1d3557" />
+      <stop offset="100%" stop-color="#0e1e33" />
     </linearGradient>
 
-    <!-- Flesh Tone -->
-    <linearGradient id="fleshGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#c97a63" />
-      <stop offset="40%" stop-color="#a44e38" />
-      <stop offset="100%" stop-color="#5a1d12" />
+    <!-- Scout White Wing Gradient -->
+    <linearGradient id="scoutWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#edf2f4" />
+      <stop offset="100%" stop-color="#c5d3e8" />
     </linearGradient>
 
-    <!-- Attack Titan Emerald Eye Glow -->
-    <filter id="emeraldEyeGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#00f5d4" flood-opacity="1" />
-      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#06d6a0" flood-opacity="0.8" />
+    <!-- Glow Effect -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffd166" flood-opacity="0.6"/>
     </filter>
-
-    <!-- Fiery Titan Glow -->
-    <filter id="titanGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#e63946" flood-opacity="0.85" />
+    
+    <filter id="crimsonShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#000000" flood-opacity="0.8"/>
     </filter>
   </defs>
 
-  <!-- Circular Outer Badge -->
-  <circle cx="32" cy="32" r="30" fill="url(#titanBg)" stroke="url(#titanRim)" stroke-width="2.5" filter="url(#titanGlow)" />
+  <!-- Shield Base Background -->
+  <path d="M 12 6 L 52 6 C 52 6 54 28 50 42 C 46 53 32 60 32 60 C 32 60 18 53 14 42 C 10 28 12 6 12 6 Z" 
+        fill="url(#shieldBg)" 
+        stroke="url(#goldBorder)" 
+        stroke-width="2.5" 
+        stroke-linejoin="round"
+        filter="url(#goldGlow)" />
 
-  <!-- Inner Subtle Ring -->
-  <circle cx="32" cy="32" r="27.5" fill="none" stroke="rgba(255, 0, 84, 0.3)" stroke-width="1" />
+  <!-- Inner Shield Inset Border -->
+  <path d="M 15 9 L 49 9 C 49 9 50.8 28 47.2 40.5 C 43.6 50 32 56 32 56 C 32 56 20.4 50 16.8 40.5 C 13.2 28 15 9 15 9 Z" 
+        fill="none" 
+        stroke="rgba(212, 175, 55, 0.4)" 
+        stroke-width="1" />
 
-  <!-- ATTACK TITAN (EREN) HEAD & FACE SILHOUETTE -->
-  
-  <!-- Back Hair Silhouette -->
-  <path d="M 12 28 C 10 16 20 6 32 6 C 44 6 54 16 52 28 C 54 36 53 46 48 52 C 45 46 47 38 46 32 C 44 24 40 18 32 18 C 24 18 20 24 18 32 C 17 38 19 46 16 52 C 11 46 10 36 12 28 Z" 
-        fill="url(#hairGrad)" />
-
-  <!-- Neck & Trapezius Muscle Tendons -->
-  <path d="M 23 42 L 20 58 L 44 58 L 41 42 Z" fill="#6a2318" />
-  <path d="M 27 44 L 26 58 M 32 46 L 32 58 M 37 44 L 38 58" stroke="#3a0e08" stroke-width="1.2" />
-
-  <!-- Face / Head Base Skin -->
-  <path d="M 21 22 C 22 18 27 15 32 15 C 37 15 42 18 43 22 C 45 28 45 35 43 43 C 40 49 35 52 32 52 C 29 52 24 49 21 43 C 19 35 19 28 21 22 Z" 
-        fill="url(#fleshGrad)" />
-
-  <!-- Cheek Hollows & Intense Bone Structure -->
-  <path d="M 22 30 C 25 33 27 38 26 43 L 23 41 Z" fill="#42130c" />
-  <path d="M 42 30 C 39 33 37 38 38 43 L 41 41 Z" fill="#42130c" />
-
-  <!-- Fierce Brow Ridge (Shadow) -->
-  <path d="M 21 24 L 32 28 L 43 24 L 39 22 L 32 24 L 25 22 Z" fill="#2d0b06" />
-
-  <!-- Nose Bridge & Nostrils -->
-  <polygon points="32,26 30,34 34,34" fill="#52160c" />
-  <circle cx="30.5" cy="34" r="0.8" fill="#180402" />
-  <circle cx="33.5" cy="34" r="0.8" fill="#180402" />
-
-  <!-- Exposed Attack Titan Jaw & Sharp Double-Row Teeth -->
-  <!-- Upper Teeth Gum / Cavity -->
-  <path d="M 25 37 Q 32 38 39 37 Q 32 46 25 37 Z" fill="#150302" />
-  <!-- Upper Teeth -->
-  <path d="M 26 37 L 27 40 L 28 37 L 30 41 L 32 37 L 34 41 L 36 37 L 37 40 L 38 37" 
-        stroke="#f8f9fa" stroke-width="1.4" fill="none" stroke-linecap="round" />
-  <!-- Lower Teeth & Heavy Pointed Jaw -->
-  <path d="M 27 44 Q 32 43 37 44 Q 32 49 27 44 Z" fill="#150302" />
-  <path d="M 28 44 L 29 42 L 30 44 L 32 41 L 34 44 L 35 42 L 36 44" 
-        stroke="#f8f9fa" stroke-width="1.2" fill="none" stroke-linecap="round" />
-
-  <!-- Forehead Hair Strands Falling Forward (Eren's Iconic Wild Bangs) -->
-  <path d="M 24 12 Q 27 22 28 27 Q 26 21 23 16 Z" fill="#1b1e24" />
-  <path d="M 32 10 Q 33 22 34 29 Q 32 20 30 14 Z" fill="#252932" />
-  <path d="M 40 12 Q 37 22 36 27 Q 38 21 41 16 Z" fill="#1b1e24" />
-  <path d="M 18 20 Q 20 28 22 35 Q 18 27 16 22 Z" fill="#14171c" />
-  <path d="M 46 20 Q 44 28 42 35 Q 46 27 48 22 Z" fill="#14171c" />
-
-  <!-- ICONIC ATTACK TITAN GLOWING EMERALD EYES -->
-  <g filter="url(#emeraldEyeGlow)">
-    <!-- Left Eye (Slanted Intense Predator Angle) -->
-    <polygon points="23,25 28,27 24,28" fill="#00f5d4" />
-    <circle cx="25.5" cy="26.5" r="0.7" fill="#ffffff" />
-
-    <!-- Right Eye -->
-    <polygon points="41,25 36,27 40,28" fill="#00f5d4" />
-    <circle cx="38.5" cy="26.5" r="0.7" fill="#ffffff" />
+  <!-- Wings of Freedom (自由の翼): Left Wing (White Feathers) -->
+  <g id="white-wing" filter="url(#crimsonShadow)">
+    <!-- Feather 1 (Top Left) -->
+    <path d="M 29 13 L 20 18 L 22 23 L 30 19 Z" fill="url(#scoutWhite)" />
+    <!-- Feather 2 -->
+    <path d="M 29 19 L 17 24 L 19 29 L 30 25 Z" fill="url(#scoutWhite)" />
+    <!-- Feather 3 -->
+    <path d="M 29 25 L 15 31 L 17 36 L 29 31 Z" fill="url(#scoutWhite)" />
+    <!-- Feather 4 -->
+    <path d="M 28 31 L 16 38 L 19 43 L 28 37 Z" fill="url(#scoutWhite)" />
+    <!-- Feather 5 (Bottom) -->
+    <path d="M 27 37 L 20 45 L 24 48 L 29 42 Z" fill="url(#scoutWhite)" />
   </g>
+
+  <!-- Wings of Freedom (自由の翼): Right Wing (Scout Blue Feathers - Overlapping) -->
+  <g id="blue-wing" filter="url(#crimsonShadow)">
+    <!-- Feather 1 (Top Right) -->
+    <path d="M 33 16 L 44 21 L 42 26 L 32 22 Z" fill="url(#scoutBlue)" stroke="#457b9d" stroke-width="0.5" />
+    <!-- Feather 2 -->
+    <path d="M 33 22 L 47 27 L 45 32 L 32 28 Z" fill="url(#scoutBlue)" stroke="#457b9d" stroke-width="0.5" />
+    <!-- Feather 3 -->
+    <path d="M 33 28 L 49 34 L 47 39 L 33 34 Z" fill="url(#scoutBlue)" stroke="#457b9d" stroke-width="0.5" />
+    <!-- Feather 4 -->
+    <path d="M 34 34 L 48 41 L 45 46 L 34 40 Z" fill="url(#scoutBlue)" stroke="#457b9d" stroke-width="0.5" />
+    <!-- Feather 5 (Bottom) -->
+    <path d="M 35 40 L 44 48 L 40 51 L 33 45 Z" fill="url(#scoutBlue)" stroke="#457b9d" stroke-width="0.5" />
+  </g>
+
+  <!-- Central Crest Accent / Cross -->
+  <circle cx="32" cy="11" r="1.5" fill="#e63946" />
+  <circle cx="32" cy="53" r="1.2" fill="#ffd166" />
 </svg>
