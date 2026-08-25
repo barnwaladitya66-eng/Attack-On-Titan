@@ -1,9 +1,50 @@
-// Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeSwitcher();
   initNavigation();
   initScrollObserver();
   initPageControllers();
 });
+
+// Interactive Live Theme Switcher Controller (All 4 Dark Themes)
+function initThemeSwitcher() {
+  const themes = [
+    { id: 'volcanic-rumbling', name: 'Volcanic', icon: 'fa-volcano', color: '#e63946' },
+    { id: 'midnight-scout', name: 'Scout', icon: 'fa-feather-pointed', color: '#3a86ff' },
+    { id: 'paths-coordinate', name: 'Paths', icon: 'fa-tree', color: '#00f5d4' },
+    { id: 'royal-fortress', name: 'Royal', icon: 'fa-crown', color: '#d4af37' }
+  ];
+
+  const savedTheme = localStorage.getItem('aot-theme') || 'volcanic-rumbling';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  const navControls = document.querySelector('.nav-controls');
+  if (navControls && !document.querySelector('.theme-switcher-bar')) {
+    const switcher = document.createElement('div');
+    switcher.className = 'theme-switcher-bar';
+    switcher.innerHTML = themes.map(t => `
+      <button class="theme-pill-btn ${t.id === savedTheme ? 'active' : ''}" data-theme="${t.id}" title="Switch to ${t.name} Dark Theme">
+        <i class="fa-solid ${t.icon}" style="color: ${t.color};"></i> ${t.name}
+      </button>
+    `).join('');
+
+    navControls.prepend(switcher);
+
+    switcher.querySelectorAll('.theme-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const themeId = btn.dataset.theme;
+        document.documentElement.setAttribute('data-theme', themeId);
+        localStorage.setItem('aot-theme', themeId);
+
+        switcher.querySelectorAll('.theme-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (window.aotParticles) {
+          window.aotParticles.triggerLightning();
+        }
+      });
+    });
+  }
+}
 
 // Scroll Trigger Animation Observer
 function initScrollObserver() {

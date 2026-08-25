@@ -36,6 +36,86 @@
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* THEME 1: MIDNIGHT SCOUT (WINGS OF FREEDOM) */
+[data-theme="midnight-scout"] {
+  --bg-primary: #060a10;
+  --bg-secondary: #0a101b;
+  --bg-card: rgba(13, 21, 34, 0.88);
+  --bg-card-hover: rgba(20, 32, 50, 0.95);
+  --border-card: rgba(43, 88, 148, 0.35);
+  --border-gold: rgba(226, 183, 20, 0.4);
+  --accent-red: #3a86ff;
+  --accent-crimson: #2a528a;
+  --accent-amber: #e2b714;
+  --accent-gold: #e2b714;
+  --accent-emerald: #06d6a0;
+  --accent-scout-blue: #1d3557;
+  --text-primary: #f1faee;
+  --text-secondary: #90a4ae;
+  --text-highlight: #ffd166;
+  --glow-red: 0 0 25px rgba(58, 134, 255, 0.45);
+}
+
+/* THEME 2: VOLCANIC RUMBLING (DOOMSDAY MARCH) */
+[data-theme="volcanic-rumbling"] {
+  --bg-primary: #080405;
+  --bg-secondary: #100609;
+  --bg-card: rgba(20, 9, 12, 0.88);
+  --bg-card-hover: rgba(30, 14, 18, 0.95);
+  --border-card: rgba(230, 57, 70, 0.4);
+  --border-gold: rgba(251, 86, 7, 0.4);
+  --accent-red: #e63946;
+  --accent-crimson: #9d0208;
+  --accent-amber: #fb5607;
+  --accent-gold: #ffbe0b;
+  --accent-emerald: #e63946;
+  --accent-scout-blue: #540b0e;
+  --text-primary: #f1faee;
+  --text-secondary: #b08994;
+  --text-highlight: #ffbe0b;
+  --glow-red: 0 0 25px rgba(230, 57, 70, 0.6);
+}
+
+/* THEME 3: THE PATHS COORDINATE (COSMIC YMIR NEXUS) */
+[data-theme="paths-coordinate"] {
+  --bg-primary: #03070e;
+  --bg-secondary: #06101c;
+  --bg-card: rgba(10, 19, 32, 0.88);
+  --bg-card-hover: rgba(16, 29, 48, 0.95);
+  --border-card: rgba(0, 245, 212, 0.35);
+  --border-gold: rgba(155, 93, 229, 0.45);
+  --accent-red: #00f5d4;
+  --accent-crimson: #9b5de5;
+  --accent-amber: #ffd166;
+  --accent-gold: #ffd166;
+  --accent-emerald: #06d6a0;
+  --accent-scout-blue: #0f4c5c;
+  --text-primary: #f1faee;
+  --text-secondary: #80ced6;
+  --text-highlight: #00f5d4;
+  --glow-red: 0 0 25px rgba(0, 245, 212, 0.45);
+}
+
+/* THEME 4: WALL SINA ROYAL FORTRESS (MITRAS IMPERIAL) */
+[data-theme="royal-fortress"] {
+  --bg-primary: #08090c;
+  --bg-secondary: #0d1014;
+  --bg-card: rgba(18, 21, 27, 0.88);
+  --bg-card-hover: rgba(26, 30, 38, 0.95);
+  --border-card: rgba(212, 175, 55, 0.35);
+  --border-gold: rgba(212, 175, 55, 0.5);
+  --accent-red: #d4af37;
+  --accent-crimson: #9d0208;
+  --accent-amber: #e8d8b8;
+  --accent-gold: #d4af37;
+  --accent-emerald: #2a9d8f;
+  --accent-scout-blue: #1e2530;
+  --text-primary: #f5eedb;
+  --text-secondary: #b5a995;
+  --text-highlight: #e8d8b8;
+  --glow-red: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -263,6 +343,76 @@ body::before {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+/* Interactive Theme Switcher Bar */
+.theme-switcher-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(10, 14, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 0.25rem 0.4rem;
+  gap: 0.35rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.theme-pill-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.theme-pill-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-pill-btn.active {
+  color: #fff;
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  box-shadow: 0 0 12px var(--accent-red);
+}
+
+.theme-pill-btn[data-theme="midnight-scout"].active {
+  background: #2a528a;
+  border-color: #3a86ff;
+  box-shadow: 0 0 12px #3a86ff;
+}
+
+.theme-pill-btn[data-theme="volcanic-rumbling"].active {
+  background: #9d0208;
+  border-color: #e63946;
+  box-shadow: 0 0 12px #e63946;
+}
+
+.theme-pill-btn[data-theme="paths-coordinate"].active {
+  background: #0f4c5c;
+  border-color: #00f5d4;
+  color: #00f5d4;
+  box-shadow: 0 0 12px #00f5d4;
+}
+
+.theme-pill-btn[data-theme="royal-fortress"].active {
+  background: #2a2010;
+  border-color: #d4af37;
+  color: #ffd166;
+  box-shadow: 0 0 12px #d4af37;
 }
 
 .mobile-menu-btn {
