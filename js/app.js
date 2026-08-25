@@ -5,16 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageControllers();
 });
 
-// Interactive Live Theme Switcher Controller (All 4 Dark Themes)
+// Interactive Live Theme Switcher Controller (Pure Black OLED Editions)
 function initThemeSwitcher() {
   const themes = [
-    { id: 'volcanic-rumbling', name: 'Volcanic', icon: 'fa-volcano', color: '#e63946' },
-    { id: 'midnight-scout', name: 'Scout', icon: 'fa-feather-pointed', color: '#3a86ff' },
-    { id: 'paths-coordinate', name: 'Paths', icon: 'fa-tree', color: '#00f5d4' },
-    { id: 'royal-fortress', name: 'Royal', icon: 'fa-crown', color: '#d4af37' }
+    { id: 'abyssal-crimson', name: 'Blood Black', icon: 'fa-skull', color: '#ff0033' },
+    { id: 'oled-noir', name: 'OLED Stealth', icon: 'fa-moon', color: '#ffffff' },
+    { id: 'shadow-cyber', name: 'Titan Emerald', icon: 'fa-eye', color: '#00f5d4' },
+    { id: 'obsidian-gold', name: 'Jet Gold', icon: 'fa-crown', color: '#ffd700' }
   ];
 
-  const savedTheme = localStorage.getItem('aot-theme') || 'volcanic-rumbling';
+  const savedTheme = localStorage.getItem('aot-theme') || 'abyssal-crimson';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
   const navControls = document.querySelector('.nav-controls');
@@ -22,7 +22,7 @@ function initThemeSwitcher() {
     const switcher = document.createElement('div');
     switcher.className = 'theme-switcher-bar';
     switcher.innerHTML = themes.map(t => `
-      <button class="theme-pill-btn ${t.id === savedTheme ? 'active' : ''}" data-theme="${t.id}" title="Switch to ${t.name} Dark Theme">
+      <button class="theme-pill-btn ${t.id === savedTheme ? 'active' : ''}" data-theme="${t.id}" title="Switch to ${t.name} (True Black OLED Theme)">
         <i class="fa-solid ${t.icon}" style="color: ${t.color};"></i> ${t.name}
       </button>
     `).join('');

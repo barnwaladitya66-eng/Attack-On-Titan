@@ -2,118 +2,118 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-primary: #07080a;
-  --bg-secondary: #0e1117;
-  --bg-card: rgba(16, 20, 28, 0.85);
-  --bg-card-hover: rgba(24, 30, 42, 0.95);
-  --border-card: rgba(230, 57, 70, 0.25);
+  --bg-primary: #000000;
+  --bg-secondary: #050505;
+  --bg-card: rgba(8, 8, 10, 0.88);
+  --bg-card-hover: rgba(16, 16, 20, 0.95);
+  --border-card: rgba(255, 255, 255, 0.08);
   --border-gold: rgba(212, 175, 55, 0.35);
 
-  --accent-red: #e63946;
+  --accent-red: #ff0033;
   --accent-crimson: #9d0208;
   --accent-amber: #ff7b00;
-  --accent-gold: #d4af37;
-  --accent-emerald: #2a9d8f;
+  --accent-gold: #ffd166;
+  --accent-emerald: #00f5d4;
   --accent-scout-blue: #1d3557;
-  --accent-titan-glow: #ff5400;
+  --accent-titan-glow: #ff0033;
   
-  --text-primary: #f1faee;
-  --text-secondary: #a8b2d1;
-  --text-muted: #64748b;
-  --text-highlight: #ffba08;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aab8;
+  --text-muted: #606875;
+  --text-highlight: #ffd166;
 
   --font-display: 'Cinzel Decorative', 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
   --font-tech: 'Rajdhani', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  --glow-red: 0 0 25px rgba(230, 57, 70, 0.45);
-  --glow-amber: 0 0 25px rgba(255, 123, 0, 0.45);
-  --glow-blue: 0 0 25px rgba(29, 53, 87, 0.55);
+  --glow-red: 0 0 25px rgba(255, 0, 51, 0.5);
+  --glow-amber: 0 0 25px rgba(255, 209, 102, 0.4);
+  --glow-blue: 0 0 25px rgba(0, 245, 212, 0.45);
 
   --transition-fast: 0.2s ease;
   --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* THEME 1: MIDNIGHT SCOUT (WINGS OF FREEDOM) */
-[data-theme="midnight-scout"] {
-  --bg-primary: #060a10;
-  --bg-secondary: #0a101b;
-  --bg-card: rgba(13, 21, 34, 0.88);
-  --bg-card-hover: rgba(20, 32, 50, 0.95);
-  --border-card: rgba(43, 88, 148, 0.35);
-  --border-gold: rgba(226, 183, 20, 0.4);
-  --accent-red: #3a86ff;
-  --accent-crimson: #2a528a;
-  --accent-amber: #e2b714;
-  --accent-gold: #e2b714;
-  --accent-emerald: #06d6a0;
-  --accent-scout-blue: #1d3557;
-  --text-primary: #f1faee;
-  --text-secondary: #90a4ae;
-  --text-highlight: #ffd166;
-  --glow-red: 0 0 25px rgba(58, 134, 255, 0.45);
-}
-
-/* THEME 2: VOLCANIC RUMBLING (DOOMSDAY MARCH) */
-[data-theme="volcanic-rumbling"] {
-  --bg-primary: #080405;
-  --bg-secondary: #100609;
-  --bg-card: rgba(20, 9, 12, 0.88);
-  --bg-card-hover: rgba(30, 14, 18, 0.95);
-  --border-card: rgba(230, 57, 70, 0.4);
-  --border-gold: rgba(251, 86, 7, 0.4);
-  --accent-red: #e63946;
-  --accent-crimson: #9d0208;
-  --accent-amber: #fb5607;
-  --accent-gold: #ffbe0b;
-  --accent-emerald: #e63946;
-  --accent-scout-blue: #540b0e;
-  --text-primary: #f1faee;
-  --text-secondary: #b08994;
-  --text-highlight: #ffbe0b;
-  --glow-red: 0 0 25px rgba(230, 57, 70, 0.6);
-}
-
-/* THEME 3: THE PATHS COORDINATE (COSMIC YMIR NEXUS) */
-[data-theme="paths-coordinate"] {
-  --bg-primary: #03070e;
-  --bg-secondary: #06101c;
-  --bg-card: rgba(10, 19, 32, 0.88);
-  --bg-card-hover: rgba(16, 29, 48, 0.95);
-  --border-card: rgba(0, 245, 212, 0.35);
-  --border-gold: rgba(155, 93, 229, 0.45);
-  --accent-red: #00f5d4;
-  --accent-crimson: #9b5de5;
+/* THEME 1: PURE OLED NOIR (STEALTH BLACK & TITANIUM) */
+[data-theme="oled-noir"] {
+  --bg-primary: #000000;
+  --bg-secondary: #040405;
+  --bg-card: rgba(8, 8, 10, 0.92);
+  --bg-card-hover: rgba(16, 16, 20, 0.98);
+  --border-card: rgba(255, 255, 255, 0.1);
+  --border-gold: rgba(255, 255, 255, 0.25);
+  --accent-red: #ffffff;
+  --accent-crimson: #e2e8f0;
   --accent-amber: #ffd166;
-  --accent-gold: #ffd166;
-  --accent-emerald: #06d6a0;
-  --accent-scout-blue: #0f4c5c;
-  --text-primary: #f1faee;
-  --text-secondary: #80ced6;
-  --text-highlight: #00f5d4;
-  --glow-red: 0 0 25px rgba(0, 245, 212, 0.45);
+  --accent-gold: #ffffff;
+  --accent-emerald: #00f5d4;
+  --accent-scout-blue: #12151c;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-highlight: #ffffff;
+  --glow-red: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* THEME 4: WALL SINA ROYAL FORTRESS (MITRAS IMPERIAL) */
-[data-theme="royal-fortress"] {
-  --bg-primary: #08090c;
-  --bg-secondary: #0d1014;
-  --bg-card: rgba(18, 21, 27, 0.88);
-  --bg-card-hover: rgba(26, 30, 38, 0.95);
-  --border-card: rgba(212, 175, 55, 0.35);
-  --border-gold: rgba(212, 175, 55, 0.5);
-  --accent-red: #d4af37;
-  --accent-crimson: #9d0208;
-  --accent-amber: #e8d8b8;
-  --accent-gold: #d4af37;
-  --accent-emerald: #2a9d8f;
-  --accent-scout-blue: #1e2530;
-  --text-primary: #f5eedb;
-  --text-secondary: #b5a995;
-  --text-highlight: #e8d8b8;
-  --glow-red: 0 0 25px rgba(212, 175, 55, 0.4);
+/* THEME 2: ABYSSAL CRIMSON (PITCH BLACK & BLOOD RED) */
+[data-theme="abyssal-crimson"] {
+  --bg-primary: #000000;
+  --bg-secondary: #050102;
+  --bg-card: rgba(10, 3, 5, 0.92);
+  --bg-card-hover: rgba(22, 6, 10, 0.98);
+  --border-card: rgba(255, 0, 51, 0.3);
+  --border-gold: rgba(255, 0, 51, 0.5);
+  --accent-red: #ff0033;
+  --accent-crimson: #cc0029;
+  --accent-amber: #ff2a4b;
+  --accent-gold: #ff0033;
+  --accent-emerald: #ff0033;
+  --accent-scout-blue: #2a050a;
+  --text-primary: #ffffff;
+  --text-secondary: #b59fa3;
+  --text-highlight: #ff2a4b;
+  --glow-red: 0 0 25px rgba(255, 0, 51, 0.65);
+}
+
+/* THEME 3: SHADOW CYBER (PITCH BLACK & EMERALD TITAN) */
+[data-theme="shadow-cyber"] {
+  --bg-primary: #000000;
+  --bg-secondary: #020606;
+  --bg-card: rgba(4, 10, 10, 0.92);
+  --bg-card-hover: rgba(8, 20, 20, 0.98);
+  --border-card: rgba(0, 245, 212, 0.25);
+  --border-gold: rgba(0, 245, 212, 0.45);
+  --accent-red: #00f5d4;
+  --accent-crimson: #06d6a0;
+  --accent-amber: #00ff88;
+  --accent-gold: #00f5d4;
+  --accent-emerald: #00ff88;
+  --accent-scout-blue: #021a18;
+  --text-primary: #ffffff;
+  --text-secondary: #82a5a0;
+  --text-highlight: #00f5d4;
+  --glow-red: 0 0 25px rgba(0, 245, 212, 0.55);
+}
+
+/* THEME 4: OBSIDIAN GOLD (PITCH BLACK & 24K GOLD) */
+[data-theme="obsidian-gold"] {
+  --bg-primary: #000000;
+  --bg-secondary: #060502;
+  --bg-card: rgba(10, 8, 4, 0.92);
+  --bg-card-hover: rgba(22, 18, 8, 0.98);
+  --border-card: rgba(255, 215, 0, 0.25);
+  --border-gold: rgba(255, 215, 0, 0.5);
+  --accent-red: #ffd700;
+  --accent-crimson: #d4af37;
+  --accent-amber: #ffb703;
+  --accent-gold: #ffd700;
+  --accent-emerald: #ffd700;
+  --accent-scout-blue: #1c1605;
+  --text-primary: #ffffff;
+  --text-secondary: #b5a882;
+  --text-highlight: #ffd700;
+  --glow-red: 0 0 25px rgba(255, 215, 0, 0.5);
 }
 
 * {
@@ -389,30 +389,32 @@ body::before {
   box-shadow: 0 0 12px var(--accent-red);
 }
 
-.theme-pill-btn[data-theme="midnight-scout"].active {
-  background: #2a528a;
-  border-color: #3a86ff;
-  box-shadow: 0 0 12px #3a86ff;
+.theme-pill-btn[data-theme="oled-noir"].active {
+  background: #1e2430;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
-.theme-pill-btn[data-theme="volcanic-rumbling"].active {
-  background: #9d0208;
-  border-color: #e63946;
-  box-shadow: 0 0 12px #e63946;
+.theme-pill-btn[data-theme="abyssal-crimson"].active {
+  background: #3d000c;
+  border-color: #ff0033;
+  color: #ff0033;
+  box-shadow: 0 0 14px rgba(255, 0, 51, 0.6);
 }
 
-.theme-pill-btn[data-theme="paths-coordinate"].active {
-  background: #0f4c5c;
+.theme-pill-btn[data-theme="shadow-cyber"].active {
+  background: #002b24;
   border-color: #00f5d4;
   color: #00f5d4;
-  box-shadow: 0 0 12px #00f5d4;
+  box-shadow: 0 0 14px rgba(0, 245, 212, 0.6);
 }
 
-.theme-pill-btn[data-theme="royal-fortress"].active {
-  background: #2a2010;
-  border-color: #d4af37;
-  color: #ffd166;
-  box-shadow: 0 0 12px #d4af37;
+.theme-pill-btn[data-theme="obsidian-gold"].active {
+  background: #332600;
+  border-color: #ffd700;
+  color: #ffd700;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.6);
 }
 
 .mobile-menu-btn {
