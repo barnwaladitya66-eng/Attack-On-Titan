@@ -1,50 +1,11 @@
+// Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
-  initThemeSwitcher();
+  document.documentElement.removeAttribute('data-theme');
+  localStorage.removeItem('aot-theme');
   initNavigation();
   initScrollObserver();
   initPageControllers();
 });
-
-// Interactive Live Theme Switcher Controller (Pure Black OLED Editions)
-function initThemeSwitcher() {
-  const themes = [
-    { id: 'abyssal-crimson', name: 'Blood Black', icon: 'fa-skull', color: '#ff0033' },
-    { id: 'oled-noir', name: 'OLED Stealth', icon: 'fa-moon', color: '#ffffff' },
-    { id: 'shadow-cyber', name: 'Titan Emerald', icon: 'fa-eye', color: '#00f5d4' },
-    { id: 'obsidian-gold', name: 'Jet Gold', icon: 'fa-crown', color: '#ffd700' }
-  ];
-
-  const savedTheme = localStorage.getItem('aot-theme') || 'abyssal-crimson';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-
-  const navControls = document.querySelector('.nav-controls');
-  if (navControls && !document.querySelector('.theme-switcher-bar')) {
-    const switcher = document.createElement('div');
-    switcher.className = 'theme-switcher-bar';
-    switcher.innerHTML = themes.map(t => `
-      <button class="theme-pill-btn ${t.id === savedTheme ? 'active' : ''}" data-theme="${t.id}" title="Switch to ${t.name} (True Black OLED Theme)">
-        <i class="fa-solid ${t.icon}" style="color: ${t.color};"></i> ${t.name}
-      </button>
-    `).join('');
-
-    navControls.prepend(switcher);
-
-    switcher.querySelectorAll('.theme-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const themeId = btn.dataset.theme;
-        document.documentElement.setAttribute('data-theme', themeId);
-        localStorage.setItem('aot-theme', themeId);
-
-        switcher.querySelectorAll('.theme-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        if (window.aotParticles) {
-          window.aotParticles.triggerLightning();
-        }
-      });
-    });
-  }
-}
 
 // Scroll Trigger Animation Observer
 function initScrollObserver() {

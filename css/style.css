@@ -3,117 +3,37 @@
 
 :root {
   --bg-primary: #000000;
-  --bg-secondary: #050505;
-  --bg-card: rgba(8, 8, 10, 0.88);
-  --bg-card-hover: rgba(16, 16, 20, 0.95);
-  --border-card: rgba(255, 255, 255, 0.08);
-  --border-gold: rgba(212, 175, 55, 0.35);
+  --bg-secondary: #050102;
+  --bg-card: rgba(10, 3, 5, 0.92);
+  --bg-card-hover: rgba(22, 6, 10, 0.98);
+  --border-card: rgba(255, 0, 51, 0.25);
+  --border-gold: rgba(255, 0, 51, 0.45);
 
   --accent-red: #ff0033;
-  --accent-crimson: #9d0208;
-  --accent-amber: #ff7b00;
+  --accent-crimson: #cc0029;
+  --accent-amber: #ff2a4b;
   --accent-gold: #ffd166;
   --accent-emerald: #00f5d4;
-  --accent-scout-blue: #1d3557;
+  --accent-scout-blue: #2a050a;
   --accent-titan-glow: #ff0033;
   
   --text-primary: #ffffff;
-  --text-secondary: #a0aab8;
-  --text-muted: #606875;
-  --text-highlight: #ffd166;
+  --text-secondary: #b59fa3;
+  --text-muted: #6b5c60;
+  --text-highlight: #ff2a4b;
 
   --font-display: 'Cinzel Decorative', 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
   --font-tech: 'Rajdhani', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  --glow-red: 0 0 25px rgba(255, 0, 51, 0.5);
-  --glow-amber: 0 0 25px rgba(255, 209, 102, 0.4);
-  --glow-blue: 0 0 25px rgba(0, 245, 212, 0.45);
+  --glow-red: 0 0 25px rgba(255, 0, 51, 0.65);
+  --glow-amber: 0 0 25px rgba(255, 42, 75, 0.45);
+  --glow-blue: 0 0 25px rgba(255, 0, 51, 0.35);
 
   --transition-fast: 0.2s ease;
   --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* THEME 1: PURE OLED NOIR (STEALTH BLACK & TITANIUM) */
-[data-theme="oled-noir"] {
-  --bg-primary: #000000;
-  --bg-secondary: #040405;
-  --bg-card: rgba(8, 8, 10, 0.92);
-  --bg-card-hover: rgba(16, 16, 20, 0.98);
-  --border-card: rgba(255, 255, 255, 0.1);
-  --border-gold: rgba(255, 255, 255, 0.25);
-  --accent-red: #ffffff;
-  --accent-crimson: #e2e8f0;
-  --accent-amber: #ffd166;
-  --accent-gold: #ffffff;
-  --accent-emerald: #00f5d4;
-  --accent-scout-blue: #12151c;
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  --text-highlight: #ffffff;
-  --glow-red: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-/* THEME 2: ABYSSAL CRIMSON (PITCH BLACK & BLOOD RED) */
-[data-theme="abyssal-crimson"] {
-  --bg-primary: #000000;
-  --bg-secondary: #050102;
-  --bg-card: rgba(10, 3, 5, 0.92);
-  --bg-card-hover: rgba(22, 6, 10, 0.98);
-  --border-card: rgba(255, 0, 51, 0.3);
-  --border-gold: rgba(255, 0, 51, 0.5);
-  --accent-red: #ff0033;
-  --accent-crimson: #cc0029;
-  --accent-amber: #ff2a4b;
-  --accent-gold: #ff0033;
-  --accent-emerald: #ff0033;
-  --accent-scout-blue: #2a050a;
-  --text-primary: #ffffff;
-  --text-secondary: #b59fa3;
-  --text-highlight: #ff2a4b;
-  --glow-red: 0 0 25px rgba(255, 0, 51, 0.65);
-}
-
-/* THEME 3: SHADOW CYBER (PITCH BLACK & EMERALD TITAN) */
-[data-theme="shadow-cyber"] {
-  --bg-primary: #000000;
-  --bg-secondary: #020606;
-  --bg-card: rgba(4, 10, 10, 0.92);
-  --bg-card-hover: rgba(8, 20, 20, 0.98);
-  --border-card: rgba(0, 245, 212, 0.25);
-  --border-gold: rgba(0, 245, 212, 0.45);
-  --accent-red: #00f5d4;
-  --accent-crimson: #06d6a0;
-  --accent-amber: #00ff88;
-  --accent-gold: #00f5d4;
-  --accent-emerald: #00ff88;
-  --accent-scout-blue: #021a18;
-  --text-primary: #ffffff;
-  --text-secondary: #82a5a0;
-  --text-highlight: #00f5d4;
-  --glow-red: 0 0 25px rgba(0, 245, 212, 0.55);
-}
-
-/* THEME 4: OBSIDIAN GOLD (PITCH BLACK & 24K GOLD) */
-[data-theme="obsidian-gold"] {
-  --bg-primary: #000000;
-  --bg-secondary: #060502;
-  --bg-card: rgba(10, 8, 4, 0.92);
-  --bg-card-hover: rgba(22, 18, 8, 0.98);
-  --border-card: rgba(255, 215, 0, 0.25);
-  --border-gold: rgba(255, 215, 0, 0.5);
-  --accent-red: #ffd700;
-  --accent-crimson: #d4af37;
-  --accent-amber: #ffb703;
-  --accent-gold: #ffd700;
-  --accent-emerald: #ffd700;
-  --accent-scout-blue: #1c1605;
-  --text-primary: #ffffff;
-  --text-secondary: #b5a882;
-  --text-highlight: #ffd700;
-  --glow-red: 0 0 25px rgba(255, 215, 0, 0.5);
 }
 
 * {
@@ -343,78 +263,6 @@ body::before {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
-
-/* Interactive Theme Switcher Bar */
-.theme-switcher-bar {
-  display: flex;
-  align-items: center;
-  background: rgba(10, 14, 20, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 30px;
-  padding: 0.25rem 0.4rem;
-  gap: 0.35rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-}
-
-.theme-pill-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-secondary);
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-tech);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.theme-pill-btn:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.theme-pill-btn.active {
-  color: #fff;
-  background: var(--accent-red);
-  border-color: var(--accent-red);
-  box-shadow: 0 0 12px var(--accent-red);
-}
-
-.theme-pill-btn[data-theme="oled-noir"].active {
-  background: #1e2430;
-  border-color: #ffffff;
-  color: #ffffff;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-}
-
-.theme-pill-btn[data-theme="abyssal-crimson"].active {
-  background: #3d000c;
-  border-color: #ff0033;
-  color: #ff0033;
-  box-shadow: 0 0 14px rgba(255, 0, 51, 0.6);
-}
-
-.theme-pill-btn[data-theme="shadow-cyber"].active {
-  background: #002b24;
-  border-color: #00f5d4;
-  color: #00f5d4;
-  box-shadow: 0 0 14px rgba(0, 245, 212, 0.6);
-}
-
-.theme-pill-btn[data-theme="obsidian-gold"].active {
-  background: #332600;
-  border-color: #ffd700;
-  color: #ffd700;
-  box-shadow: 0 0 14px rgba(255, 215, 0, 0.6);
 }
 
 .mobile-menu-btn {
