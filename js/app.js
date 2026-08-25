@@ -1,38 +1,120 @@
 // Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
-  document.documentElement.removeAttribute('data-theme');
-  localStorage.removeItem('aot-theme');
   initNavigation();
-  initScrollObserver();
+  initScrollTriggerSystem();
   initPageControllers();
 });
 
-// Scroll Trigger Animation Observer
-function initScrollObserver() {
+// Advanced Scroll Trigger, Progress Bar & Animated Counters System
+function initScrollTriggerSystem() {
+  // 1. Inject Top Scroll Progress Bar
+  let progressLine = document.querySelector('.scroll-progress-line');
+  if (!progressLine) {
+    progressLine = document.createElement('div');
+    progressLine.className = 'scroll-progress-line';
+    document.body.prepend(progressLine);
+  }
+
+  // 2. Inject Floating Back-to-Top Button
+  let scrollTopBtn = document.querySelector('.scroll-top-btn');
+  if (!scrollTopBtn) {
+    scrollTopBtn = document.createElement('button');
+    scrollTopBtn.className = 'scroll-top-btn';
+    scrollTopBtn.setAttribute('aria-label', 'Scroll back to top');
+    scrollTopBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+    document.body.appendChild(scrollTopBtn);
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Update Progress Bar & Back-to-Top visibility on scroll
+  const handleScroll = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    
+    progressLine.style.width = `${progress}%`;
+
+    if (scrollTop > 350) {
+      scrollTopBtn.classList.add('is-visible');
+    } else {
+      scrollTopBtn.classList.remove('is-visible');
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // 3. Scroll Reveal Intersection Observer
   const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -50px 0px',
+    rootMargin: '0px 0px -40px 0px',
     threshold: 0.08
   };
 
-  const observer = new IntersectionObserver((entries, obs) => {
+  const revealObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
+        
+        // Trigger Animated Counter if target has stat number
+        const statNumber = entry.target.querySelector('.stat-number');
+        if (statNumber && !statNumber.dataset.animated) {
+          animateStatCounter(statNumber);
+        }
+
         obs.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  document.querySelectorAll('.reveal-on-scroll, .reveal-left, .reveal-right').forEach(el => {
-    observer.observe(el);
+  document.querySelectorAll('.reveal-on-scroll, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    revealObserver.observe(el);
   });
 
   window.reobserveScrollElements = () => {
-    document.querySelectorAll('.reveal-on-scroll:not(.is-revealed), .reveal-left:not(.is-revealed), .reveal-right:not(.is-revealed)').forEach(el => {
-      observer.observe(el);
+    document.querySelectorAll('.reveal-on-scroll:not(.is-revealed), .reveal-left:not(.is-revealed), .reveal-right:not(.is-revealed), .reveal-scale:not(.is-revealed)').forEach(el => {
+      revealObserver.observe(el);
     });
   };
+}
+
+// Animated Number Counter on Scroll Trigger
+function animateStatCounter(el) {
+  el.dataset.animated = 'true';
+  const rawText = el.innerText.trim();
+  const hasPlus = rawText.includes('+');
+  const hasPercent = rawText.includes('%');
+  const numericVal = parseInt(rawText.replace(/[^0-9]/g, ''), 10);
+
+  if (isNaN(numericVal)) return;
+
+  const duration = 1400;
+  const startTime = performance.now();
+
+  function updateCounter(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    const currentCount = Math.floor(easeProgress * numericVal);
+
+    let formatted = currentCount.toLocaleString();
+    if (hasPlus) formatted += '+';
+    if (hasPercent) formatted += '%';
+
+    el.innerText = formatted;
+
+    if (progress < 1) {
+      requestAnimationFrame(updateCounter);
+    } else {
+      el.innerText = rawText;
+    }
+  }
+
+  requestAnimationFrame(updateCounter);
 }
 
 // Navigation & Mobile Menu
