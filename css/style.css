@@ -153,73 +153,53 @@ body::before {
   box-shadow: 0 0 30px var(--accent-red);
 }
 
-/* Highly Evident & Cinematic Scroll Trigger Reveal Animations */
+/* Highly Evident & Crisp Scroll Trigger Reveal Animations (No Blur) */
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(80px) scale(0.92);
-  filter: blur(6px);
-  transition: 
-    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
-    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
-  filter: blur(0px);
 }
 
 .reveal-left {
   opacity: 0;
   transform: translateX(-100px) scale(0.9);
-  filter: blur(6px);
-  transition: 
-    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
-    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-left.is-revealed {
   opacity: 1;
   transform: translateX(0) scale(1);
-  filter: blur(0px);
 }
 
 .reveal-right {
   opacity: 0;
   transform: translateX(100px) scale(0.9);
-  filter: blur(6px);
-  transition: 
-    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
-    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-right.is-revealed {
   opacity: 1;
   transform: translateX(0) scale(1);
-  filter: blur(0px);
 }
 
 .reveal-scale {
   opacity: 0;
   transform: scale(0.78);
-  filter: blur(8px);
-  transition: 
-    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
-    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-scale.is-revealed {
   opacity: 1;
   transform: scale(1);
-  filter: blur(0px);
 }
 
 /* Distinct Wave Stagger Delays */
