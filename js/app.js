@@ -5,17 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageControllers();
 });
 
-// Advanced Scroll Trigger, Progress Bar & Animated Counters System
+// Advanced Scroll Trigger & Animated Counters System
 function initScrollTriggerSystem() {
-  // 1. Inject Top Scroll Progress Bar
-  let progressLine = document.querySelector('.scroll-progress-line');
-  if (!progressLine) {
-    progressLine = document.createElement('div');
-    progressLine.className = 'scroll-progress-line';
-    document.body.prepend(progressLine);
-  }
-
-  // 2. Inject Floating Back-to-Top Button
+  // 1. Inject Floating Back-to-Top Button
   let scrollTopBtn = document.querySelector('.scroll-top-btn');
   if (!scrollTopBtn) {
     scrollTopBtn = document.createElement('button');
@@ -29,14 +21,9 @@ function initScrollTriggerSystem() {
     });
   }
 
-  // Update Progress Bar & Back-to-Top visibility on scroll
+  // Update Back-to-Top visibility on scroll
   const handleScroll = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    
-    progressLine.style.width = `${progress}%`;
-
     if (scrollTop > 350) {
       scrollTopBtn.classList.add('is-visible');
     } else {
@@ -47,11 +34,11 @@ function initScrollTriggerSystem() {
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
-  // 3. Scroll Reveal Intersection Observer
+  // 2. High-Impact Scroll Reveal Intersection Observer
   const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -40px 0px',
-    threshold: 0.08
+    rootMargin: '0px 0px -80px 0px',
+    threshold: 0.1
   };
 
   const revealObserver = new IntersectionObserver((entries, obs) => {
