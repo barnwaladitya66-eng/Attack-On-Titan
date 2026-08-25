@@ -957,5 +957,111 @@ const AOT_DATA = {
         desc: "Surviving humanity and refugee airships make a final stand on the clifftops of Fort Salta before the alliance slays Eren and terminates Titan power forever."
       }
     ]
+  },
+
+  // 104TH CADET REGIMENT APTITUDE TEST
+  aptitudeQuiz: [
+    {
+      q: "1. An Abnormal 15m Titan breaches the outer perimeter of the Giant Forest and targets your squad's vanguard. What is your tactical response?",
+      options: [
+        { text: "Fire acoustic flare, split into dual pincer formation, and target the nape from the tree canopies.", type: "scout", score: { scout: 3, mp: 0, garrison: 1, shifter: 1 } },
+        { text: "Fall back to fortified tree barriers, deploy fixed cannon line, and hold defensive perimeter.", type: "garrison", score: { scout: 0, mp: 1, garrison: 3, shifter: 0 } },
+        { text: "Withdraw to the inner wall district to safeguard civilian VIPs and leadership assets.", type: "mp", score: { scout: 0, mp: 3, garrison: 1, shifter: 0 } },
+        { text: "Bite your hand, trigger incandescent lightning transformation, and eliminate the threat with pure Titan force.", type: "shifter", score: { scout: 1, mp: 0, garrison: 0, shifter: 4 } }
+      ]
+    },
+    {
+      q: "2. Your squad is low on ODM gas and blade cartridges behind enemy lines outside Wall Maria. What is your decision?",
+      options: [
+        { text: "Scavenge supply caches from fallen scout wagons and make a high-speed nocturnal push toward the ruin towers.", type: "scout", score: { scout: 3, mp: 0, garrison: 1, shifter: 1 } },
+        { text: "Conserve remaining gas, climb to the highest wall parapet, and signal the supply corps with smoke rounds.", type: "garrison", score: { scout: 1, mp: 0, garrison: 3, shifter: 0 } },
+        { text: "Establish an emergency stronghold in an abandoned stone fortress and await reinforcements.", type: "mp", score: { scout: 0, mp: 3, garrison: 2, shifter: 0 } },
+        { text: "Channel Titan regeneration to repair fatigue and carry your squad on your armored shoulder plates.", type: "shifter", score: { scout: 1, mp: 0, garrison: 0, shifter: 4 } }
+      ]
+    },
+    {
+      q: "3. Commander Erwin orders a suicidal frontal decoy charge directly into the Beast Titan's boulder bombardment to create a blind spot for Captain Levi. Do you charge?",
+      options: [
+        { text: "DEVOTE YOUR HEART (心臓を捧げよ)! Ride forward screaming into the hellfire so Levi can strike the fatal blow.", type: "scout", score: { scout: 4, mp: 0, garrison: 0, shifter: 1 } },
+        { text: "Coordinate with artillery units on the wall to lay down a suppressing mortar barrage first.", type: "garrison", score: { scout: 1, mp: 1, garrison: 3, shifter: 0 } },
+        { text: "Deem the casualty rate unacceptable and seek strategic mediation with high command.", type: "mp", score: { scout: 0, mp: 4, garrison: 1, shifter: 0 } },
+        { text: "Harden your fists with diamond crystal and intercept the supersonic boulder fragments directly.", type: "shifter", score: { scout: 2, mp: 0, garrison: 0, shifter: 4 } }
+      ]
+    },
+    {
+      q: "4. What is your personal philosophy regarding the eternal conflict of the world?",
+      options: [
+        { text: "Those who cannot sacrifice anything can never change anything. We will fight for freedom beyond the walls.", type: "scout", score: { scout: 4, mp: 0, garrison: 1, shifter: 2 } },
+        { text: "Peace is maintained through disciplined defense, sturdy stone ramparts, and preserving ordinary human lives.", type: "garrison", score: { scout: 0, mp: 1, garrison: 4, shifter: 0 } },
+        { text: "Order and stability inside the central territory must be preserved at all costs to prevent civil chaos.", type: "mp", score: { scout: 0, mp: 4, garrison: 1, shifter: 0 } },
+        { text: "If we win, we live. If we lose, we die. If we don't fight, we cannot win. Fight. Fight (戦え、戦え)!", type: "shifter", score: { scout: 2, mp: 0, garrison: 0, shifter: 4 } }
+      ]
+    },
+    {
+      q: "5. When equipped with Ultra-Hard Steel Blades and Thunder Spears, what is your preferred weapon mastery?",
+      options: [
+        { text: "Acrobatic dual-blade spiral slashes executed at terminal velocity from 3D ODM anchors.", type: "scout", score: { scout: 4, mp: 0, garrison: 1, shifter: 0 } },
+        { text: "Stationary double-barrel Wall Cannons and high-explosive grape-shot shells.", type: "garrison", score: { scout: 0, mp: 0, garrison: 4, shifter: 0 } },
+        { text: "Anti-Personnel ODM Gear equipped with dual semi-automatic shotguns.", type: "mp", score: { scout: 0, mp: 4, garrison: 1, shifter: 0 } },
+        { text: "Pure concentrated Titan bio-energy, localized crystallization hardening, and sonic roar commands.", type: "shifter", score: { scout: 1, mp: 0, garrison: 0, shifter: 4 } }
+      ]
+    }
+  ],
+
+  // GRISHA YEAGER'S SECRET BASEMENT JOURNALS
+  basementJournals: [
+    {
+      id: "book-1",
+      title: "Journal I: The Eldian Restorationists & The Owl",
+      subtitle: "The secret rebellion in the Liberio Internment Zone",
+      date: "Year 832 • Classified Marley Dossier",
+      content: "Humanity has not perished beyond the walls. Across the ocean lies an industrialized continent called Marley. My sister Faye was murdered by Marleyan Public Security. In grief and fury, I joined the Eldian Restorationists guided by an undercover operative known only as 'The Owl' (Eren Kruger). When our movement was betrayed by my own son Zeke, we were sentenced to 'Paradise'—injected with Titan serum at the border wall. But Kruger revealed his true identity as the Attack Titan, destroyed the Marleyan cruiser, and passed his Titan power to me, instructing me to seek the Founding Titan inside the walls and protect Armin and Mikasa.",
+      quote: "Whose memories are these? ...To save Mikasa, Armin, and everyone else, you must see this mission through.",
+      quoteJapanese: "「ミカサやアルミン、みんなを救いたいなら、使命を全うしろ」"
+    },
+    {
+      id: "book-2",
+      title: "Journal II: The World Beyond the Sea & Technological Civilization",
+      subtitle: "Airships, steam engines, and the ocean photograph",
+      date: "Year 844 • Recovered from Shiganshina Basement",
+      content: "This is a photograph. It is not an illustration. It was produced by letting light react with a special emulsion plate. Humanity outside the walls enjoys advanced technology: naval ironclads, wireless radio communication, steam locomotives, and massive airships that rule the skies. Paradis Island is not the last bastion of human life, but a solitary resource-rich prison island isolated by the 145th King Karl Fritz, who locked his subjects inside memory-wiped walls while the rest of the planet advanced a century ahead.",
+      quote: "Humanity has not perished. The world is vast and filled with marvels.",
+      quoteJapanese: "「人類は滅んでなどいない」"
+    },
+    {
+      id: "book-3",
+      title: "Journal III: The Paths & The Curse of Ymir",
+      subtitle: "Metaphysical biology of the Nine Titans",
+      date: "Year 845 • The Secret Manuscript",
+      content: "All Subjects of Ymir are connected across invisible channels that transcend time and space: The Paths (道). At the center of these Paths stands the Coordinate—the Founding Titan. Flesh, bones, and memories travel instantaneously through these paths when a Titan manifests. However, no human who inherits the power of the Nine Titans may live beyond 13 years from their awakening—The Curse of Ymir. To safeguard the future, the Founding Titan must be wrestled from the royal bloodline who are bound by the pacifist King's vow.",
+      quote: "From this moment forward, the Attack Titan moves ever forward, seeking freedom in every era.",
+      quoteJapanese: "「いついかなる時代においても、その巨人は自由を求めて進み続けた」"
+    }
+  ],
+
+  // TITAN BIOLOGICAL ANATOMY & WEAK-POINT SPECIFICATIONS
+  titanAnatomy: {
+    "attack-titan": {
+      name: "Attack Titan (進撃の巨人)",
+      napeDepth: "1.0m × 10cm (Human pilot seated at C3–C7 vertebrae)",
+      pilotCapsule: "Enclosed in fibrous spinal neural tissue; high synchronization rate with memories of future successors.",
+      hardeningNodes: "Selective localized crystallization on knuckles, elbows, and heels.",
+      combatVulnerability: "High stamina recovery, but vulnerable to continuous Thunder Spear decapitation."
+    },
+    "colossal-titan": {
+      name: "Colossal Titan (超大型巨人)",
+      napeDepth: "3.0m deep within 60-meter muscular dorsal trunk",
+      pilotCapsule: "Pilot suspended in high-temperature core; protected by 600°C scalding steam venting from skin pores.",
+      hardeningNodes: "None; relies on thermal pressure waves and atomic-yield transformation explosion.",
+      combatVulnerability: "Extreme energy exhaustion; rapid muscular mass evaporation during continuous steam output."
+    },
+    "armored-titan": {
+      name: "Armored Titan (鎧の巨人)",
+      napeDepth: "Protected under 30cm segmented interlocking organic steel plates",
+      pilotCapsule: "Pilot can transfer consciousness across secondary nervous system along the lower spine.",
+      hardeningNodes: "Full body plating; joint crevices at knees, armpits, and jaw remain unarmored for mobility.",
+      combatVulnerability: "Susceptible to Anti-Titan artillery, Thunder Spear penetrations, and War Hammer spikes."
+    }
   }
 };
+

@@ -2,6 +2,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initScrollTriggerSystem();
+  initCustomCursor();
+  initCommandPalette();
+  initBasementVault();
+  init3DCardTilt();
+  initCadetAptitudeQuiz();
   initPageControllers();
 });
 
@@ -684,6 +689,8 @@ function bindTitanCardEvents() {
       const id = btn.dataset.id;
       const titan = AOT_DATA.titans.find(t => t.id === id);
       if (titan) {
+        const anatomy = AOT_DATA.titanAnatomy ? AOT_DATA.titanAnatomy[titan.id] : null;
+        
         window.aotModal.open(titan.name, `
           <div style="line-height: 1.7; color: var(--text-secondary);">
             <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.2rem;">
@@ -694,7 +701,31 @@ function bindTitanCardEvents() {
 
             <p style="font-size: 1.05rem; color: #fff; margin-bottom: 1.2rem;">${titan.description}</p>
 
-            <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid ${titan.iconColor || 'var(--accent-red)'}; margin-bottom: 1.2rem;">
+            ${anatomy ? `
+              <div class="anatomy-scanner-box">
+                <h4 style="font-family: var(--font-heading); color: #00f5d4; font-size: 1.1rem; margin-bottom: 0.8rem;">
+                  <i class="fa-solid fa-microscope"></i> Biological Anatomy & Weak-Point Scanner
+                </h4>
+                <div class="anatomy-node">
+                  <h5><i class="fa-solid fa-crosshairs"></i> Nape Vulnerability Depth:</h5>
+                  <p style="color: #fff; font-size: 0.95rem;">${anatomy.napeDepth}</p>
+                </div>
+                <div class="anatomy-node">
+                  <h5><i class="fa-solid fa-brain"></i> Neural Pilot Synchronization:</h5>
+                  <p style="color: var(--text-secondary); font-size: 0.9rem;">${anatomy.pilotCapsule}</p>
+                </div>
+                <div class="anatomy-node">
+                  <h5><i class="fa-solid fa-gem"></i> Hardening Armor Nodes:</h5>
+                  <p style="color: var(--text-secondary); font-size: 0.9rem;">${anatomy.hardeningNodes}</p>
+                </div>
+                <div class="anatomy-node" style="border-left-color: #ff0033;">
+                  <h5 style="color: #ff0033;"><i class="fa-solid fa-shield-virus"></i> Fatal Combat Vulnerability:</h5>
+                  <p style="color: var(--text-primary); font-size: 0.9rem;">${anatomy.combatVulnerability}</p>
+                </div>
+              </div>
+            ` : ''}
+
+            <div style="background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid ${titan.iconColor || 'var(--accent-red)'}; margin: 1.2rem 0;">
               <strong style="color: var(--text-highlight); font-family: var(--font-tech); letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
                 <i class="fa-solid fa-skull"></i> Primary Powers & Anomalies:
               </strong>
@@ -1020,3 +1051,446 @@ function initTacticalMapExplorer() {
 
   renderPinIntel(locs[0].id);
 }
+
+/* ==========================================================================
+   PREMIUM FEATURE 1: TACTICAL ODM CROSSHAIR CURSOR & TARGET LOCK
+   ========================================================================== */
+function initCustomCursor() {
+  if (window.innerWidth < 768) return; // Skip on mobile touch devices
+
+  const dot = document.createElement('div');
+  dot.className = 'custom-cursor-dot';
+  const ring = document.createElement('div');
+  ring.className = 'custom-cursor-ring';
+
+  document.body.appendChild(dot);
+  document.body.appendChild(ring);
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+  });
+
+  function renderCursor() {
+    ringX += (mouseX - ringX) * 0.2;
+    ringY += (mouseY - ringY) * 0.2;
+    ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
+
+  // Target lock on interactive combat cards
+  const interactiveTargets = '.titan-card, .character-card, .regiment-card, .btn, .stat-card, .timeline-card';
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactiveTargets)) {
+      document.body.classList.add('cursor-locked');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(interactiveTargets)) {
+      document.body.classList.remove('cursor-locked');
+    }
+  });
+}
+
+/* ==========================================================================
+   PREMIUM FEATURE 2: SPOTLIGHT COMMAND PALETTE (CTRL + K)
+   ========================================================================== */
+function initCommandPalette() {
+  const overlay = document.createElement('div');
+  overlay.className = 'cmd-palette-overlay';
+  overlay.innerHTML = `
+    <div class="cmd-palette-modal">
+      <div class="cmd-input-wrapper">
+        <i class="fa-solid fa-crosshairs"></i>
+        <input type="text" class="cmd-input" placeholder="Search Titans, Scouts, Wall sectors, Battles (or type 'quiz', 'basement')..." autofocus>
+      </div>
+      <div class="cmd-results-list" id="cmd-results"></div>
+      <div class="cmd-footer-shortcuts">
+        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">↑</kbd> <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">↓</kbd> to navigate</span>
+        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">Enter</kbd> to select</span>
+        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">ESC</kbd> to close</span>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const input = overlay.querySelector('.cmd-input');
+  const resultsContainer = overlay.querySelector('#cmd-results');
+
+  // Build searchable index from AOT_DATA
+  const searchableIndex = [];
+
+  if (typeof AOT_DATA !== 'undefined') {
+    if (AOT_DATA.nineTitans) {
+      AOT_DATA.nineTitans.forEach(t => searchableIndex.push({
+        title: t.name,
+        category: 'Nine Titans',
+        desc: t.japanese + ' • ' + t.height,
+        url: 'titans.html'
+      }));
+    }
+    if (AOT_DATA.characters) {
+      AOT_DATA.characters.forEach(c => searchableIndex.push({
+        title: c.name,
+        category: 'Personnel Dossier',
+        desc: c.japanese + ' • ' + c.allegiance,
+        url: 'characters.html'
+      }));
+    }
+    if (AOT_DATA.timeline) {
+      AOT_DATA.timeline.forEach(tl => searchableIndex.push({
+        title: tl.title,
+        category: 'Timeline Milestone',
+        desc: tl.year + ' • ' + tl.impact,
+        url: 'timeline.html'
+      }));
+    }
+    if (AOT_DATA.tacticalMapLocations) {
+      AOT_DATA.tacticalMapLocations.forEach(loc => searchableIndex.push({
+        title: loc.name,
+        category: 'Wall Map Sector',
+        desc: loc.coords,
+        url: 'world.html'
+      }));
+    }
+  }
+
+  // Add Special Commands
+  searchableIndex.push(
+    { title: '104th Cadet Aptitude Exam', category: 'Special Mode', desc: 'Take the military aptitude exam and get your Military ID card', action: 'quiz' },
+    { title: "Grisha's Secret Basement Vault", category: 'Classified Archive', desc: "Unlock Grisha Yeager's 3 classified diaries", action: 'basement' },
+    { title: 'The Nine Titans Codex', category: 'Page Jump', desc: 'Explore all 9 Titan Shifters and Battle Matrix', url: 'titans.html' },
+    { title: 'Personnel Military Dossiers', category: 'Page Jump', desc: 'View character stats, allegiance, and Japanese quotes', url: 'characters.html' },
+    { title: 'Historical Paths Timeline', category: 'Page Jump', desc: 'Explore 2,000 years of Eldian history & Rumbling Simulator', url: 'timeline.html' },
+    { title: 'Concentric Walls & World Atlas', category: 'Page Jump', desc: 'Wall Maria, Rose, Sina specs and tactical radar', url: 'world.html' }
+  );
+
+  let selectedIdx = 0;
+
+  function renderResults(query = '') {
+    const q = query.toLowerCase().trim();
+    const filtered = q === '' ? searchableIndex.slice(0, 8) : searchableIndex.filter(item => 
+      item.title.toLowerCase().includes(q) || 
+      item.category.toLowerCase().includes(q) || 
+      item.desc.toLowerCase().includes(q)
+    ).slice(0, 8);
+
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `<div style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-family: var(--font-tech);">NO MATCHING MILITARY RECORDS FOUND</div>`;
+      return;
+    }
+
+    selectedIdx = Math.min(selectedIdx, filtered.length - 1);
+
+    resultsContainer.innerHTML = filtered.map((item, idx) => `
+      <div class="cmd-result-item ${idx === selectedIdx ? 'selected' : ''}" data-idx="${idx}">
+        <div class="cmd-item-info">
+          <i class="fa-solid fa-shield-halved" style="color: var(--accent-red); font-size: 0.9rem;"></i>
+          <div>
+            <div style="color: #fff; font-family: var(--font-heading); font-size: 0.95rem;">${item.title}</div>
+            <div style="color: var(--text-secondary); font-size: 0.8rem;">${item.desc}</div>
+          </div>
+        </div>
+        <span class="cmd-item-badge">${item.category}</span>
+      </div>
+    `).join('');
+
+    resultsContainer.querySelectorAll('.cmd-result-item').forEach((itemEl, idx) => {
+      itemEl.addEventListener('click', () => {
+        executeCommand(filtered[idx]);
+      });
+    });
+  }
+
+  function executeCommand(item) {
+    overlay.classList.remove('active');
+    if (item.action === 'quiz') {
+      window.openAptitudeQuiz();
+    } else if (item.action === 'basement') {
+      window.openBasementVault();
+    } else if (item.url) {
+      window.location.href = item.url;
+    }
+  }
+
+  function openPalette() {
+    overlay.classList.add('active');
+    input.value = '';
+    selectedIdx = 0;
+    renderResults('');
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closePalette() {
+    overlay.classList.remove('active');
+  }
+
+  // Keyboard trigger (Ctrl+K or Cmd+K)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (overlay.classList.contains('active')) closePalette();
+      else openPalette();
+    } else if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closePalette();
+    } else if (overlay.classList.contains('active')) {
+      const items = resultsContainer.querySelectorAll('.cmd-result-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIdx = (selectedIdx + 1) % items.length;
+        renderResults(input.value);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIdx = (selectedIdx - 1 + items.length) % items.length;
+        renderResults(input.value);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selectedEl = resultsContainer.querySelector('.cmd-result-item.selected');
+        if (selectedEl) selectedEl.click();
+      }
+    }
+  });
+
+  input.addEventListener('input', (e) => {
+    selectedIdx = 0;
+    renderResults(e.target.value);
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closePalette();
+  });
+
+  // Inject Command Palette trigger in Navbars
+  const navControls = document.querySelector('.nav-controls');
+  if (navControls && !document.getElementById('cmd-palette-nav-btn')) {
+    const cmdBtn = document.createElement('button');
+    cmdBtn.id = 'cmd-palette-nav-btn';
+    cmdBtn.className = 'btn';
+    cmdBtn.style.padding = '0.35rem 0.8rem';
+    cmdBtn.style.fontSize = '0.8rem';
+    cmdBtn.style.background = 'rgba(255, 0, 51, 0.15)';
+    cmdBtn.style.borderColor = 'var(--accent-red)';
+    cmdBtn.innerHTML = '<i class="fa-solid fa-terminal"></i> <span style="display:none; @media(min-width:768px){display:inline;}">COMMAND</span> <kbd style="background: rgba(255,255,255,0.15); padding: 1px 4px; border-radius: 3px; font-size: 0.7rem;">Ctrl+K</kbd>';
+    cmdBtn.addEventListener('click', openPalette);
+    navControls.prepend(cmdBtn);
+  }
+
+  window.openCommandPalette = openPalette;
+}
+
+/* ==========================================================================
+   PREMIUM FEATURE 3: 104TH CADET APTITUDE EXAM & MILITARY ID BADGE
+   ========================================================================== */
+function initCadetAptitudeQuiz() {
+  window.openAptitudeQuiz = function() {
+    if (typeof AOT_DATA === 'undefined' || !AOT_DATA.aptitudeQuiz) return;
+
+    let currentQ = 0;
+    const scores = { scout: 0, garrison: 0, mp: 0, shifter: 0 };
+    const questions = AOT_DATA.aptitudeQuiz;
+
+    function renderQuestionModal() {
+      const q = questions[currentQ];
+      window.aotModal.open(`104th Cadet Aptitude Exam • Question ${currentQ + 1}/5`, `
+        <div class="quiz-container">
+          <p style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff; margin-bottom: 1.2rem;">${q.q}</p>
+          <div>
+            ${q.options.map((opt, idx) => `
+              <button class="quiz-option-btn" data-idx="${idx}">
+                <strong style="color: var(--accent-red); margin-right: 0.5rem;">[${String.fromCharCode(65 + idx)}]</strong> ${opt.text}
+              </button>
+            `).join('')}
+          </div>
+          <div style="margin-top: 1.5rem; text-align: right; font-family: var(--font-tech); color: var(--text-muted);">
+            TACTICAL APTITUDE ASSESSMENT EVALUATION IN PROGRESS
+          </div>
+        </div>
+      `);
+
+      document.querySelectorAll('.quiz-option-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const opt = q.options[parseInt(btn.dataset.idx, 10)];
+          scores.scout += opt.score.scout;
+          scores.garrison += opt.score.garrison;
+          scores.mp += opt.score.mp;
+          scores.shifter += opt.score.shifter;
+
+          currentQ++;
+          if (currentQ < questions.length) {
+            renderQuestionModal();
+          } else {
+            renderFinalBadge();
+          }
+        });
+      });
+    }
+
+    function renderFinalBadge() {
+      let assignedRegiment = "Survey Corps (調査兵団)";
+      let regimentTitle = "Elite Scout Vanguard";
+      let motto = "心臓を捧げよ (Devote Your Heart)";
+      let maxScore = scores.scout;
+
+      if (scores.shifter > maxScore) {
+        assignedRegiment = "Titan Shifter Special Operative";
+        regimentTitle = "Inheritor of the Nine";
+        motto = "戦え、戦え (Fight, Fight)";
+        maxScore = scores.shifter;
+      } else if (scores.mp > maxScore) {
+        assignedRegiment = "Military Police Brigade (憲兵団)";
+        regimentTitle = "Wall Sina Central Guard";
+        motto = "王政を守護せよ (Protect the Crown)";
+        maxScore = scores.mp;
+      } else if (scores.garrison > maxScore) {
+        assignedRegiment = "Garrison Regiment (駐屯兵団)";
+        regimentTitle = "Wall Rose Defense Artillery";
+        motto = "壁を守り抜け (Defend the Walls)";
+      }
+
+      window.aotModal.open("Cadet Aptitude Assessment Complete!", `
+        <div style="text-align: center;">
+          <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.4rem; margin-bottom: 0.5rem;">OFFICIAL MILITARY ASSIGNMENT</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.2rem;">Based on your tactical response profile, high command has designated your deployment:</p>
+          
+          <div class="military-id-card">
+            <div class="id-card-header">
+              <div class="id-avatar-circle">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div style="text-align: left;">
+                <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem;">RECRUIT CADET #104</h4>
+                <p style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 0.95rem; letter-spacing: 1px;">${assignedRegiment}</p>
+              </div>
+            </div>
+
+            <div class="id-card-grid" style="text-align: left;">
+              <div>
+                <div class="id-field-label">Specialty Rank:</div>
+                <div class="id-field-val">${regimentTitle}</div>
+              </div>
+              <div>
+                <div class="id-field-label">Regiment Motto:</div>
+                <div class="id-field-val" style="font-size: 0.9rem; color: #ff2a4b;">${motto}</div>
+              </div>
+              <div>
+                <div class="id-field-label">Combat Score:</div>
+                <div class="id-field-val" style="color: var(--accent-gold);">96 / 100</div>
+              </div>
+              <div>
+                <div class="id-field-label">Security Clearance:</div>
+                <div class="id-field-val" style="color: #00f5d4;">LEVEL 4 CLASSIFIED</div>
+              </div>
+            </div>
+
+            <div class="id-official-stamp">VERIFIED PARADIS</div>
+          </div>
+
+          <div style="margin-top: 1.8rem; display: flex; gap: 1rem; justify-content: center;">
+            <button class="btn btn-primary" onclick="window.openAptitudeQuiz()"><i class="fa-solid fa-rotate-right"></i> Retake Exam</button>
+            <button class="btn btn-secondary" onclick="window.aotModal.close()"><i class="fa-solid fa-check"></i> Accept Commission</button>
+          </div>
+        </div>
+      `);
+    }
+
+    renderQuestionModal();
+  };
+}
+
+/* ==========================================================================
+   PREMIUM FEATURE 5: GRISHA'S BASEMENT KEY SECRET VAULT
+   ========================================================================== */
+function initBasementVault() {
+  window.openBasementVault = function() {
+    if (typeof AOT_DATA === 'undefined' || !AOT_DATA.basementJournals) return;
+
+    const journals = AOT_DATA.basementJournals;
+
+    window.aotModal.open("🗝️ The Basement Vault • Classified Records of Grisha Yeager", `
+      <div style="line-height: 1.8;">
+        <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent-gold); padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
+          <h4 style="font-family: var(--font-heading); color: var(--accent-gold);"><i class="fa-solid fa-key"></i> The Key Behind the Desk Drawer in Shiganshina</h4>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.4rem;">
+            Recovered during the Battle of Shiganshina by Eren, Mikasa, and Levi. These three leather-bound manuscripts reveal the true history of the world outside the walls.
+          </p>
+        </div>
+
+        <div>
+          ${journals.map(j => `
+            <div class="journal-book-card">
+              <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin-bottom: 0.2rem;">${j.title}</h4>
+              <div style="font-family: var(--font-tech); color: var(--accent-red); font-size: 0.85rem; margin-bottom: 0.8rem;">${j.subtitle} • ${j.date}</div>
+              <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">${j.content}</p>
+              <div style="background: rgba(0,0,0,0.6); padding: 0.8rem 1rem; border-left: 3px solid var(--accent-gold); border-radius: 4px;">
+                <div style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 0.9rem;">${j.quoteJapanese}</div>
+                <div style="font-style: italic; color: var(--text-primary); font-size: 0.85rem;">"${j.quote}"</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `);
+  };
+
+  // Inject Basement Key button in Navbars
+  const navControls = document.querySelector('.nav-controls');
+  if (navControls && !document.getElementById('basement-nav-key-btn')) {
+    const keyBtn = document.createElement('button');
+    keyBtn.id = 'basement-nav-key-btn';
+    keyBtn.className = 'basement-key-trigger';
+    keyBtn.innerHTML = '<i class="fa-solid fa-key"></i> <span>BASEMENT</span>';
+    keyBtn.title = "Unlock Grisha's Secret Basement Vault";
+    keyBtn.addEventListener('click', window.openBasementVault);
+    navControls.prepend(keyBtn);
+  }
+}
+
+/* ==========================================================================
+   PREMIUM FEATURE 6: 3D CARD TILT & HOLOGRAPHIC SPECULAR SHEEN
+   ========================================================================== */
+function init3DCardTilt() {
+  if (window.innerWidth < 1024) return; // Only desktop mice
+
+  function applyTilt(el) {
+    el.classList.add('tilt-card');
+    if (!el.querySelector('.tilt-glare')) {
+      const glare = document.createElement('div');
+      glare.className = 'tilt-glare';
+      el.appendChild(glare);
+    }
+
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+      const glare = el.querySelector('.tilt-glare');
+      if (glare) {
+        const glareX = (x / rect.width) * 100;
+        const glareY = (y / rect.height) * 100;
+        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.18) 0%, transparent 60%)`;
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
+  }
+
+  document.querySelectorAll('.titan-card, .character-card, .regiment-card, .stat-card, .disclosure-card').forEach(applyTilt);
+}
+
