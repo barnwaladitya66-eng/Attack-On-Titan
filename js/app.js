@@ -1271,9 +1271,10 @@ function initCommandPalette() {
     if (e.target === overlay) closePalette();
   });
 
-  // Inject Command Palette trigger in Navbars
+  // Inject Command Palette trigger in Navbars (Only on non-home pages per directive)
+  const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !!document.querySelector('.hero-section');
   const navControls = document.querySelector('.nav-controls');
-  if (navControls && !document.getElementById('cmd-palette-nav-btn')) {
+  if (!isHomePage && navControls && !document.getElementById('cmd-palette-nav-btn')) {
     const cmdBtn = document.createElement('button');
     cmdBtn.id = 'cmd-palette-nav-btn';
     cmdBtn.className = 'btn';
@@ -1318,44 +1319,46 @@ function initCadetAptitudeQuiz() {
         </div>
       `);
 
-      document.querySelectorAll('.quiz-option-btn').forEach(btn => {
+      const modalBody = document.querySelector('.modal-body');
+      if (!modalBody) return;
+
+      modalBody.querySelectorAll('.quiz-option-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          const opt = q.options[parseInt(btn.dataset.idx, 10)];
-          scores.scout += opt.score.scout;
-          scores.garrison += opt.score.garrison;
-          scores.mp += opt.score.mp;
-          scores.shifter += opt.score.shifter;
+          const idx = parseInt(btn.dataset.idx, 10);
+          const selected = q.options[idx];
+          scores.scout += selected.score.scout;
+          scores.garrison += selected.score.garrison;
+          scores.mp += selected.score.mp;
+          scores.shifter += selected.score.shifter;
 
           currentQ++;
           if (currentQ < questions.length) {
             renderQuestionModal();
           } else {
-            renderFinalBadge();
+            renderQuizResults();
           }
         });
       });
     }
 
-    function renderFinalBadge() {
-      let assignedRegiment = "Survey Corps (調査兵団)";
-      let regimentTitle = "Elite Scout Vanguard";
-      let motto = "心臓を捧げよ (Devote Your Heart)";
-      let maxScore = scores.scout;
+    function renderQuizResults() {
+      let assignedRegiment = "SURVEY CORPS (SCOUT REGIMENT)";
+      let regimentTitle = "Special Operations Vanguard";
+      let motto = "Shinzo wo Sasageyo • Dedicate Your Heart!";
 
-      if (scores.shifter > maxScore) {
-        assignedRegiment = "Titan Shifter Special Operative";
-        regimentTitle = "Inheritor of the Nine";
-        motto = "戦え、戦え (Fight, Fight)";
-        maxScore = scores.shifter;
-      } else if (scores.mp > maxScore) {
-        assignedRegiment = "Military Police Brigade (憲兵団)";
-        regimentTitle = "Wall Sina Central Guard";
-        motto = "王政を守護せよ (Protect the Crown)";
-        maxScore = scores.mp;
-      } else if (scores.garrison > maxScore) {
-        assignedRegiment = "Garrison Regiment (駐屯兵団)";
-        regimentTitle = "Wall Rose Defense Artillery";
-        motto = "壁を守り抜け (Defend the Walls)";
+      const maxScore = Math.max(scores.scout, scores.garrison, scores.mp, scores.shifter);
+      if (maxScore === scores.mp) {
+        assignedRegiment = "MILITARY POLICE BRIGADE";
+        regimentTitle = "Interior Royal Sentinel";
+        motto = "For the King and Interior Peace";
+      } else if (maxScore === scores.garrison) {
+        assignedRegiment = "GARRISON REGIMENT";
+        regimentTitle = "Wall Fortification Heavy Artillery";
+        motto = "The Shield of Humanity";
+      } else if (maxScore === scores.shifter) {
+        assignedRegiment = "TITAN SHIFTER CORPS";
+        regimentTitle = "The Coordinate Vanguard";
+        motto = "Advance Ever Forward";
       }
 
       window.aotModal.open("Cadet Aptitude Assessment Complete!", `
@@ -1409,21 +1412,164 @@ function initCadetAptitudeQuiz() {
 }
 
 /* ==========================================================================
-   PREMIUM FEATURE 5: GRISHA'S BASEMENT KEY SECRET VAULT
+   FEATURE 5: SHIGANSHINA BASEMENT LOCK PUZZLE & VAULT
    ========================================================================== */
 function initBasementVault() {
-  window.openBasementVault = function() {
-    if (typeof AOT_DATA === 'undefined' || !AOT_DATA.basementJournals) return;
+  const puzzleData = [
+    {
+      cylinder: "Cylinder I • The Primordial Genesis",
+      riddle: "What ancient anomaly bonded with Ymir Fritz beneath the giant tree in the prehistoric forest?",
+      options: [
+        { text: "The Hallucigenia Organism (Spinal Source of Living Matter)", correct: true },
+        { text: "A Golden Dragon Core", correct: false },
+        { text: "A Volcanic Iceburst Stone Meteorite", correct: false }
+      ]
+    },
+    {
+      cylinder: "Cylinder II • The Secret Informant",
+      riddle: "What was the codename of the Restorationist double-agent inside Marley Public Security?",
+      options: [
+        { text: "The Wolf (オオカミ)", correct: false },
+        { text: "The Owl / Eren Kruger (フクロウ)", correct: true },
+        { text: "The Falcon (ハヤブサ)", correct: false }
+      ]
+    },
+    {
+      cylinder: "Cylinder III • The Outside Truth",
+      riddle: "What truth did Grisha's photograph reveal beyond the ocean?",
+      options: [
+        { text: "The entire outer continent is an empty wasteland", correct: false },
+        { text: "Humanity has not perished; advanced human civilization lives across the sea", correct: true },
+        { text: "The outside ocean is filled with endless fire and magma", correct: false }
+      ]
+    }
+  ];
 
+  window.openBasementPuzzle = function() {
+    let selections = [-1, -1, -1];
+
+    function renderPuzzleModal(feedbackMsg = '', isSuccess = false) {
+      window.aotModal.open("🗝️ The Basement Deadbolt • Dr. Yeager's Memory Cipher Puzzle", `
+        <div class="basement-puzzle-container">
+          <div class="puzzle-door-chamber">
+            <div class="puzzle-door-icon">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem;">THE SEALED IRON KEYHOLE</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 580px; margin: 0.5rem auto 0;">
+              Before you lies the desk in the Yeager basement in Shiganshina. To insert and turn the golden key, you must align the 3 ancient brass tumblers with Dr. Grisha Yeager's true memories.
+            </p>
+          </div>
+
+          ${feedbackMsg ? `
+            <div class="puzzle-feedback-msg ${isSuccess ? 'success' : 'error'}">
+              <i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${feedbackMsg}
+            </div>
+          ` : ''}
+
+          <div class="puzzle-tumblers-grid">
+            ${puzzleData.map((p, cIdx) => `
+              <div class="puzzle-tumbler-box" data-cidx="${cIdx}">
+                <div class="puzzle-tumbler-header">
+                  <span><i class="fa-solid fa-gears"></i> ${p.cylinder}</span>
+                  <span style="color: ${selections[cIdx] !== -1 ? '#00f5d4' : 'var(--text-muted)'}; font-size: 0.75rem;">
+                    ${selections[cIdx] !== -1 ? 'ALIGNED ✓' : 'LOCKED'}
+                  </span>
+                </div>
+                <div class="puzzle-riddle-text">${p.riddle}</div>
+                <div class="puzzle-options-list">
+                  ${p.options.map((opt, oIdx) => `
+                    <button class="puzzle-option-btn ${selections[cIdx] === oIdx ? 'selected' : ''}" data-cidx="${cIdx}" data-oidx="${oIdx}">
+                      <strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt.text}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+            <button class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.8rem 2rem; font-size: 1rem;">
+              <i class="fa-solid fa-key"></i> Turn Key & Unlock Vault
+            </button>
+          </div>
+        </div>
+      `);
+
+      const modalBody = document.querySelector('.modal-body');
+      if (!modalBody) return;
+
+      modalBody.querySelectorAll('.puzzle-option-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cIdx = parseInt(btn.dataset.cidx, 10);
+          const oIdx = parseInt(btn.dataset.oidx, 10);
+          selections[cIdx] = oIdx;
+          renderPuzzleModal();
+        });
+      });
+
+      const turnBtn = modalBody.querySelector('#puzzle-turn-key-btn');
+      if (turnBtn) {
+        turnBtn.addEventListener('click', () => {
+          if (selections.includes(-1)) {
+            renderPuzzleModal("Please select an answer for all 3 tumbler cylinders before turning the key!", false);
+            return;
+          }
+
+          const isAllCorrect = puzzleData.every((p, idx) => p.options[selections[idx]].correct === true);
+
+          if (isAllCorrect) {
+            localStorage.setItem('aot_basement_unlocked', 'true');
+            updateBasementNavLabel(true);
+            window.aotModal.open("✨ VAULT UNLOCKED! • The Basement Key Turns", `
+              <div style="text-align: center; padding: 1.5rem 0;">
+                <div style="font-size: 4rem; color: var(--accent-gold); animation: pulse 1s infinite alternate; margin-bottom: 1rem;">
+                  <i class="fa-solid fa-unlock-keyhole"></i>
+                </div>
+                <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem;">KLANG-CLICK!</h3>
+                <p style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0.5rem 0 1rem;">
+                  The Iron Tumblers Disengage • Key Successfully Turned
+                </p>
+                <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
+                  The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph.
+                </p>
+                <button class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+                  <i class="fa-solid fa-book-open"></i> Read Grisha's 3 Classified Journals
+                </button>
+              </div>
+            `);
+          } else {
+            renderPuzzleModal("The heavy iron tumblers resist! The memory cipher sequence is incorrect. Re-read the clues and align the tumblers correctly.", false);
+          }
+        });
+      }
+    }
+
+    renderPuzzleModal();
+  };
+
+  window.openBasementVault = function() {
+    const isUnlocked = localStorage.getItem('aot_basement_unlocked') === 'true';
+    if (!isUnlocked) {
+      window.openBasementPuzzle();
+      return;
+    }
+
+    if (typeof AOT_DATA === 'undefined' || !AOT_DATA.basementJournals) return;
     const journals = AOT_DATA.basementJournals;
 
     window.aotModal.open("🗝️ The Basement Vault • Classified Records of Grisha Yeager", `
       <div style="line-height: 1.8;">
-        <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent-gold); padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem;">
-          <h4 style="font-family: var(--font-heading); color: var(--accent-gold);"><i class="fa-solid fa-key"></i> The Key Behind the Desk Drawer in Shiganshina</h4>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.4rem;">
-            Recovered during the Battle of Shiganshina by Eren, Mikasa, and Levi. These three leather-bound manuscripts reveal the true history of the world outside the walls.
-          </p>
+        <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent-gold); padding: 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h4 style="font-family: var(--font-heading); color: var(--accent-gold);"><i class="fa-solid fa-key"></i> Key Acquired & Unlocked</h4>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.3rem;">
+              Recovered during the Battle of Shiganshina. These three manuscripts reveal the true history of the world outside the walls.
+            </p>
+          </div>
+          <button class="btn btn-secondary" onclick="localStorage.removeItem('aot_basement_unlocked'); updateBasementNavLabel(false); window.openBasementPuzzle();" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            <i class="fa-solid fa-lock"></i> Re-lock Puzzle
+          </button>
         </div>
 
         <div>
@@ -1443,14 +1589,32 @@ function initBasementVault() {
     `);
   };
 
+  function updateBasementNavLabel(unlocked) {
+    const keyBtn = document.getElementById('basement-nav-key-btn');
+    if (keyBtn) {
+      if (unlocked) {
+        keyBtn.innerHTML = '<i class="fa-solid fa-key"></i> <span>BASEMENT (UNLOCKED)</span>';
+        keyBtn.title = "Access Grisha's Unlocked Basement Vault";
+      } else {
+        keyBtn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>BASEMENT (PUZZLE)</span>';
+        keyBtn.title = "Solve Shiganshina Lock Puzzle to get Basement Key";
+      }
+    }
+  }
+
   // Inject Basement Key button in Navbars
   const navControls = document.querySelector('.nav-controls');
   if (navControls && !document.getElementById('basement-nav-key-btn')) {
     const keyBtn = document.createElement('button');
     keyBtn.id = 'basement-nav-key-btn';
     keyBtn.className = 'basement-key-trigger';
-    keyBtn.innerHTML = '<i class="fa-solid fa-key"></i> <span>BASEMENT</span>';
-    keyBtn.title = "Unlock Grisha's Secret Basement Vault";
+    const isUnlocked = localStorage.getItem('aot_basement_unlocked') === 'true';
+    if (isUnlocked) {
+      keyBtn.innerHTML = '<i class="fa-solid fa-key"></i> <span>BASEMENT (UNLOCKED)</span>';
+    } else {
+      keyBtn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>BASEMENT (PUZZLE)</span>';
+    }
+    keyBtn.title = "Solve Puzzle to Unlock Basement Key";
     keyBtn.addEventListener('click', window.openBasementVault);
     navControls.prepend(keyBtn);
   }

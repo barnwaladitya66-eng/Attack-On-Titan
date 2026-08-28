@@ -1774,3 +1774,127 @@
   flex-direction: column;
 }
 
+/* ==========================================================================
+   FEATURE: SHIGANSHINA BASEMENT LOCK PUZZLE
+   ========================================================================== */
+.basement-puzzle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.puzzle-door-chamber {
+  background: radial-gradient(circle at center, #1b0a0e 0%, #080204 100%);
+  border: 2px solid #8b5a2b;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+.puzzle-door-icon {
+  font-size: 3.5rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.8rem;
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+}
+
+.puzzle-tumblers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+
+.puzzle-tumbler-box {
+  background: rgba(14, 5, 8, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 6px;
+  padding: 1.2rem;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.puzzle-tumbler-box:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.puzzle-tumbler-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-tech);
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.puzzle-riddle-text {
+  font-size: 0.9rem;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.puzzle-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.puzzle-option-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  line-height: 1.3;
+}
+
+.puzzle-option-btn:hover {
+  background: rgba(255, 0, 51, 0.15);
+  border-color: var(--accent-red);
+  color: #fff;
+}
+
+.puzzle-option-btn.selected {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--accent-gold);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.puzzle-feedback-msg {
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: none;
+  margin: 1rem 0;
+  animation: fadeIn 0.3s ease;
+}
+
+.puzzle-feedback-msg.error {
+  display: block;
+  background: rgba(255, 0, 51, 0.15);
+  border: 1px solid var(--accent-red);
+  color: #ff4d6d;
+}
+
+.puzzle-feedback-msg.success {
+  display: block;
+  background: rgba(6, 214, 160, 0.15);
+  border: 1px solid #06d6a0;
+  color: #06d6a0;
+}
+
+
