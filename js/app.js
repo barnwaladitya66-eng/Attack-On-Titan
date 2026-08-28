@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initScrollTriggerSystem();
-  initCustomCursor();
   initCommandPalette();
   initBasementVault();
   init3DCardTilt();
@@ -1050,54 +1049,6 @@ function initTacticalMapExplorer() {
   });
 
   renderPinIntel(locs[0].id);
-}
-
-/* ==========================================================================
-   PREMIUM FEATURE 1: TACTICAL ODM CROSSHAIR CURSOR & TARGET LOCK
-   ========================================================================== */
-function initCustomCursor() {
-  if (window.innerWidth < 768) return; // Skip on mobile touch devices
-
-  const dot = document.createElement('div');
-  dot.className = 'custom-cursor-dot';
-  const ring = document.createElement('div');
-  ring.className = 'custom-cursor-ring';
-
-  document.body.appendChild(dot);
-  document.body.appendChild(ring);
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let ringX = mouseX;
-  let ringY = mouseY;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-  });
-
-  function renderCursor() {
-    ringX += (mouseX - ringX) * 0.2;
-    ringY += (mouseY - ringY) * 0.2;
-    ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
-
-  // Target lock on interactive combat cards
-  const interactiveTargets = '.titan-card, .character-card, .regiment-card, .btn, .stat-card, .timeline-card';
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactiveTargets)) {
-      document.body.classList.add('cursor-locked');
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactiveTargets)) {
-      document.body.classList.remove('cursor-locked');
-    }
-  });
 }
 
 /* ==========================================================================
