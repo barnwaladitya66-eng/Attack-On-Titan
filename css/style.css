@@ -979,3 +979,233 @@ body::before {
     padding: 1.5rem;
   }
 }
+
+/* ==========================================================================
+   FEATURE 4: SMOOTH PAGE TRANSITIONS (GSAP / FRAMER MOTION STYLE CURTAIN WIPE)
+   ========================================================================== */
+.page-wipe-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(30, 2, 8, 0.98) 0%, rgba(0, 0, 0, 0.99) 100%);
+  border-bottom: 3px solid var(--accent-red);
+  z-index: 999999;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+.page-wipe-curtain.wipe-in {
+  transform: translateY(0%);
+  pointer-events: auto;
+}
+
+.page-wipe-curtain.wipe-out {
+  transform: translateY(100%);
+}
+
+.wipe-loader-content {
+  text-align: center;
+}
+
+.wipe-emblem {
+  font-size: 2.8rem;
+  color: var(--accent-red);
+  animation: emblemPulse 0.8s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px var(--accent-red));
+}
+
+@keyframes emblemPulse {
+  from { transform: scale(0.9); opacity: 0.7; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+
+.wipe-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: #fff;
+  margin-top: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   FEATURE 5: DYNAMIC FACTION THEME SYSTEM & ACCENT ENGINE
+   ========================================================================== */
+/* 1. Scout Regiment / Survey Corps Theme */
+[data-theme="scouts"] {
+  --bg-primary: #040914;
+  --bg-secondary: #081226;
+  --bg-card: rgba(10, 22, 44, 0.92);
+  --bg-card-hover: rgba(16, 34, 68, 0.98);
+  --border-card: rgba(0, 187, 249, 0.35);
+  --border-gold: rgba(0, 187, 249, 0.55);
+  --accent-red: #00bbf9;
+  --accent-crimson: #0077b6;
+  --accent-amber: #48cae4;
+  --accent-gold: #ffd166;
+  --accent-emerald: #06d6a0;
+  --accent-scout-blue: #0077b6;
+  --accent-titan-glow: #00bbf9;
+  --text-highlight: #00bbf9;
+  --glow-red: 0 0 25px rgba(0, 187, 249, 0.65);
+}
+
+/* 2. Garrison Regiment Theme */
+[data-theme="garrison"] {
+  --bg-primary: #0d0608;
+  --bg-secondary: #170b0e;
+  --bg-card: rgba(26, 12, 16, 0.92);
+  --bg-card-hover: rgba(38, 18, 24, 0.98);
+  --border-card: rgba(247, 127, 0, 0.35);
+  --border-gold: rgba(247, 127, 0, 0.55);
+  --accent-red: #f77f00;
+  --accent-crimson: #d62828;
+  --accent-amber: #fcbf49;
+  --accent-gold: #fcbf49;
+  --accent-emerald: #e63946;
+  --accent-scout-blue: #d62828;
+  --accent-titan-glow: #f77f00;
+  --text-highlight: #f77f00;
+  --glow-red: 0 0 25px rgba(247, 127, 0, 0.65);
+}
+
+/* 3. Military Police Brigade Theme */
+[data-theme="mp"] {
+  --bg-primary: #060d0a;
+  --bg-secondary: #0c1813;
+  --bg-card: rgba(12, 28, 22, 0.92);
+  --bg-card-hover: rgba(18, 42, 33, 0.98);
+  --border-card: rgba(6, 214, 160, 0.35);
+  --border-gold: rgba(6, 214, 160, 0.55);
+  --accent-red: #06d6a0;
+  --accent-crimson: #2d6a4f;
+  --accent-amber: #52b788;
+  --accent-gold: #ffd166;
+  --accent-emerald: #06d6a0;
+  --accent-scout-blue: #2d6a4f;
+  --accent-titan-glow: #06d6a0;
+  --text-highlight: #06d6a0;
+  --glow-red: 0 0 25px rgba(6, 214, 160, 0.65);
+}
+
+/* 4. The Nine Titans / Magma Shifter Theme */
+[data-theme="titans"] {
+  --bg-primary: #120401;
+  --bg-secondary: #1f0802;
+  --bg-card: rgba(36, 11, 4, 0.92);
+  --bg-card-hover: rgba(54, 17, 6, 0.98);
+  --border-card: rgba(255, 84, 0, 0.4);
+  --border-gold: rgba(255, 158, 0, 0.6);
+  --accent-red: #ff5400;
+  --accent-crimson: #d00000;
+  --accent-amber: #ff9e00;
+  --accent-gold: #ffe600;
+  --accent-emerald: #ffaa00;
+  --accent-scout-blue: #9d0208;
+  --accent-titan-glow: #ff5400;
+  --text-highlight: #ff9e00;
+  --glow-red: 0 0 25px rgba(255, 84, 0, 0.7);
+}
+
+/* 5. Yeagerist / Blood Black (Default) */
+[data-theme="yeagerist"] {
+  --bg-primary: #000000;
+  --bg-secondary: #050102;
+  --bg-card: rgba(10, 3, 5, 0.92);
+  --bg-card-hover: rgba(22, 6, 10, 0.98);
+  --border-card: rgba(255, 0, 51, 0.25);
+  --border-gold: rgba(255, 0, 51, 0.45);
+  --accent-red: #ff0033;
+  --accent-crimson: #cc0029;
+  --accent-amber: #ff2a4b;
+  --accent-gold: #ffd166;
+  --accent-emerald: #00f5d4;
+  --accent-scout-blue: #2a050a;
+  --accent-titan-glow: #ff0033;
+  --text-highlight: #ff2a4b;
+  --glow-red: 0 0 25px rgba(255, 0, 51, 0.65);
+}
+
+/* Faction Switcher Widget in Navbar */
+.faction-switcher-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.faction-toggle-btn {
+  background: rgba(20, 6, 10, 0.85);
+  border: 1px solid var(--accent-red);
+  color: #fff;
+  padding: 0.35rem 0.8rem;
+  border-radius: 4px;
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.faction-toggle-btn:hover {
+  background: var(--accent-red);
+  color: #000;
+  box-shadow: var(--glow-red);
+}
+
+.faction-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(12, 4, 6, 0.98);
+  border: 1px solid var(--accent-red);
+  border-radius: 6px;
+  padding: 0.5rem;
+  width: 220px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), var(--glow-red);
+  z-index: 10001;
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  backdrop-filter: blur(14px);
+}
+
+.faction-dropdown-menu.show {
+  display: flex;
+}
+
+.faction-option-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all var(--transition-fast);
+}
+
+.faction-option-btn:hover,
+.faction-option-btn.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: currentColor;
+}
+

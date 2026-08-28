@@ -1428,3 +1428,349 @@
 .tilt-card:hover .tilt-glare {
   opacity: 1;
 }
+
+/* ==========================================================================
+   FEATURE 1: ENHANCED CHARACTER & TITAN 3D SHOWCASE CARDS (ROTATE-Y / HOVER STATS)
+   ========================================================================== */
+.showcase-3d-card {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.showcase-3d-card:hover {
+  transform: translateY(-8px) rotateX(4deg) rotateY(-2deg) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), var(--glow-red);
+}
+
+.showcase-regiment-seal {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 1.4rem;
+  opacity: 0.85;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.showcase-3d-card:hover .showcase-regiment-seal {
+  transform: scale(1.2) rotate(12deg);
+  filter: drop-shadow(0 0 10px var(--accent-gold));
+}
+
+.stat-hover-reveal {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease, margin-top 0.35s ease;
+}
+
+.character-card:hover .stat-hover-reveal,
+.titan-card:hover .stat-hover-reveal {
+  max-height: 250px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   FEATURE 2: INTERACTIVE STORY TIMELINE EXPANDABLE MEDIA DRAWERS
+   ========================================================================== */
+.timeline-drawer-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 0, 51, 0.4);
+  color: var(--accent-gold);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.timeline-drawer-btn:hover {
+  background: rgba(255, 0, 51, 0.15);
+  border-color: var(--accent-red);
+  color: #fff;
+}
+
+.timeline-drawer-btn i.fa-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.timeline-drawer-btn.open i.fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.timeline-media-drawer {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, padding 0.4s ease;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+  border-left: 3px solid var(--accent-gold);
+  margin-top: 0.5rem;
+}
+
+.timeline-media-drawer.open {
+  max-height: 500px;
+  opacity: 1;
+  padding: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.drawer-dialogue-box {
+  background: rgba(18, 5, 8, 0.9);
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #fff;
+  border: 1px solid rgba(255, 0, 51, 0.2);
+}
+
+.drawer-tag-pill {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--accent-gold);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+/* ==========================================================================
+   FEATURE 3: MULTIMEDIA FAN EXPERIENCE HUB (OST PLAYER & 4K ART GALLERY)
+   ========================================================================== */
+.multimedia-hub-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.multimedia-tabs-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.mm-tab-btn {
+  background: rgba(18, 6, 9, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  padding: 0.6rem 1.4rem;
+  border-radius: 4px;
+  font-family: var(--font-tech);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mm-tab-btn:hover,
+.mm-tab-btn.active {
+  background: var(--accent-red);
+  color: #000;
+  border-color: var(--accent-red);
+  box-shadow: var(--glow-red);
+}
+
+/* OST Player Section */
+.ost-player-card {
+  background: linear-gradient(135deg, rgba(20, 6, 10, 0.95) 0%, rgba(5, 1, 2, 0.98) 100%);
+  border: 1px solid var(--accent-red);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.ost-current-track-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.2rem;
+}
+
+.ost-waveform-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 48px;
+  padding: 0 10px;
+}
+
+.waveform-bar {
+  width: 4px;
+  background: var(--accent-red);
+  border-radius: 2px;
+  height: 8px;
+  transition: height 0.15s ease;
+}
+
+.ost-player-card.playing .waveform-bar {
+  animation: waveDance 1.2s ease-in-out infinite alternate;
+}
+
+.ost-player-card.playing .waveform-bar:nth-child(2n) { animation-delay: 0.2s; }
+.ost-player-card.playing .waveform-bar:nth-child(3n) { animation-delay: 0.4s; }
+.ost-player-card.playing .waveform-bar:nth-child(4n) { animation-delay: 0.6s; }
+
+@keyframes waveDance {
+  0% { height: 6px; background: var(--accent-red); }
+  50% { height: 42px; background: var(--accent-gold); }
+  100% { height: 16px; background: var(--accent-red); }
+}
+
+.ost-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+
+.ost-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ost-btn:hover {
+  background: var(--accent-red);
+  color: #000;
+  border-color: var(--accent-red);
+  transform: scale(1.1);
+}
+
+.ost-btn.play-main {
+  width: 58px;
+  height: 58px;
+  background: var(--accent-red);
+  color: #000;
+  border-color: var(--accent-red);
+  font-size: 1.4rem;
+}
+
+.ost-track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.ost-track-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ost-track-row:hover,
+.ost-track-row.active {
+  background: rgba(255, 0, 51, 0.15);
+  border-color: var(--accent-red);
+}
+
+/* 4K Art Gallery Grid */
+.art-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.art-card-item {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform var(--transition-normal), border-color var(--transition-fast), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.art-card-item:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.art-card-thumb {
+  height: 170px;
+  background: linear-gradient(135deg, #1f080c 0%, #080204 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.art-card-thumb i {
+  font-size: 3rem;
+  color: var(--accent-red);
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.art-card-item:hover .art-card-thumb i {
+  transform: scale(1.15);
+  color: var(--accent-gold);
+}
+
+.art-res-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.art-card-body {
+  padding: 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
