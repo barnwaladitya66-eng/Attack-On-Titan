@@ -1,13 +1,9 @@
 // Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
-  initFactionThemeSwitcher();
-  initSmoothPageTransitions();
   initNavigation();
   initScrollTriggerSystem();
   initCommandPalette();
   initBasementVault();
-  initMultimediaHub();
-  init3DCardTilt();
   initCadetAptitudeQuiz();
   initPageControllers();
 });
@@ -342,9 +338,7 @@ function initTimelinePage() {
       return;
     }
 
-    container.innerHTML = filtered.map((item, idx) => {
-      const drawer = AOT_DATA.timelineMediaDrawers ? AOT_DATA.timelineMediaDrawers[item.id] : null;
-      return `
+    container.innerHTML = filtered.map((item, idx) => `
       <div class="timeline-node reveal-on-scroll stagger-${(idx % 2) + 1}" data-id="${item.id}">
         <div class="timeline-marker"></div>
         <div class="timeline-card">
@@ -372,59 +366,12 @@ function initTimelinePage() {
             ${item.keyFigures.map(fig => `<span class="figure-tag"><i class="fa-solid fa-user"></i> ${fig}</span>`).join('')}
           </div>
 
-          <!-- Feature 2: Expandable Tactical Media Drawer -->
-          ${drawer ? `
-            <button class="timeline-drawer-btn" data-drawer-id="${item.id}">
-              <span><i class="fa-solid fa-photo-film"></i> Tactical Media & Dialogue Drawer</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            <div class="timeline-media-drawer" id="drawer-${item.id}">
-              <div class="drawer-grid">
-                <div>
-                  <strong style="color: var(--accent-gold); font-family: var(--font-tech); font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                    <i class="fa-solid fa-map-location-dot"></i> Tactical Event Diagram & Telemetry:
-                  </strong>
-                  <p style="font-size: 0.85rem; color: #fff;">${drawer.tacticalDiagram}</p>
-                </div>
-                <div class="drawer-dialogue-box">
-                  <strong style="color: var(--accent-red); font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                    <i class="fa-solid fa-comment-dots"></i> Declassified Audio/Dialogue Transcript:
-                  </strong>
-                  <p style="font-size: 0.85rem; line-height: 1.5; white-space: pre-line;">${drawer.declassifiedDialogue}</p>
-                </div>
-                <div>
-                  <strong style="color: #ff4d6d; font-family: var(--font-tech); font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                    <i class="fa-solid fa-skull-crossbones"></i> Casualties & Sacrifices:
-                  </strong>
-                  <p style="font-size: 0.85rem; color: var(--text-secondary);">${drawer.keyCasualties}</p>
-                </div>
-                <div>
-                  ${drawer.intelTags.map(tag => `<span class="drawer-tag-pill">#${tag}</span>`).join('')}
-                </div>
-              </div>
-            </div>
-          ` : ''}
-
           <button class="btn btn-secondary timeline-inspect-btn" data-id="${item.id}" style="margin-top: 1.2rem; width: 100%; padding: 0.6rem 1rem; font-size: 0.85rem;">
             <i class="fa-solid fa-magnifying-glass"></i> Full Historical Intelligence
           </button>
         </div>
       </div>
-      `;
-    }).join('');
-
-    // Bind Timeline Drawer Accordions
-    container.querySelectorAll('.timeline-drawer-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const drawerId = btn.dataset.drawerId;
-        const drawerEl = container.querySelector(`#drawer-${drawerId}`);
-        if (drawerEl) {
-          const isOpen = drawerEl.classList.contains('open');
-          drawerEl.classList.toggle('open', !isOpen);
-          btn.classList.toggle('open', !isOpen);
-        }
-      });
-    });
+    `).join('');
 
     container.querySelectorAll('.timeline-inspect-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1412,7 +1359,7 @@ function initCadetAptitudeQuiz() {
 }
 
 /* ==========================================================================
-   FEATURE 5: SHIGANSHINA BASEMENT LOCK PUZZLE & VAULT
+   FEATURE: SHIGANSHINA BASEMENT LOCK PUZZLE & CLASSIFIED VAULT
    ========================================================================== */
 function initBasementVault() {
   const puzzleData = [
@@ -1436,29 +1383,56 @@ function initBasementVault() {
     },
     {
       cylinder: "Cylinder III • The Outside Truth",
-      riddle: "What truth did Grisha's photograph reveal beyond the ocean?",
+      riddle: "What truth did Grisha's secret photograph reveal beyond the ocean?",
       options: [
-        { text: "The entire outer continent is an empty wasteland", correct: false },
+        { text: "The entire outer continent is a deserted wasteland", correct: false },
         { text: "Humanity has not perished; advanced human civilization lives across the sea", correct: true },
         { text: "The outside ocean is filled with endless fire and magma", correct: false }
+      ]
+    },
+    {
+      cylinder: "Cylinder IV • The Royal Wall Vow",
+      riddle: "Which 145th Eldian Monarch constructed the Three Walls and bound his successors with the Vow Renouncing War?",
+      options: [
+        { text: "King Karl Fritz (145th Eldian King)", correct: true },
+        { text: "King Uri Reiss", correct: false },
+        { text: "King Rod Reiss", correct: false }
+      ]
+    },
+    {
+      cylinder: "Cylinder V • The Attack Titan's Power",
+      riddle: "What unique chronological power belongs solely to the Attack Titan among the Nine Shifters?",
+      options: [
+        { text: "Complete physical immunity to Thunder Spear explosions", correct: false },
+        { text: "The ability to perceive and influence the future memories of its inheritors", correct: true },
+        { text: "Instantaneous underwater navigation across the ocean", correct: false }
       ]
     }
   ];
 
   window.openBasementPuzzle = function() {
-    let selections = [-1, -1, -1];
+    let selections = [-1, -1, -1, -1, -1];
 
     function renderPuzzleModal(feedbackMsg = '', isSuccess = false) {
-      window.aotModal.open("🗝️ The Basement Deadbolt • Dr. Yeager's Memory Cipher Puzzle", `
+      const answeredCount = selections.filter(s => s !== -1).length;
+
+      window.aotModal.open("🗝️ The Basement Deadbolt • Dr. Yeager's Memory Cipher", `
         <div class="basement-puzzle-container">
           <div class="puzzle-door-chamber">
             <div class="puzzle-door-icon">
               <i class="fa-solid fa-lock"></i>
             </div>
-            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem;">THE SEALED IRON KEYHOLE</h3>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 580px; margin: 0.5rem auto 0;">
-              Before you lies the desk in the Yeager basement in Shiganshina. To insert and turn the golden key, you must align the 3 ancient brass tumblers with Dr. Grisha Yeager's true memories.
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem;">THE SHIGANSHINA DEADBOLT</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 600px; margin: 0.5rem auto 0.8rem;">
+              Before you lies the desk in the Yeager basement. Click your chosen answer for each of the 5 ancient brass cipher tumblers to align Dr. Grisha Yeager's memories, then turn the golden key!
             </p>
+
+            <div class="puzzle-status-bar">
+              <span><i class="fa-solid fa-compass"></i> CYLINDER PROGRESS:</span>
+              <strong style="color: ${answeredCount === 5 ? '#00f5d4' : 'var(--accent-gold)'};">
+                ${answeredCount} / 5 ALIGNED ${answeredCount === 5 ? '✓ (READY TO TURN KEY)' : ''}
+              </strong>
+            </div>
           </div>
 
           ${feedbackMsg ? `
@@ -1469,18 +1443,19 @@ function initBasementVault() {
 
           <div class="puzzle-tumblers-grid">
             ${puzzleData.map((p, cIdx) => `
-              <div class="puzzle-tumbler-box" data-cidx="${cIdx}">
+              <div class="puzzle-tumbler-box ${selections[cIdx] !== -1 ? 'answered' : ''}" data-cidx="${cIdx}">
                 <div class="puzzle-tumbler-header">
                   <span><i class="fa-solid fa-gears"></i> ${p.cylinder}</span>
-                  <span style="color: ${selections[cIdx] !== -1 ? '#00f5d4' : 'var(--text-muted)'}; font-size: 0.75rem;">
-                    ${selections[cIdx] !== -1 ? 'ALIGNED ✓' : 'LOCKED'}
+                  <span style="color: ${selections[cIdx] !== -1 ? '#00f5d4' : 'var(--accent-red)'}; font-size: 0.78rem; font-weight: 700;">
+                    ${selections[cIdx] !== -1 ? 'ALIGNED ✓' : 'UNALIGNED'}
                   </span>
                 </div>
                 <div class="puzzle-riddle-text">${p.riddle}</div>
                 <div class="puzzle-options-list">
                   ${p.options.map((opt, oIdx) => `
                     <button class="puzzle-option-btn ${selections[cIdx] === oIdx ? 'selected' : ''}" data-cidx="${cIdx}" data-oidx="${oIdx}">
-                      <strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt.text}
+                      <span><strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt.text}</span>
+                      ${selections[cIdx] === oIdx ? '<i class="fa-solid fa-check" style="color: var(--accent-gold);"></i>' : ''}
                     </button>
                   `).join('')}
                 </div>
@@ -1489,7 +1464,7 @@ function initBasementVault() {
           </div>
 
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-            <button class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.8rem 2rem; font-size: 1rem;">
+            <button class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.85rem 2.2rem; font-size: 1.05rem;">
               <i class="fa-solid fa-key"></i> Turn Key & Unlock Vault
             </button>
           </div>
@@ -1512,7 +1487,7 @@ function initBasementVault() {
       if (turnBtn) {
         turnBtn.addEventListener('click', () => {
           if (selections.includes(-1)) {
-            renderPuzzleModal("Please select an answer for all 3 tumbler cylinders before turning the key!", false);
+            renderPuzzleModal("Please select an answer for all 5 tumbler cylinders before turning the key!", false);
             return;
           }
 
@@ -1528,7 +1503,7 @@ function initBasementVault() {
                 </div>
                 <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem;">KLANG-CLICK!</h3>
                 <p style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0.5rem 0 1rem;">
-                  The Iron Tumblers Disengage • Key Successfully Turned
+                  All 5 Tumblers Disengaged • Key Successfully Turned
                 </p>
                 <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
                   The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph.
@@ -1539,7 +1514,7 @@ function initBasementVault() {
               </div>
             `);
           } else {
-            renderPuzzleModal("The heavy iron tumblers resist! The memory cipher sequence is incorrect. Re-read the clues and align the tumblers correctly.", false);
+            renderPuzzleModal("The heavy iron tumblers resist! One or more memory cipher answers are incorrect. Review the historical clues and align all 5 cylinders correctly.", false);
           }
         });
       }
@@ -1620,422 +1595,6 @@ function initBasementVault() {
   }
 }
 
-/* ==========================================================================
-   FEATURE 4: SMOOTH PAGE TRANSITIONS (GSAP / FRAMER MOTION STYLE CURTAIN WIPE)
-   ========================================================================== */
-function initSmoothPageTransitions() {
-  let curtain = document.querySelector('.page-wipe-curtain');
-  if (!curtain) {
-    curtain = document.createElement('div');
-    curtain.className = 'page-wipe-curtain';
-    curtain.innerHTML = `
-      <div class="wipe-loader-content">
-        <div class="wipe-emblem"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="wipe-text">Loading Tactical Archives...</div>
-      </div>
-    `;
-    document.body.appendChild(curtain);
-  }
-
-  // Intercept all internal navigation links
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || href.startsWith('javascript:')) return;
-
-    // Only intercept internal HTML page links
-    if (href.endsWith('.html') || href === './' || href === '/') {
-      e.preventDefault();
-      curtain.classList.remove('wipe-out');
-      curtain.classList.add('wipe-in');
-
-      setTimeout(() => {
-        window.location.href = href;
-      }, 350);
-    }
-  });
-
-  // Fade curtain out on page load
-  window.addEventListener('pageshow', () => {
-    if (curtain) {
-      curtain.classList.remove('wipe-in');
-      curtain.classList.add('wipe-out');
-      setTimeout(() => {
-        curtain.classList.remove('wipe-out');
-      }, 500);
-    }
-  });
-}
-
-/* ==========================================================================
-   FEATURE 5: DYNAMIC FACTION THEME TOGGLE & ICONOGRAPHY SYSTEM
-   ========================================================================== */
-function initFactionThemeSwitcher() {
-  const factions = [
-    { id: 'yeagerist', name: 'Yeagerist / Blood Black', icon: 'fa-fire-flame-curved', color: '#ff0033' },
-    { id: 'scouts', name: 'Survey Corps (Scouts)', icon: 'fa-feather-pointed', color: '#00bbf9' },
-    { id: 'garrison', name: 'Garrison Regiment', icon: 'fa-shield', color: '#f77f00' },
-    { id: 'mp', name: 'Military Police Brigade', icon: 'fa-chess-knight', color: '#06d6a0' },
-    { id: 'titans', name: 'The Nine Titans (Magma)', icon: 'fa-volcano', color: '#ff5400' }
-  ];
-
-  const savedTheme = localStorage.getItem('aot_faction_theme') || 'yeagerist';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-
-  const navControls = document.querySelector('.nav-controls');
-  if (navControls && !document.getElementById('faction-switcher-box')) {
-    const box = document.createElement('div');
-    box.id = 'faction-switcher-box';
-    box.className = 'faction-switcher-box';
-
-    const activeFaction = factions.find(f => f.id === savedTheme) || factions[0];
-
-    box.innerHTML = `
-      <button class="faction-toggle-btn" id="faction-toggle-btn" title="Switch Military Faction Theme">
-        <i class="fa-solid ${activeFaction.icon}"></i>
-        <span class="faction-label">${activeFaction.name.split('/')[0].trim()}</span>
-        <i class="fa-solid fa-caret-down" style="font-size: 0.75rem;"></i>
-      </button>
-      <div class="faction-dropdown-menu" id="faction-dropdown-menu">
-        <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); padding: 0.3rem 0.5rem; letter-spacing: 1px; text-transform: uppercase;">Select Faction Theme:</div>
-        ${factions.map(f => `
-          <button class="faction-option-btn ${f.id === savedTheme ? 'active' : ''}" data-theme-id="${f.id}" style="--opt-color: ${f.color}">
-            <i class="fa-solid ${f.icon}" style="color: ${f.color}"></i>
-            <span>${f.name}</span>
-          </button>
-        `).join('')}
-      </div>
-    `;
-
-    navControls.prepend(box);
-
-    const toggleBtn = box.querySelector('#faction-toggle-btn');
-    const dropdown = box.querySelector('#faction-dropdown-menu');
-
-    toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle('show');
-    });
-
-    document.addEventListener('click', () => {
-      dropdown.classList.remove('show');
-    });
-
-    box.querySelectorAll('.faction-option-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const themeId = btn.dataset.themeId;
-        document.documentElement.setAttribute('data-theme', themeId);
-        localStorage.setItem('aot_faction_theme', themeId);
-
-        box.querySelectorAll('.faction-option-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const selected = factions.find(f => f.id === themeId);
-        if (selected) {
-          toggleBtn.innerHTML = `
-            <i class="fa-solid ${selected.icon}"></i>
-            <span class="faction-label">${selected.name.split('/')[0].trim()}</span>
-            <i class="fa-solid fa-caret-down" style="font-size: 0.75rem;"></i>
-          `;
-        }
-        dropdown.classList.remove('show');
-      });
-    });
-  }
-}
-
-/* ==========================================================================
-   FEATURE 3: MULTIMEDIA FAN EXPERIENCE HUB (OST PLAYER & 4K ART GALLERY)
-   ========================================================================== */
-function initMultimediaHub() {
-  let audioCtx = null;
-  let synthOscillator = null;
-  let synthGain = null;
-  let isPlaying = false;
-  let currentTrackIdx = 0;
-
-  function playProceduralAmbience() {
-    try {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      if (synthOscillator) {
-        synthOscillator.stop();
-        synthOscillator.disconnect();
-      }
-
-      synthOscillator = audioCtx.createOscillator();
-      synthGain = audioCtx.createGain();
-
-      synthOscillator.type = 'sawtooth';
-      // Low drone frequency 110Hz (A2) with gentle lowpass filter
-      synthOscillator.frequency.setValueAtTime(110, audioCtx.currentTime);
-
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(450, audioCtx.currentTime);
-
-      synthGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      synthGain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 1.5);
-
-      synthOscillator.connect(filter);
-      filter.connect(synthGain);
-      synthGain.connect(audioCtx.destination);
-
-      synthOscillator.start();
-    } catch (err) {
-      console.log('WebAudio visualizer initiated');
-    }
-  }
-
-  function stopProceduralAmbience() {
-    if (synthGain && audioCtx) {
-      try {
-        synthGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-        setTimeout(() => {
-          if (synthOscillator) {
-            synthOscillator.stop();
-            synthOscillator.disconnect();
-            synthOscillator = null;
-          }
-        }, 500);
-      } catch(e) {}
-    }
-  }
-
-  window.openMultimediaHub = function(initialTab = 'ost') {
-    if (typeof AOT_DATA === 'undefined' || !AOT_DATA.multimediaHub) return;
-
-    const { soundtracks, wallpapers } = AOT_DATA.multimediaHub;
-    const curTrack = soundtracks[currentTrackIdx] || soundtracks[0];
-
-    window.aotModal.open("🎭 Multimedia Fan Experience Hub", `
-      <div class="multimedia-hub-container">
-        <!-- Hub Navigation Tabs -->
-        <div class="multimedia-tabs-nav">
-          <button class="mm-tab-btn ${initialTab === 'ost' ? 'active' : ''}" data-target="ost-section">
-            <i class="fa-solid fa-music"></i> Soundtrack Lounge
-          </button>
-          <button class="mm-tab-btn ${initialTab === 'art' ? 'active' : ''}" data-target="art-section">
-            <i class="fa-solid fa-palette"></i> 4K Wall Art & Concepts
-          </button>
-        </div>
-
-        <!-- Tab 1: Soundtrack Lounge -->
-        <div id="ost-section" class="mm-tab-content" style="${initialTab === 'ost' ? 'display: block;' : 'display: none;'}">
-          <div class="ost-player-card ${isPlaying ? 'playing' : ''}" id="ost-player-card">
-            <div class="ost-current-track-info">
-              <div>
-                <div style="font-family: var(--font-tech); font-size: 0.8rem; color: var(--accent-gold); letter-spacing: 2px; text-transform: uppercase;">
-                  <i class="fa-solid fa-compact-disc fa-spin" style="--fa-animation-duration: 4s;"></i> Now Streaming • ${curTrack.album}
-                </div>
-                <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; margin: 0.3rem 0;" id="cur-track-title">${curTrack.title}</h3>
-                <div style="color: var(--text-secondary); font-size: 0.9rem;" id="cur-track-meta">
-                  Composer: <strong style="color: #fff;">${curTrack.composer}</strong> | Vocal: <strong style="color: #fff;">${curTrack.vocalist}</strong>
-                </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.4rem;" id="cur-track-desc">${curTrack.description}</p>
-              </div>
-
-              <!-- Animated Waveform Visualizer -->
-              <div class="ost-waveform-visualizer" id="ost-visualizer">
-                ${Array.from({ length: 16 }).map(() => '<div class="waveform-bar"></div>').join('')}
-              </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="ost-controls-bar">
-              <button class="ost-btn" id="ost-prev-btn" title="Previous Track"><i class="fa-solid fa-backward-step"></i></button>
-              <button class="ost-btn play-main" id="ost-play-btn" title="Play / Pause">
-                <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
-              </button>
-              <button class="ost-btn" id="ost-next-btn" title="Next Track"><i class="fa-solid fa-forward-step"></i></button>
-            </div>
-
-            <!-- Track Playlist -->
-            <div class="ost-track-list">
-              <div style="font-family: var(--font-tech); font-size: 0.8rem; color: var(--accent-red); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.3rem;">
-                <i class="fa-solid fa-list-ul"></i> Canonical Audio Anthology (6 Master Tracks)
-              </div>
-              ${soundtracks.map((t, idx) => `
-                <div class="ost-track-row ${idx === currentTrackIdx ? 'active' : ''}" data-idx="${idx}">
-                  <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="font-family: var(--font-tech); font-weight: 700; color: var(--accent-red); width: 18px;">${idx + 1}</span>
-                    <div>
-                      <strong style="color: #fff; font-size: 0.95rem;">${t.title}</strong>
-                      <div style="font-size: 0.75rem; color: var(--text-muted);">${t.vocalist} • ${t.mood}</div>
-                    </div>
-                  </div>
-                  <span style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--accent-gold);">${t.duration}</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 2: 4K Concept Art Gallery -->
-        <div id="art-section" class="mm-tab-content" style="${initialTab === 'art' ? 'display: block;' : 'display: none;'}">
-          <div class="art-gallery-grid">
-            ${wallpapers.map(w => `
-              <div class="art-card-item">
-                <div class="art-card-thumb">
-                  <i class="fa-solid ${w.category === 'Titans' ? 'fa-volcano' : w.category === 'Battles' ? 'fa-explosion' : w.category === 'Characters' ? 'fa-user-ninja' : 'fa-monument'}"></i>
-                  <span class="art-res-badge">${w.resolution}</span>
-                </div>
-                <div class="art-card-body">
-                  <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-red); letter-spacing: 1px; text-transform: uppercase;">${w.tag}</div>
-                  <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0.3rem 0;">${w.title}</h4>
-                  <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; flex-grow: 1;">${w.desc}</p>
-                  <button class="btn btn-secondary" onclick="alert('Viewing 4K Canvas: ${w.title}')" style="width: 100%; padding: 0.5rem; font-size: 0.8rem;">
-                    <i class="fa-solid fa-expand"></i> Inspect Artwork
-                  </button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-    `);
-
-    // Tab Switcher inside Modal
-    const modalBody = document.querySelector('.modal-body');
-    if (modalBody) {
-      modalBody.querySelectorAll('.mm-tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          modalBody.querySelectorAll('.mm-tab-btn').forEach(b => b.classList.remove('active'));
-          modalBody.querySelectorAll('.mm-tab-content').forEach(c => c.style.display = 'none');
-          btn.classList.add('active');
-          const target = modalBody.querySelector(`#${btn.dataset.target}`);
-          if (target) target.style.display = 'block';
-        });
-      });
-
-      // Play / Pause Logic
-      const playBtn = modalBody.querySelector('#ost-play-btn');
-      const playerCard = modalBody.querySelector('#ost-player-card');
-
-      function updateTrackDisplay(idx) {
-        currentTrackIdx = idx;
-        const track = soundtracks[currentTrackIdx];
-        modalBody.querySelector('#cur-track-title').textContent = track.title;
-        modalBody.querySelector('#cur-track-meta').innerHTML = `Composer: <strong style="color: #fff;">${track.composer}</strong> | Vocal: <strong style="color: #fff;">${track.vocalist}</strong>`;
-        modalBody.querySelector('#cur-track-desc').textContent = track.description;
-
-        modalBody.querySelectorAll('.ost-track-row').forEach((r, i) => {
-          r.classList.toggle('active', i === currentTrackIdx);
-        });
-      }
-
-      if (playBtn) {
-        playBtn.addEventListener('click', () => {
-          isPlaying = !isPlaying;
-          if (isPlaying) {
-            playProceduralAmbience();
-            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-            playerCard.classList.add('playing');
-          } else {
-            stopProceduralAmbience();
-            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-            playerCard.classList.remove('playing');
-          }
-        });
-      }
-
-      const prevBtn = modalBody.querySelector('#ost-prev-btn');
-      const nextBtn = modalBody.querySelector('#ost-next-btn');
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-          const newIdx = (currentTrackIdx - 1 + soundtracks.length) % soundtracks.length;
-          updateTrackDisplay(newIdx);
-          if (isPlaying) playProceduralAmbience();
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-          const newIdx = (currentTrackIdx + 1) % soundtracks.length;
-          updateTrackDisplay(newIdx);
-          if (isPlaying) playProceduralAmbience();
-        });
-      }
-
-      modalBody.querySelectorAll('.ost-track-row').forEach(row => {
-        row.addEventListener('click', () => {
-          const idx = parseInt(row.dataset.idx, 10);
-          updateTrackDisplay(idx);
-          if (!isPlaying) {
-            isPlaying = true;
-            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-            playerCard.classList.add('playing');
-          }
-          playProceduralAmbience();
-        });
-      });
-    }
-  };
-
-  // Inject Multimedia Hub Trigger into Navbar
-  const navControls = document.querySelector('.nav-controls');
-  if (navControls && !document.getElementById('multimedia-nav-btn')) {
-    const mmBtn = document.createElement('button');
-    mmBtn.id = 'multimedia-nav-btn';
-    mmBtn.className = 'faction-toggle-btn';
-    mmBtn.style.borderColor = 'var(--accent-gold)';
-    mmBtn.style.color = 'var(--accent-gold)';
-    mmBtn.innerHTML = '<i class="fa-solid fa-photo-film"></i> <span>MULTIMEDIA</span>';
-    mmBtn.title = "Open Multimedia Fan Experience Hub (OST & 4K Art)";
-    mmBtn.addEventListener('click', () => window.openMultimediaHub('ost'));
-    navControls.prepend(mmBtn);
-  }
-}
-
-/* ==========================================================================
-   FEATURE 1 & 6: 3D CARD TILT & HOLOGRAPHIC SPECULAR SHEEN FOR SHOWCASE CARDS
-   ========================================================================== */
-function init3DCardTilt() {
-  if (window.innerWidth < 1024) return; // Only desktop mice
-
-  function applyTilt(el) {
-    el.classList.add('tilt-card', 'showcase-3d-card');
-    if (!el.querySelector('.tilt-glare')) {
-      const glare = document.createElement('div');
-      glare.className = 'tilt-glare';
-      el.appendChild(glare);
-    }
-
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -10;
-      const rotateY = ((x - centerX) / centerX) * 10;
-
-      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-
-      const glare = el.querySelector('.tilt-glare');
-      if (glare) {
-        const glareX = (x / rect.width) * 100;
-        const glareY = (y / rect.height) * 100;
-        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.18) 0%, transparent 60%)`;
-      }
-    });
-
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    });
-  }
-
-  document.querySelectorAll('.titan-card, .character-card, .regiment-card, .stat-card, .disclosure-card, .timeline-card, .art-card-item').forEach(applyTilt);
-}
 
 
 
