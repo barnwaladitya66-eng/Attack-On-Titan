@@ -1306,11 +1306,22 @@ function initBasementVault() {
             <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
               The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph proving civilization thrives across the ocean.
             </p>
-            <button type="button" class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+            <button type="button" class="btn btn-primary" id="open-unlocked-vault-btn" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
               <i class="fa-solid fa-book-open"></i> Read Grisha's 3 Classified Journals
             </button>
           </div>
         `);
+
+        const modalBody = document.getElementById('aot-modal-body');
+        if (modalBody) {
+          const openVaultBtn = modalBody.querySelector('#open-unlocked-vault-btn');
+          if (openVaultBtn) {
+            openVaultBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              window.openBasementVault();
+            });
+          }
+        }
       } else {
         window.aotModal.open("🔒 Deadbolt Jammed • Incorrect Memory Alignment", `
           <div style="text-align: center; padding: 1.2rem 0;">
@@ -1384,7 +1395,7 @@ function initBasementVault() {
               Recovered during the Battle of Shiganshina. These three manuscripts reveal the true history of the world outside the walls.
             </p>
           </div>
-          <button type="button" class="btn btn-secondary" onclick="localStorage.removeItem('aot_basement_unlocked'); updateBasementNavLabel(false); window.openBasementPuzzle();" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+          <button type="button" class="btn btn-secondary" id="relock-basement-vault-btn" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
             <i class="fa-solid fa-lock"></i> Re-lock Puzzle
           </button>
         </div>
@@ -1404,6 +1415,25 @@ function initBasementVault() {
         </div>
       </div>
     `);
+
+    const modalBody = document.getElementById('aot-modal-body');
+    if (modalBody) {
+      const relockBtn = modalBody.querySelector('#relock-basement-vault-btn');
+      if (relockBtn) {
+        relockBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('aot_basement_unlocked');
+          updateBasementNavLabel(false);
+          window.openBasementPuzzle();
+        });
+      }
+    }
+  };
+
+  window.relockBasementVault = function() {
+    localStorage.removeItem('aot_basement_unlocked');
+    updateBasementNavLabel(false);
+    window.openBasementPuzzle();
   };
 
   function updateBasementNavLabel(unlocked) {
