@@ -1141,144 +1141,109 @@ function initCadetAptitudeQuiz() {
    FEATURE: SHIGANSHINA BASEMENT LOCK PUZZLE & CLASSIFIED VAULT
    ========================================================================== */
 function initBasementVault() {
-  const masterQuestionPool = [
-    {
-      cylinderLabel: "The Primordial Genesis",
-      riddle: "What ancient anomaly bonded with Ymir Fritz beneath the giant tree in the prehistoric forest?",
-      options: [
-        { text: "The Hallucigenia Organism (Spinal Source of Living Matter)", correct: true },
-        { text: "A Mythological Golden Dragon Core", correct: false },
-        { text: "A Volcanic Iceburst Stone Meteorite", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Secret Informant",
-      riddle: "What was the codename of the Eldian Restorationist double-agent inside Marley Public Security?",
-      options: [
-        { text: "The Owl / Eren Kruger (フクロウ)", correct: true },
-        { text: "The Wolf (オオカミ)", correct: false },
-        { text: "The Falcon (ハヤブサ)", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Outside World Truth",
-      riddle: "What shocking truth did Grisha's secret photograph behind the drawer reveal about humanity beyond the sea?",
-      options: [
-        { text: "Humanity has not perished; advanced human civilization thrives across the ocean", correct: true },
-        { text: "The entire outer continent is a deserted wasteland ruined by Titans", correct: false },
-        { text: "The outside ocean is filled with endless fire and boiling magma", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Royal Wall Vow",
-      riddle: "Which 145th Eldian Monarch constructed the Three Walls and bound his successors with the Vow Renouncing War?",
-      options: [
-        { text: "King Karl Fritz (145th King of Eldia)", correct: true },
-        { text: "King Uri Reiss", correct: false },
-        { text: "King Rod Reiss", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Attack Titan's Power",
-      riddle: "What unique metaphysical power belongs solely to the Attack Titan among the Nine Shifters?",
-      options: [
-        { text: "The ability to perceive and influence the future memories of its inheritors", correct: true },
-        { text: "Complete physical immunity to Thunder Spear explosions", correct: false },
-        { text: "Instantaneous underwater navigation across the ocean", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Coordinate & Founding Titan",
-      riddle: "What condition must be met for a non-royal Founding Titan shifter to command the Coordinate power?",
-      options: [
-        { text: "Physical contact with a Titan or Human of Royal Eldian Blood", correct: true },
-        { text: "Ingesting spinal fluid from all Nine Titan Shifters", correct: false },
-        { text: "Standing atop Wall Sina at midnight during a blood moon", correct: false }
-      ]
-    },
-    {
-      cylinderLabel: "The Ackerman Lineage",
-      riddle: "What is the true origin and biological nature of the Ackerman Clan?",
-      options: [
-        { text: "An unintended byproduct of ancient Titan science, manifesting Titan power in human form", correct: true },
-        { text: "A pure Marleyan noble bloodline resistant to Titan spinal injections", correct: false },
-        { text: "Descendants of King Karl Fritz who refused to enter the Three Walls", correct: false }
-      ]
-    }
+  const BASEMENT_QUESTION_POOL = [
+    {"id": 1, "question": "What was the name of the doctor who injected Eren with the Titan serum in 845?", "options": ["Grisha Yeager", "Rod Reiss", "Kenny Ackerman", "Kruger"], "correctAnswer": "Grisha Yeager", "answer": "Grisha Yeager"},
+    {"id": 2, "question": "Which interior wall was broken first during the initial Colossal Titan attack?", "options": ["Wall Maria", "Wall Rose", "Wall Sina", "Wall Sheena"], "correctAnswer": "Wall Maria", "answer": "Wall Maria"},
+    {"id": 3, "question": "What is the name of the Scout Regiment Commander who preceded Erwin Smith?", "options": ["Keith Shadis", "Dot Pyxis", "Nile Dawk", "Theo Magath"], "correctAnswer": "Keith Shadis", "answer": "Keith Shadis"},
+    {"id": 4, "question": "What substance powers the Vertical Maneuvering Equipment (ODM gear)?", "options": ["Iceburst Stone", "Iron Bamboo", "Titan Crystal", "Fossil Fuel"], "correctAnswer": "Iceburst Stone", "answer": "Iceburst Stone"},
+    {"id": 5, "question": "What was the name of Grisha Yeager's younger sister who died in Marley?", "options": ["Faye Yeager", "Carla Yeager", "Dina Fritz", "Frieda Reiss"], "correctAnswer": "Faye Yeager", "answer": "Faye Yeager"},
+    {"id": 6, "question": "Which Eldian restorationist group was Grisha Yeager a leader of?", "options": ["Eldian Restorationists", "Jaegerists", "Scout Regiment", "Warriors"], "correctAnswer": "Eldian Restorationists", "answer": "Eldian Restorationists"},
+    {"id": 7, "question": "What was the original name of the Attack Titan's holder before Grisha Yeager?", "options": ["Eren Kruger", "Willy Tybur", "Uri Reiss", "Porco Galliard"], "correctAnswer": "Eren Kruger", "answer": "Eren Kruger"},
+    {"id": 8, "question": "What is the name of the Marleyan internment zone where Grisha grew up?", "options": ["Liberio", "Shiganshina", "Trost", "Otvin"], "correctAnswer": "Liberio", "answer": "Liberio"},
+    {"id": 9, "question": "Which Titan possesses the ability to see memories of past and future inherits?", "options": ["Attack Titan", "Founding Titan", "Beast Titan", "War Hammer Titan"], "correctAnswer": "Attack Titan", "answer": "Attack Titan"},
+    {"id": 10, "question": "Who was the original holder of the Female Titan inside the Marleyan warrior program?", "options": ["Annie Leonhart", "Pieck Finger", "Gabi Braun", "Lara Tybur"], "correctAnswer": "Annie Leonhart", "answer": "Annie Leonhart"},
+    {"id": 11, "question": "What is the maximum lifespan limit for a human after inheriting one of the Nine Titans?", "options": ["13 Years", "10 Years", "20 Years", "15 Years"], "correctAnswer": "13 Years", "answer": "13 Years"},
+    {"id": 12, "question": "Which Titan Shifter absorbed the War Hammer Titan during the Raid on Liberio?", "options": ["Eren Yeager", "Reiner Braun", "Zeke Yeager", "Falco Grice"], "correctAnswer": "Eren Yeager", "answer": "Eren Yeager"},
+    {"id": 13, "question": "What was the secret signal code given by Erwin Smith during the 57th Expedition?", "options": ["Smoke Signals", "Flare Guns", "Acoustic Transmitters", "Pigeon Messengers"], "correctAnswer": "Smoke Signals", "answer": "Smoke Signals"},
+    {"id": 14, "question": "Which city was the destination for the operation to retake Wall Maria in Season 3?", "options": ["Shiganshina District", "Trost District", "Krolva District", "Utopian District"], "correctAnswer": "Shiganshina District", "answer": "Shiganshina District"},
+    {"id": 15, "question": "What item was inside Grisha Yeager's desk drawer that proved humanity existed outside the Walls?", "options": ["A Photograph", "A Printed Newspaper", "A World Map", "A Pocket Watch"], "correctAnswer": "A Photograph", "answer": "A Photograph"},
+    {"id": 16, "question": "Who injected himself with serum to become a Mindless Titan during the Battle of Utgard Castle?", "options": ["Rod Reiss", "Gelgar", "Henning", "Lynne"], "correctAnswer": "Rod Reiss", "answer": "Rod Reiss"},
+    {"id": 17, "question": "What is the full name of the original person who acquired Titan powers?", "options": ["Ymir Fritz", "Maria Fritz", "Rose Fritz", "Sina Fritz"], "correctAnswer": "Ymir Fritz", "answer": "Ymir Fritz"},
+    {"id": 18, "question": "Which royal family member was eaten by Grisha Yeager under the Reiss Chapel?", "options": ["Frieda Reiss", "Urk Reiss", "Dirk Reiss", "Florian Reiss"], "correctAnswer": "Frieda Reiss", "answer": "Frieda Reiss"},
+    {"id": 19, "question": "What specific condition must be met for a non-royal Founding Titan holder to activate its full power?", "options": ["Physical contact with someone of Royal Blood", "Eating a Royal Titan", "Entering the Paths via sleep", "Using the Titan Serum"], "correctAnswer": "Physical contact with someone of Royal Blood", "answer": "Physical contact with someone of Royal Blood"},
+    {"id": 20, "question": "What is the name of the pacifist vow made by the 145th King of Eldia?", "options": ["Vow Renouncing War", "Pact of the Walls", "Eldian Covenant", "King Karl Vow"], "correctAnswer": "Vow Renouncing War", "answer": "Vow Renouncing War"}
   ];
 
+  function getRandomQuestions(pool, count = 5) {
+    const shuffled = [...pool].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count).map((q, idx) => ({
+      ...q,
+      cylinderNum: ['I', 'II', 'III', 'IV', 'V'][idx] || (idx + 1),
+      options: [...q.options].sort(() => 0.5 - Math.random())
+    }));
+  }
+
   window.openBasementPuzzle = function() {
-    // 1. Randomize and select 5 questions from the pool
-    const activeQuestions = [...masterQuestionPool]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5)
-      .map((q, idx) => ({
-        cylinder: `Cylinder ${['I', 'II', 'III', 'IV', 'V'][idx]} • ${q.cylinderLabel}`,
-        riddle: q.riddle,
-        options: [...q.options].sort(() => Math.random() - 0.5)
-      }));
+    let currentBatch = getRandomQuestions(BASEMENT_QUESTION_POOL, 5);
+    let currentIndex = 0;
+    let score = 0;
+    let userAnswers = [];
 
-    let selections = [-1, -1, -1, -1, -1];
+    function renderQuestionView(feedback = '', isCorrect = false) {
+      if (currentIndex >= currentBatch.length) {
+        renderQuizResults();
+        return;
+      }
 
-    function renderPuzzleModal(feedbackMsg = '', isSuccess = false) {
-      const answeredCount = selections.filter(s => s !== -1).length;
-      const progressPercent = Math.round((answeredCount / 5) * 100);
+      const q = currentBatch[currentIndex];
+      const progressPercent = Math.round(((currentIndex + 1) / currentBatch.length) * 100);
 
-      window.aotModal.open("🗝️ The Basement Deadbolt • Dr. Yeager's Memory Cipher", `
+      window.aotModal.open(`🗝️ Grisha's Basement Cipher • Cylinder ${q.cylinderNum} (${currentIndex + 1}/5)`, `
         <div class="basement-puzzle-container">
           <div class="puzzle-door-chamber">
             <div class="puzzle-door-icon">
               <i class="fa-solid fa-lock"></i>
             </div>
-            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; letter-spacing: 1px;">THE SHIGANSHINA DEADBOLT</h3>
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; letter-spacing: 1px;">
+              THE SHIGANSHINA DEADBOLT • CYLINDER ${q.cylinderNum}
+            </h3>
             <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 600px; margin: 0.5rem auto 0.8rem; line-height: 1.5;">
-              Before you lies Dr. Grisha Yeager's desk in the Shiganshina basement. Click your answer for each of the 5 randomized brass cipher tumblers to align his memories, then turn the key!
+              Before you lies Dr. Grisha Yeager's desk. Disengage all 5 brass memory cylinders with correct historical answers to turn the key!
             </p>
 
-            <div style="background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; max-width: 480px; margin: 0.6rem auto 1rem; overflow: hidden;">
-              <div style="background: ${answeredCount === 5 ? '#00f5d4' : 'var(--accent-gold)'}; height: 100%; width: ${progressPercent}%; transition: width 0.3s ease;"></div>
+            <div style="background: rgba(255,255,255,0.08); border-radius: 4px; height: 8px; max-width: 480px; margin: 0.6rem auto 1rem; overflow: hidden;">
+              <div style="background: var(--accent-gold); height: 100%; width: ${progressPercent}%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--accent-gold);"></div>
             </div>
 
             <div class="puzzle-status-bar">
-              <span><i class="fa-solid fa-compass"></i> CYLINDER PROGRESS:</span>
-              <strong style="color: ${answeredCount === 5 ? '#00f5d4' : 'var(--accent-gold)'};">
-                ${answeredCount} / 5 ALIGNED (${progressPercent}%) ${answeredCount === 5 ? '✓ READY TO TURN KEY' : ''}
+              <span><i class="fa-solid fa-compass"></i> CYLINDER PROGRESS: ${currentIndex + 1} OF 5</span>
+              <strong style="color: var(--accent-gold);">
+                ${progressPercent}% ALIGNED • CURRENT SCORE: ${score}/${currentIndex}
               </strong>
             </div>
           </div>
 
-          ${feedbackMsg ? `
-            <div class="puzzle-feedback-msg ${isSuccess ? 'success' : 'error'}">
-              <i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${feedbackMsg}
+          ${feedback ? `
+            <div class="puzzle-feedback-msg ${isCorrect ? 'success' : 'error'}">
+              <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${feedback}
             </div>
           ` : ''}
 
-          <div class="puzzle-tumblers-grid">
-            ${activeQuestions.map((p, cIdx) => `
-              <div class="puzzle-tumbler-box ${selections[cIdx] !== -1 ? 'answered' : ''}" data-cidx="${cIdx}">
-                <div class="puzzle-tumbler-header">
-                  <span><i class="fa-solid fa-gears"></i> ${p.cylinder}</span>
-                  <span style="color: ${selections[cIdx] !== -1 ? '#00f5d4' : 'var(--accent-red)'}; font-size: 0.78rem; font-weight: 700;">
-                    ${selections[cIdx] !== -1 ? 'ALIGNED ✓' : 'UNALIGNED'}
-                  </span>
-                </div>
-                <div class="puzzle-riddle-text">${p.riddle}</div>
-                <div class="puzzle-options-list">
-                  ${p.options.map((opt, oIdx) => `
-                    <button type="button" class="puzzle-option-btn ${selections[cIdx] === oIdx ? 'selected' : ''}" data-cidx="${cIdx}" data-oidx="${oIdx}">
-                      <span><strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt.text}</span>
-                      ${selections[cIdx] === oIdx ? '<i class="fa-solid fa-check" style="color: var(--accent-gold);"></i>' : ''}
-                    </button>
-                  `).join('')}
-                </div>
-              </div>
-            `).join('')}
+          <div class="puzzle-tumbler-box" style="margin-top: 1rem;">
+            <div class="puzzle-tumbler-header">
+              <span><i class="fa-solid fa-gears"></i> Cipher Code #${q.id} • Cylinder ${q.cylinderNum}</span>
+              <span style="color: var(--accent-gold); font-size: 0.8rem; font-weight: 700;">QUESTION ${currentIndex + 1} OF 5</span>
+            </div>
+            <div class="puzzle-riddle-text" style="font-size: 1.05rem; margin: 1rem 0; font-weight: 600;">
+              ${q.question}
+            </div>
+            <div class="puzzle-options-list">
+              ${q.options.map((opt, oIdx) => `
+                <button type="button" class="puzzle-option-btn" data-option="${encodeURIComponent(opt)}">
+                  <span><strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt}</span>
+                  <i class="fa-solid fa-chevron-right" style="opacity: 0.5;"></i>
+                </button>
+              `).join('')}
+            </div>
           </div>
 
-          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-            <button type="button" class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.85rem 2.2rem; font-size: 1.05rem;">
-              <i class="fa-solid fa-key"></i> Turn Key & Unlock Vault
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 0.8rem;">
+            <button type="button" class="btn btn-secondary" id="quiz-reset-batch-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              <i class="fa-solid fa-rotate-right"></i> Reroll 5 Questions
             </button>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-tech);">
+              Pass Requirement: 5 / 5 Correct Answers
+            </span>
           </div>
         </div>
       `);
@@ -1289,52 +1254,115 @@ function initBasementVault() {
       modalBody.querySelectorAll('.puzzle-option-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          const cIdx = parseInt(btn.dataset.cidx, 10);
-          const oIdx = parseInt(btn.dataset.oidx, 10);
-          selections[cIdx] = oIdx;
-          renderPuzzleModal();
+          const selectedOption = decodeURIComponent(btn.dataset.option);
+          const correctVal = q.correctAnswer || q.answer;
+          const isMatch = selectedOption === correctVal;
+
+          if (isMatch) {
+            score++;
+          }
+
+          userAnswers.push({
+            question: q.question,
+            selected: selectedOption,
+            correct: correctVal,
+            isCorrect: isMatch
+          });
+
+          currentIndex++;
+          renderQuestionView();
         });
       });
 
-      const turnBtn = modalBody.querySelector('#puzzle-turn-key-btn');
-      if (turnBtn) {
-        turnBtn.addEventListener('click', (e) => {
+      const resetBtn = modalBody.querySelector('#quiz-reset-batch-btn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (selections.includes(-1)) {
-            renderPuzzleModal("Please select an answer for all 5 tumbler cylinders before turning the key!", false);
-            return;
-          }
-
-          const isAllCorrect = activeQuestions.every((p, idx) => p.options[selections[idx]].correct === true);
-
-          if (isAllCorrect) {
-            localStorage.setItem('aot_basement_unlocked', 'true');
-            updateBasementNavLabel(true);
-            window.aotModal.open("✨ VAULT UNLOCKED! • The Basement Key Turns", `
-              <div style="text-align: center; padding: 1.5rem 0;">
-                <div style="font-size: 4rem; color: var(--accent-gold); animation: pulse 1s infinite alternate; margin-bottom: 1rem;">
-                  <i class="fa-solid fa-unlock-keyhole"></i>
-                </div>
-                <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem;">KLANG-CLICK!</h3>
-                <p style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0.5rem 0 1rem;">
-                  All 5 Tumblers Disengaged • Key Successfully Turned
-                </p>
-                <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
-                  The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph.
-                </p>
-                <button type="button" class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
-                  <i class="fa-solid fa-book-open"></i> Read Grisha's 3 Classified Journals
-                </button>
-              </div>
-            `);
-          } else {
-            renderPuzzleModal("The heavy iron tumblers resist! One or more memory cipher answers are incorrect. Review the historical clues and align all 5 cylinders correctly.", false);
-          }
+          currentBatch = getRandomQuestions(BASEMENT_QUESTION_POOL, 5);
+          currentIndex = 0;
+          score = 0;
+          userAnswers = [];
+          renderQuestionView();
         });
       }
     }
 
-    renderPuzzleModal();
+    function renderQuizResults() {
+      const isPerfect = score === currentBatch.length;
+
+      if (isPerfect) {
+        localStorage.setItem('aot_basement_unlocked', 'true');
+        updateBasementNavLabel(true);
+
+        window.aotModal.open("✨ VAULT UNLOCKED! • The Basement Key Turns", `
+          <div style="text-align: center; padding: 1.5rem 0;">
+            <div style="font-size: 4rem; color: var(--accent-gold); animation: pulse 1s infinite alternate; margin-bottom: 1rem;">
+              <i class="fa-solid fa-unlock-keyhole"></i>
+            </div>
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.6rem;">KLANG-CLICK!</h3>
+            <p style="font-family: var(--font-tech); color: var(--accent-gold); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0.5rem 0 1rem;">
+              Score: 5 / 5 (100%) • All 5 Tumblers Disengaged
+            </p>
+            <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
+              The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph proving civilization thrives across the ocean.
+            </p>
+            <button type="button" class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+              <i class="fa-solid fa-book-open"></i> Read Grisha's 3 Classified Journals
+            </button>
+          </div>
+        `);
+      } else {
+        window.aotModal.open("🔒 Deadbolt Jammed • Incorrect Memory Alignment", `
+          <div style="text-align: center; padding: 1.2rem 0;">
+            <div style="font-size: 3.5rem; color: var(--accent-red); margin-bottom: 1rem;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.4rem;">CYLINDERS RESIST TURNING</h3>
+            <p style="font-family: var(--font-tech); color: #ff4d6d; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; margin: 0.4rem 0 1rem;">
+              Score: ${score} / 5 Correct (${Math.round((score / 5) * 100)}%) • 5/5 Required
+            </p>
+            <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.5rem; font-size: 0.95rem; line-height: 1.6;">
+              The iron lock mechanisms do not line up. Dr. Yeager's memories remain scrambled. Review the historical records and reroll a new 5-question batch to try again!
+            </p>
+
+            <div style="text-align: left; background: rgba(0,0,0,0.5); padding: 1.2rem; border-radius: 6px; border-left: 3px solid var(--accent-red); margin-bottom: 1.5rem; max-height: 240px; overflow-y: auto;">
+              <strong style="color: var(--accent-gold); font-family: var(--font-tech); text-transform: uppercase; display: block; margin-bottom: 0.8rem; font-size: 0.85rem;">
+                Answer Review:
+              </strong>
+              ${userAnswers.map((ua, idx) => `
+                <div style="margin-bottom: 0.8rem; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                  <div style="color: #fff; margin-bottom: 0.2rem;"><strong>Q${idx + 1}:</strong> ${ua.question}</div>
+                  <div style="color: ${ua.isCorrect ? '#06d6a0' : '#ff4d6d'};">
+                    Your Answer: ${ua.selected} ${ua.isCorrect ? '✓' : `✗ (Correct: ${ua.correct})`}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <button type="button" class="btn btn-primary" id="retry-basement-quiz-btn" style="font-size: 1rem; padding: 0.75rem 1.8rem;">
+              <i class="fa-solid fa-rotate-right"></i> Try Again (New Random 5 Questions)
+            </button>
+          </div>
+        `);
+
+        const modalBody = document.getElementById('aot-modal-body');
+        if (modalBody) {
+          const retryBtn = modalBody.querySelector('#retry-basement-quiz-btn');
+          if (retryBtn) {
+            retryBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              currentBatch = getRandomQuestions(BASEMENT_QUESTION_POOL, 5);
+              currentIndex = 0;
+              score = 0;
+              userAnswers = [];
+              renderQuestionView();
+            });
+          }
+        }
+      }
+    }
+
+    renderQuestionView();
   };
 
   window.openBasementVault = function() {
