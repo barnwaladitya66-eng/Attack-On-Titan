@@ -312,26 +312,17 @@ function initTimelinePage() {
   initRumblingSimulator();
 
   let currentEra = 'all';
-  let searchQuery = '';
 
   function renderTimeline() {
     if (!container) return;
-    const filtered = AOT_DATA.timeline.filter(item => {
-      const matchesEra = currentEra === 'all' || item.era === currentEra;
-      const matchesSearch = !searchQuery || 
-        item.title.toLowerCase().includes(searchQuery) ||
-        item.summary.toLowerCase().includes(searchQuery) ||
-        item.year.toLowerCase().includes(searchQuery) ||
-        item.keyFigures.some(f => f.toLowerCase().includes(searchQuery));
-      return matchesEra && matchesSearch;
-    });
+    const filtered = AOT_DATA.timeline.filter(item => currentEra === 'all' || item.era === currentEra);
 
     if (filtered.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
           <i class="fa-solid fa-scroll" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-red);"></i>
           <h3 style="font-family: var(--font-heading); color: #fff;">No Chronicles Found</h3>
-          <p>Try adjusting your search criteria or era filter.</p>
+          <p>Try adjusting your era filter.</p>
         </div>
       `;
       return;
@@ -416,13 +407,6 @@ function initTimelinePage() {
       renderTimeline();
     });
   });
-
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      renderTimeline();
-    });
-  }
 
   renderTimeline();
 }
@@ -513,26 +497,17 @@ function initTitansPage() {
   initShifterLineageFlowchart();
 
   let currentCategory = 'all';
-  let searchQuery = '';
 
   function renderTitans() {
     if (!container) return;
-    const filtered = AOT_DATA.titans.filter(t => {
-      const matchesCategory = currentCategory === 'all' || t.category === currentCategory;
-      const matchesSearch = !searchQuery ||
-        t.name.toLowerCase().includes(searchQuery) ||
-        t.description.toLowerCase().includes(searchQuery) ||
-        t.inheritors.some(i => i.toLowerCase().includes(searchQuery)) ||
-        t.primaryAbilities.some(a => a.toLowerCase().includes(searchQuery));
-      return matchesCategory && matchesSearch;
-    });
+    const filtered = AOT_DATA.titans.filter(t => currentCategory === 'all' || t.category === currentCategory);
 
     if (filtered.length === 0) {
       container.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
           <i class="fa-solid fa-skull" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-red);"></i>
           <h3 style="font-family: var(--font-heading); color: #fff;">No Titans Match Filter</h3>
-          <p>Adjust your search query or category filter.</p>
+          <p>Adjust your category filter.</p>
         </div>
       `;
       return;
@@ -556,13 +531,6 @@ function initTitansPage() {
       renderTitans();
     });
   });
-
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      renderTitans();
-    });
-  }
 
   renderTitans();
   renderHeightComparator();
@@ -787,23 +755,15 @@ function renderHeightComparator() {
 function initCharactersPage() {
   const container = document.getElementById('characters-grid');
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const searchInput = document.getElementById('characters-search');
 
   if (typeof AOT_DATA === 'undefined') return;
 
   let currentAllegiance = 'all';
-  let searchQuery = '';
 
   function renderCharacters() {
     if (!container) return;
     const filtered = AOT_DATA.characters.filter(c => {
-      const matchesAllegiance = currentAllegiance === 'all' || c.allegiance.toLowerCase().includes(currentAllegiance.toLowerCase());
-      const matchesSearch = !searchQuery ||
-        c.name.toLowerCase().includes(searchQuery) ||
-        c.bio.toLowerCase().includes(searchQuery) ||
-        c.role.toLowerCase().includes(searchQuery) ||
-        c.titansHeld.some(t => t.toLowerCase().includes(searchQuery));
-      return matchesAllegiance && matchesSearch;
+      return currentAllegiance === 'all' || c.allegiance.toLowerCase().includes(currentAllegiance.toLowerCase());
     });
 
     if (filtered.length === 0) {
@@ -811,7 +771,7 @@ function initCharactersPage() {
         <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
           <i class="fa-solid fa-user-slash" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-red);"></i>
           <h3 style="font-family: var(--font-heading); color: #fff;">No Personnel Records Found</h3>
-          <p>Try searching with another name or clearance filter.</p>
+          <p>Try adjusting your allegiance clearance filter.</p>
         </div>
       `;
       return;
@@ -870,13 +830,6 @@ function initCharactersPage() {
       renderCharacters();
     });
   });
-
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      renderCharacters();
-    });
-  }
 
   renderCharacters();
 }
