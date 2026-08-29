@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initScrollTriggerSystem();
-  initCommandPalette();
   initBasementVault();
   initCadetAptitudeQuiz();
   initPageControllers();
@@ -1051,193 +1050,6 @@ function initTacticalMapExplorer() {
 }
 
 /* ==========================================================================
-   PREMIUM FEATURE 2: SPOTLIGHT COMMAND PALETTE (CTRL + K)
-   ========================================================================== */
-function initCommandPalette() {
-  const overlay = document.createElement('div');
-  overlay.className = 'cmd-palette-overlay';
-  overlay.innerHTML = `
-    <div class="cmd-palette-modal">
-      <div class="cmd-input-wrapper">
-        <i class="fa-solid fa-crosshairs"></i>
-        <input type="text" class="cmd-input" placeholder="Search Titans, Scouts, Wall sectors, Battles (or type 'quiz', 'basement')..." autofocus>
-      </div>
-      <div class="cmd-results-list" id="cmd-results"></div>
-      <div class="cmd-footer-shortcuts">
-        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">↑</kbd> <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">↓</kbd> to navigate</span>
-        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">Enter</kbd> to select</span>
-        <span><kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">ESC</kbd> to close</span>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-
-  const input = overlay.querySelector('.cmd-input');
-  const resultsContainer = overlay.querySelector('#cmd-results');
-
-  // Build searchable index from AOT_DATA
-  const searchableIndex = [];
-
-  if (typeof AOT_DATA !== 'undefined') {
-    if (AOT_DATA.nineTitans) {
-      AOT_DATA.nineTitans.forEach(t => searchableIndex.push({
-        title: t.name,
-        category: 'Nine Titans',
-        desc: t.japanese + ' • ' + t.height,
-        url: 'titans.html'
-      }));
-    }
-    if (AOT_DATA.characters) {
-      AOT_DATA.characters.forEach(c => searchableIndex.push({
-        title: c.name,
-        category: 'Personnel Dossier',
-        desc: c.japanese + ' • ' + c.allegiance,
-        url: 'characters.html'
-      }));
-    }
-    if (AOT_DATA.timeline) {
-      AOT_DATA.timeline.forEach(tl => searchableIndex.push({
-        title: tl.title,
-        category: 'Timeline Milestone',
-        desc: tl.year + ' • ' + tl.impact,
-        url: 'timeline.html'
-      }));
-    }
-    if (AOT_DATA.tacticalMapLocations) {
-      AOT_DATA.tacticalMapLocations.forEach(loc => searchableIndex.push({
-        title: loc.name,
-        category: 'Wall Map Sector',
-        desc: loc.coords,
-        url: 'world.html'
-      }));
-    }
-  }
-
-  // Add Special Commands
-  searchableIndex.push(
-    { title: '104th Cadet Aptitude Exam', category: 'Special Mode', desc: 'Take the military aptitude exam and get your Military ID card', action: 'quiz' },
-    { title: "Grisha's Secret Basement Vault", category: 'Classified Archive', desc: "Unlock Grisha Yeager's 3 classified diaries", action: 'basement' },
-    { title: 'The Nine Titans Codex', category: 'Page Jump', desc: 'Explore all 9 Titan Shifters and Battle Matrix', url: 'titans.html' },
-    { title: 'Personnel Military Dossiers', category: 'Page Jump', desc: 'View character stats, allegiance, and Japanese quotes', url: 'characters.html' },
-    { title: 'Historical Paths Timeline', category: 'Page Jump', desc: 'Explore 2,000 years of Eldian history & Rumbling Simulator', url: 'timeline.html' },
-    { title: 'Concentric Walls & World Atlas', category: 'Page Jump', desc: 'Wall Maria, Rose, Sina specs and tactical radar', url: 'world.html' }
-  );
-
-  let selectedIdx = 0;
-
-  function renderResults(query = '') {
-    const q = query.toLowerCase().trim();
-    const filtered = q === '' ? searchableIndex.slice(0, 8) : searchableIndex.filter(item => 
-      item.title.toLowerCase().includes(q) || 
-      item.category.toLowerCase().includes(q) || 
-      item.desc.toLowerCase().includes(q)
-    ).slice(0, 8);
-
-    if (filtered.length === 0) {
-      resultsContainer.innerHTML = `<div style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-family: var(--font-tech);">NO MATCHING MILITARY RECORDS FOUND</div>`;
-      return;
-    }
-
-    selectedIdx = Math.min(selectedIdx, filtered.length - 1);
-
-    resultsContainer.innerHTML = filtered.map((item, idx) => `
-      <div class="cmd-result-item ${idx === selectedIdx ? 'selected' : ''}" data-idx="${idx}">
-        <div class="cmd-item-info">
-          <i class="fa-solid fa-shield-halved" style="color: var(--accent-red); font-size: 0.9rem;"></i>
-          <div>
-            <div style="color: #fff; font-family: var(--font-heading); font-size: 0.95rem;">${item.title}</div>
-            <div style="color: var(--text-secondary); font-size: 0.8rem;">${item.desc}</div>
-          </div>
-        </div>
-        <span class="cmd-item-badge">${item.category}</span>
-      </div>
-    `).join('');
-
-    resultsContainer.querySelectorAll('.cmd-result-item').forEach((itemEl, idx) => {
-      itemEl.addEventListener('click', () => {
-        executeCommand(filtered[idx]);
-      });
-    });
-  }
-
-  function executeCommand(item) {
-    overlay.classList.remove('active');
-    if (item.action === 'quiz') {
-      window.openAptitudeQuiz();
-    } else if (item.action === 'basement') {
-      window.openBasementVault();
-    } else if (item.url) {
-      window.location.href = item.url;
-    }
-  }
-
-  function openPalette() {
-    overlay.classList.add('active');
-    input.value = '';
-    selectedIdx = 0;
-    renderResults('');
-    setTimeout(() => input.focus(), 50);
-  }
-
-  function closePalette() {
-    overlay.classList.remove('active');
-  }
-
-  // Keyboard trigger (Ctrl+K or Cmd+K)
-  window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      if (overlay.classList.contains('active')) closePalette();
-      else openPalette();
-    } else if (e.key === 'Escape' && overlay.classList.contains('active')) {
-      closePalette();
-    } else if (overlay.classList.contains('active')) {
-      const items = resultsContainer.querySelectorAll('.cmd-result-item');
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        selectedIdx = (selectedIdx + 1) % items.length;
-        renderResults(input.value);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        selectedIdx = (selectedIdx - 1 + items.length) % items.length;
-        renderResults(input.value);
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        const selectedEl = resultsContainer.querySelector('.cmd-result-item.selected');
-        if (selectedEl) selectedEl.click();
-      }
-    }
-  });
-
-  input.addEventListener('input', (e) => {
-    selectedIdx = 0;
-    renderResults(e.target.value);
-  });
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closePalette();
-  });
-
-  // Inject Command Palette trigger in Navbars (Only on non-home pages per directive)
-  const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !!document.querySelector('.hero-section');
-  const navControls = document.querySelector('.nav-controls');
-  if (!isHomePage && navControls && !document.getElementById('cmd-palette-nav-btn')) {
-    const cmdBtn = document.createElement('button');
-    cmdBtn.id = 'cmd-palette-nav-btn';
-    cmdBtn.className = 'btn';
-    cmdBtn.style.padding = '0.35rem 0.8rem';
-    cmdBtn.style.fontSize = '0.8rem';
-    cmdBtn.style.background = 'rgba(255, 0, 51, 0.15)';
-    cmdBtn.style.borderColor = 'var(--accent-red)';
-    cmdBtn.innerHTML = '<i class="fa-solid fa-terminal"></i> <span style="display:none; @media(min-width:768px){display:inline;}">COMMAND</span> <kbd style="background: rgba(255,255,255,0.15); padding: 1px 4px; border-radius: 3px; font-size: 0.7rem;">Ctrl+K</kbd>';
-    cmdBtn.addEventListener('click', openPalette);
-    navControls.prepend(cmdBtn);
-  }
-
-  window.openCommandPalette = openPalette;
-}
-
-/* ==========================================================================
    PREMIUM FEATURE 3: 104TH CADET APTITUDE EXAM & MILITARY ID BADGE
    ========================================================================== */
 function initCadetAptitudeQuiz() {
@@ -1246,31 +1058,45 @@ function initCadetAptitudeQuiz() {
 
     let currentQ = 0;
     const scores = { scout: 0, garrison: 0, mp: 0, shifter: 0 };
-    const questions = AOT_DATA.aptitudeQuiz;
+    
+    // Shuffle aptitude questions and options
+    const questions = [...AOT_DATA.aptitudeQuiz]
+      .sort(() => Math.random() - 0.5)
+      .map(q => ({
+        ...q,
+        options: [...q.options].sort(() => Math.random() - 0.5)
+      }));
 
     function renderQuestionModal() {
       const q = questions[currentQ];
-      window.aotModal.open(`104th Cadet Aptitude Exam • Question ${currentQ + 1}/5`, `
+      const progressPercent = Math.round(((currentQ + 1) / questions.length) * 100);
+
+      window.aotModal.open(`104th Cadet Aptitude Exam • Question ${currentQ + 1}/${questions.length}`, `
         <div class="quiz-container">
-          <p style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff; margin-bottom: 1.2rem;">${q.q}</p>
-          <div>
+          <div style="background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px; margin-bottom: 1.5rem; overflow: hidden;">
+            <div style="background: var(--accent-red); height: 100%; width: ${progressPercent}%; transition: width 0.3s ease;"></div>
+          </div>
+          <p style="font-family: var(--font-heading); font-size: 1.15rem; color: #fff; margin-bottom: 1.2rem; line-height: 1.5;">${q.q}</p>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
             ${q.options.map((opt, idx) => `
-              <button class="quiz-option-btn" data-idx="${idx}">
+              <button type="button" class="quiz-option-btn" data-idx="${idx}" style="cursor: pointer; padding: 0.8rem 1rem; text-align: left; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #fff; font-size: 0.95rem; transition: all 0.2s ease;">
                 <strong style="color: var(--accent-red); margin-right: 0.5rem;">[${String.fromCharCode(65 + idx)}]</strong> ${opt.text}
               </button>
             `).join('')}
           </div>
-          <div style="margin-top: 1.5rem; text-align: right; font-family: var(--font-tech); color: var(--text-muted);">
-            TACTICAL APTITUDE ASSESSMENT EVALUATION IN PROGRESS
+          <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 0.8rem; color: var(--text-muted);">
+            <span>TACTICAL EVALUATION IN PROGRESS</span>
+            <span style="color: var(--accent-gold);">${progressPercent}% COMPLETE</span>
           </div>
         </div>
       `);
 
-      const modalBody = document.querySelector('.modal-body');
+      const modalBody = document.getElementById('aot-modal-body');
       if (!modalBody) return;
 
       modalBody.querySelectorAll('.quiz-option-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
           const idx = parseInt(btn.dataset.idx, 10);
           const selected = q.options[idx];
           scores.scout += selected.score.scout;
@@ -1347,8 +1173,8 @@ function initCadetAptitudeQuiz() {
           </div>
 
           <div style="margin-top: 1.8rem; display: flex; gap: 1rem; justify-content: center;">
-            <button class="btn btn-primary" onclick="window.openAptitudeQuiz()"><i class="fa-solid fa-rotate-right"></i> Retake Exam</button>
-            <button class="btn btn-secondary" onclick="window.aotModal.close()"><i class="fa-solid fa-check"></i> Accept Commission</button>
+            <button type="button" class="btn btn-primary" onclick="window.openAptitudeQuiz()"><i class="fa-solid fa-rotate-right"></i> Retake Exam</button>
+            <button type="button" class="btn btn-secondary" onclick="window.aotModal.close()"><i class="fa-solid fa-check"></i> Accept Commission</button>
           </div>
         </div>
       `);
@@ -1362,59 +1188,88 @@ function initCadetAptitudeQuiz() {
    FEATURE: SHIGANSHINA BASEMENT LOCK PUZZLE & CLASSIFIED VAULT
    ========================================================================== */
 function initBasementVault() {
-  const puzzleData = [
+  const masterQuestionPool = [
     {
-      cylinder: "Cylinder I • The Primordial Genesis",
+      cylinderLabel: "The Primordial Genesis",
       riddle: "What ancient anomaly bonded with Ymir Fritz beneath the giant tree in the prehistoric forest?",
       options: [
         { text: "The Hallucigenia Organism (Spinal Source of Living Matter)", correct: true },
-        { text: "A Golden Dragon Core", correct: false },
+        { text: "A Mythological Golden Dragon Core", correct: false },
         { text: "A Volcanic Iceburst Stone Meteorite", correct: false }
       ]
     },
     {
-      cylinder: "Cylinder II • The Secret Informant",
-      riddle: "What was the codename of the Restorationist double-agent inside Marley Public Security?",
+      cylinderLabel: "The Secret Informant",
+      riddle: "What was the codename of the Eldian Restorationist double-agent inside Marley Public Security?",
       options: [
-        { text: "The Wolf (オオカミ)", correct: false },
         { text: "The Owl / Eren Kruger (フクロウ)", correct: true },
+        { text: "The Wolf (オオカミ)", correct: false },
         { text: "The Falcon (ハヤブサ)", correct: false }
       ]
     },
     {
-      cylinder: "Cylinder III • The Outside Truth",
-      riddle: "What truth did Grisha's secret photograph reveal beyond the ocean?",
+      cylinderLabel: "The Outside World Truth",
+      riddle: "What shocking truth did Grisha's secret photograph behind the drawer reveal about humanity beyond the sea?",
       options: [
-        { text: "The entire outer continent is a deserted wasteland", correct: false },
-        { text: "Humanity has not perished; advanced human civilization lives across the sea", correct: true },
-        { text: "The outside ocean is filled with endless fire and magma", correct: false }
+        { text: "Humanity has not perished; advanced human civilization thrives across the ocean", correct: true },
+        { text: "The entire outer continent is a deserted wasteland ruined by Titans", correct: false },
+        { text: "The outside ocean is filled with endless fire and boiling magma", correct: false }
       ]
     },
     {
-      cylinder: "Cylinder IV • The Royal Wall Vow",
+      cylinderLabel: "The Royal Wall Vow",
       riddle: "Which 145th Eldian Monarch constructed the Three Walls and bound his successors with the Vow Renouncing War?",
       options: [
-        { text: "King Karl Fritz (145th Eldian King)", correct: true },
+        { text: "King Karl Fritz (145th King of Eldia)", correct: true },
         { text: "King Uri Reiss", correct: false },
         { text: "King Rod Reiss", correct: false }
       ]
     },
     {
-      cylinder: "Cylinder V • The Attack Titan's Power",
-      riddle: "What unique chronological power belongs solely to the Attack Titan among the Nine Shifters?",
+      cylinderLabel: "The Attack Titan's Power",
+      riddle: "What unique metaphysical power belongs solely to the Attack Titan among the Nine Shifters?",
       options: [
-        { text: "Complete physical immunity to Thunder Spear explosions", correct: false },
         { text: "The ability to perceive and influence the future memories of its inheritors", correct: true },
+        { text: "Complete physical immunity to Thunder Spear explosions", correct: false },
         { text: "Instantaneous underwater navigation across the ocean", correct: false }
+      ]
+    },
+    {
+      cylinderLabel: "The Coordinate & Founding Titan",
+      riddle: "What condition must be met for a non-royal Founding Titan shifter to command the Coordinate power?",
+      options: [
+        { text: "Physical contact with a Titan or Human of Royal Eldian Blood", correct: true },
+        { text: "Ingesting spinal fluid from all Nine Titan Shifters", correct: false },
+        { text: "Standing atop Wall Sina at midnight during a blood moon", correct: false }
+      ]
+    },
+    {
+      cylinderLabel: "The Ackerman Lineage",
+      riddle: "What is the true origin and biological nature of the Ackerman Clan?",
+      options: [
+        { text: "An unintended byproduct of ancient Titan science, manifesting Titan power in human form", correct: true },
+        { text: "A pure Marleyan noble bloodline resistant to Titan spinal injections", correct: false },
+        { text: "Descendants of King Karl Fritz who refused to enter the Three Walls", correct: false }
       ]
     }
   ];
 
   window.openBasementPuzzle = function() {
+    // 1. Randomize and select 5 questions from the pool
+    const activeQuestions = [...masterQuestionPool]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+      .map((q, idx) => ({
+        cylinder: `Cylinder ${['I', 'II', 'III', 'IV', 'V'][idx]} • ${q.cylinderLabel}`,
+        riddle: q.riddle,
+        options: [...q.options].sort(() => Math.random() - 0.5)
+      }));
+
     let selections = [-1, -1, -1, -1, -1];
 
     function renderPuzzleModal(feedbackMsg = '', isSuccess = false) {
       const answeredCount = selections.filter(s => s !== -1).length;
+      const progressPercent = Math.round((answeredCount / 5) * 100);
 
       window.aotModal.open("🗝️ The Basement Deadbolt • Dr. Yeager's Memory Cipher", `
         <div class="basement-puzzle-container">
@@ -1422,15 +1277,19 @@ function initBasementVault() {
             <div class="puzzle-door-icon">
               <i class="fa-solid fa-lock"></i>
             </div>
-            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem;">THE SHIGANSHINA DEADBOLT</h3>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 600px; margin: 0.5rem auto 0.8rem;">
-              Before you lies the desk in the Yeager basement. Click your chosen answer for each of the 5 ancient brass cipher tumblers to align Dr. Grisha Yeager's memories, then turn the golden key!
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; letter-spacing: 1px;">THE SHIGANSHINA DEADBOLT</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; max-width: 600px; margin: 0.5rem auto 0.8rem; line-height: 1.5;">
+              Before you lies Dr. Grisha Yeager's desk in the Shiganshina basement. Click your answer for each of the 5 randomized brass cipher tumblers to align his memories, then turn the key!
             </p>
+
+            <div style="background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; max-width: 480px; margin: 0.6rem auto 1rem; overflow: hidden;">
+              <div style="background: ${answeredCount === 5 ? '#00f5d4' : 'var(--accent-gold)'}; height: 100%; width: ${progressPercent}%; transition: width 0.3s ease;"></div>
+            </div>
 
             <div class="puzzle-status-bar">
               <span><i class="fa-solid fa-compass"></i> CYLINDER PROGRESS:</span>
               <strong style="color: ${answeredCount === 5 ? '#00f5d4' : 'var(--accent-gold)'};">
-                ${answeredCount} / 5 ALIGNED ${answeredCount === 5 ? '✓ (READY TO TURN KEY)' : ''}
+                ${answeredCount} / 5 ALIGNED (${progressPercent}%) ${answeredCount === 5 ? '✓ READY TO TURN KEY' : ''}
               </strong>
             </div>
           </div>
@@ -1442,7 +1301,7 @@ function initBasementVault() {
           ` : ''}
 
           <div class="puzzle-tumblers-grid">
-            ${puzzleData.map((p, cIdx) => `
+            ${activeQuestions.map((p, cIdx) => `
               <div class="puzzle-tumbler-box ${selections[cIdx] !== -1 ? 'answered' : ''}" data-cidx="${cIdx}">
                 <div class="puzzle-tumbler-header">
                   <span><i class="fa-solid fa-gears"></i> ${p.cylinder}</span>
@@ -1453,7 +1312,7 @@ function initBasementVault() {
                 <div class="puzzle-riddle-text">${p.riddle}</div>
                 <div class="puzzle-options-list">
                   ${p.options.map((opt, oIdx) => `
-                    <button class="puzzle-option-btn ${selections[cIdx] === oIdx ? 'selected' : ''}" data-cidx="${cIdx}" data-oidx="${oIdx}">
+                    <button type="button" class="puzzle-option-btn ${selections[cIdx] === oIdx ? 'selected' : ''}" data-cidx="${cIdx}" data-oidx="${oIdx}">
                       <span><strong>[${String.fromCharCode(65 + oIdx)}]</strong> ${opt.text}</span>
                       ${selections[cIdx] === oIdx ? '<i class="fa-solid fa-check" style="color: var(--accent-gold);"></i>' : ''}
                     </button>
@@ -1464,18 +1323,19 @@ function initBasementVault() {
           </div>
 
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-            <button class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.85rem 2.2rem; font-size: 1.05rem;">
+            <button type="button" class="btn btn-primary" id="puzzle-turn-key-btn" style="padding: 0.85rem 2.2rem; font-size: 1.05rem;">
               <i class="fa-solid fa-key"></i> Turn Key & Unlock Vault
             </button>
           </div>
         </div>
       `);
 
-      const modalBody = document.querySelector('.modal-body');
+      const modalBody = document.getElementById('aot-modal-body');
       if (!modalBody) return;
 
       modalBody.querySelectorAll('.puzzle-option-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
           const cIdx = parseInt(btn.dataset.cidx, 10);
           const oIdx = parseInt(btn.dataset.oidx, 10);
           selections[cIdx] = oIdx;
@@ -1485,13 +1345,14 @@ function initBasementVault() {
 
       const turnBtn = modalBody.querySelector('#puzzle-turn-key-btn');
       if (turnBtn) {
-        turnBtn.addEventListener('click', () => {
+        turnBtn.addEventListener('click', (e) => {
+          e.preventDefault();
           if (selections.includes(-1)) {
             renderPuzzleModal("Please select an answer for all 5 tumbler cylinders before turning the key!", false);
             return;
           }
 
-          const isAllCorrect = puzzleData.every((p, idx) => p.options[selections[idx]].correct === true);
+          const isAllCorrect = activeQuestions.every((p, idx) => p.options[selections[idx]].correct === true);
 
           if (isAllCorrect) {
             localStorage.setItem('aot_basement_unlocked', 'true');
@@ -1508,7 +1369,7 @@ function initBasementVault() {
                 <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto 1.8rem; font-size: 1rem; line-height: 1.7;">
                   The lock turns smoothly. The bottom of the desk drawer slides open to reveal a hidden compartment containing three leather-bound books and an impossible photograph.
                 </p>
-                <button class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+                <button type="button" class="btn btn-primary" onclick="window.openBasementVault()" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
                   <i class="fa-solid fa-book-open"></i> Read Grisha's 3 Classified Journals
                 </button>
               </div>
@@ -1542,7 +1403,7 @@ function initBasementVault() {
               Recovered during the Battle of Shiganshina. These three manuscripts reveal the true history of the world outside the walls.
             </p>
           </div>
-          <button class="btn btn-secondary" onclick="localStorage.removeItem('aot_basement_unlocked'); updateBasementNavLabel(false); window.openBasementPuzzle();" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+          <button type="button" class="btn btn-secondary" onclick="localStorage.removeItem('aot_basement_unlocked'); updateBasementNavLabel(false); window.openBasementPuzzle();" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
             <i class="fa-solid fa-lock"></i> Re-lock Puzzle
           </button>
         </div>
@@ -1582,6 +1443,7 @@ function initBasementVault() {
   if (navControls && !document.getElementById('basement-nav-key-btn')) {
     const keyBtn = document.createElement('button');
     keyBtn.id = 'basement-nav-key-btn';
+    keyBtn.type = 'button';
     keyBtn.className = 'basement-key-trigger';
     const isUnlocked = localStorage.getItem('aot_basement_unlocked') === 'true';
     if (isUnlocked) {
