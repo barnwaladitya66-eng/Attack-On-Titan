@@ -1723,10 +1723,14 @@ function initRegimentOnboardingQuiz() {
       badge.innerHTML = `<span>${reg.icon}</span> <span>${reg.name}</span>`;
       badge.style.borderColor = reg.borderColor;
       badge.style.color = reg.accentColor;
+      badge.style.background = reg.badgeBg;
+      badge.style.boxShadow = `0 0 12px ${reg.badgeBg}`;
     } else {
       badge.innerHTML = `<i class="fa-solid fa-award"></i> <span>JOIN REGIMENT</span>`;
-      badge.style.borderColor = 'var(--theme-faction-accent, #06D6A0)';
-      badge.style.color = 'var(--theme-faction-accent, #06D6A0)';
+      badge.style.borderColor = 'rgba(212, 175, 55, 0.6)';
+      badge.style.color = 'var(--accent-gold, #ffd166)';
+      badge.style.background = 'rgba(212, 175, 55, 0.08)';
+      badge.style.boxShadow = 'none';
     }
   }
 

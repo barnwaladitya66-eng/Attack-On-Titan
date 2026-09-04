@@ -1866,16 +1866,22 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid var(--theme-faction-accent, #06d6a0);
-  color: var(--theme-faction-accent, #06d6a0);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: var(--accent-gold, #ffd166);
   cursor: pointer;
   transition: all 0.25s ease;
   text-decoration: none;
 }
 
+.regiment-nav-badge i {
+  color: var(--accent-red, #e63946);
+}
+
 .regiment-nav-badge:hover {
-  box-shadow: 0 0 15px currentColor;
+  background: rgba(212, 175, 55, 0.18);
+  border-color: var(--accent-gold, #ffd166);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
   color: #fff;
   transform: translateY(-1px);
 }
