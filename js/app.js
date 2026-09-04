@@ -1653,43 +1653,6 @@ function initRegimentOnboardingQuiz() {
     }
   ];
 
-  // Sound Synthesizer via Web Audio API
-  function playAptitudeTone(type) {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      if (type === 'click') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(440, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.11);
-      } else if (type === 'fanfare') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(261.63, ctx.currentTime);
-        osc.frequency.setValueAtTime(329.63, ctx.currentTime + 0.15);
-        osc.frequency.setValueAtTime(392.00, ctx.currentTime + 0.3);
-        osc.frequency.setValueAtTime(523.25, ctx.currentTime + 0.45);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.85);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.9);
-      }
-    } catch (e) {
-      // Audio not supported or blocked
-    }
-  }
-
   // Restore saved session theme to document
   const savedReg = sessionStorage.getItem('aot_session_regiment') || localStorage.getItem('aot_session_regiment');
   if (savedReg && FACTIONS[savedReg]) {
@@ -1914,7 +1877,6 @@ function initRegimentOnboardingQuiz() {
         localStorage.removeItem('aot_session_tally');
         document.documentElement.removeAttribute('data-regiment');
         updateNavbarRegimentBadge();
-        playAptitudeTone('click');
         renderQuiz();
       });
     }
@@ -1924,7 +1886,6 @@ function initRegimentOnboardingQuiz() {
       btn.addEventListener('click', () => {
         const chosenFaction = btn.getAttribute('data-faction');
         userSelections.push(chosenFaction);
-        playAptitudeTone('click');
 
         if (currentStep + 1 < QUESTIONS.length) {
           currentStep++;
@@ -1948,7 +1909,6 @@ function initRegimentOnboardingQuiz() {
           userTally = tally;
           sessionStorage.setItem('aot_session_tally', JSON.stringify(tally));
           localStorage.setItem('aot_session_tally', JSON.stringify(tally));
-          playAptitudeTone('fanfare');
           setFaction(winner);
         }
       });
@@ -1958,7 +1918,6 @@ function initRegimentOnboardingQuiz() {
     container.querySelectorAll('.regiment-override-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const facKey = btn.getAttribute('data-fac-key');
-        playAptitudeTone('click');
         setFaction(facKey);
       });
     });
