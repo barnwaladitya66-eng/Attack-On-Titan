@@ -1,10 +1,20 @@
 // Attack on Titan Compendium - Complete Application Controller & Interactive Systems
 document.addEventListener('DOMContentLoaded', () => {
-  initNavigation();
-  initScrollTriggerSystem();
-  initBasementVault();
-  initCadetAptitudeQuiz();
-  initPageControllers();
+  try { initNavigation(); } catch (e) { console.warn('initNavigation:', e); }
+  try { initScrollTriggerSystem(); } catch (e) { console.warn('initScrollTriggerSystem:', e); }
+  try { initBasementVault(); } catch (e) { console.warn('initBasementVault:', e); }
+  try { initCadetAptitudeQuiz(); } catch (e) { console.warn('initCadetAptitudeQuiz:', e); }
+  try { initRegimentOnboardingQuiz(); } catch (e) { console.warn('initRegimentOnboardingQuiz:', e); }
+  try { initPageControllers(); } catch (e) { console.warn('initPageControllers:', e); }
+
+  if (window.location.hash) {
+    setTimeout(() => {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 200);
+  }
 });
 
 // Advanced Scroll Trigger & Animated Counters System
@@ -106,14 +116,34 @@ function animateStatCounter(el) {
   requestAnimationFrame(updateCounter);
 }
 
+// Global Regiment Quiz Direct Trigger Helper
+window.openRegimentQuiz = function() {
+  const target = document.getElementById('regiment-onboarding');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) navLinks.classList.remove('mobile-open');
+  } else {
+    window.location.href = 'index.html#regiment-onboarding';
+  }
+};
+
 // Navigation & Mobile Menu
 function initNavigation() {
   const menuBtn = document.getElementById('mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
   
   if (menuBtn && navLinks) {
-    menuBtn.addEventListener('click', () => {
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       navLinks.classList.toggle('mobile-open');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+        navLinks.classList.remove('mobile-open');
+      }
     });
   }
 
@@ -124,6 +154,33 @@ function initNavigation() {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
+    }
+  });
+
+  // Global smooth scroll and cross-page navigation delegation
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // Handle regiment onboarding specific triggers
+    if (anchor.classList.contains('regiment-nav-badge') || href === '#regiment-onboarding' || href === 'index.html#regiment-onboarding' || href.endsWith('#regiment-onboarding')) {
+      e.preventDefault();
+      window.openRegimentQuiz();
+      return;
+    }
+
+    // Handle generic same-page hash links (e.g. href="#some-id")
+    if (href.startsWith('#') && href.length > 1) {
+      const targetId = href.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        if (navLinks) navLinks.classList.remove('mobile-open');
+      }
     }
   });
 }
@@ -1486,6 +1543,433 @@ function initBasementVault() {
     keyBtn.addEventListener('click', window.openBasementVault);
     navControls.prepend(keyBtn);
   }
+}
+
+// ==========================================================================
+// FEATURE: "JOIN A REGIMENT" ONBOARDING QUIZ & FACTION SYSTEM
+// ==========================================================================
+function initRegimentOnboardingQuiz() {
+  const FACTIONS = {
+    scouts: {
+      id: 'scouts',
+      name: 'Scout Regiment',
+      fullName: 'Scout Regiment (Survey Corps)',
+      japanese: '調査兵団',
+      motto: 'Wings of Freedom • For the Glory of Humanity',
+      icon: '🦅',
+      accentColor: '#06D6A0',
+      badgeBg: 'rgba(6, 214, 160, 0.12)',
+      borderColor: '#06D6A0',
+      description: 'The fearless spearhead of humanity. Venturing beyond the safety of the walls, they endure immense casualties to uncover the truth of the world and fight for true freedom.'
+    },
+    garrison: {
+      id: 'garrison',
+      name: 'Garrison Regiment',
+      fullName: 'Garrison Regiment',
+      japanese: '駐屯兵団',
+      motto: 'The Unyielding Shield of the People',
+      icon: '🌹',
+      accentColor: '#FF4D6D',
+      badgeBg: 'rgba(255, 77, 109, 0.12)',
+      borderColor: '#FF4D6D',
+      description: 'The largest military division, responsible for maintaining the concentric walls, fortifying district gates, and operating heavy artillery batteries to protect home towns and local communities.'
+    },
+    police: {
+      id: 'police',
+      name: 'Military Police',
+      fullName: 'Military Police Brigade',
+      japanese: '憲兵団',
+      motto: 'Order, Authority, and the King\'s Justice',
+      icon: '🦄',
+      accentColor: '#8338EC',
+      badgeBg: 'rgba(131, 56, 236, 0.12)',
+      borderColor: '#8338EC',
+      description: 'The elite top 10 graduates assigned to Wall Sina. They oversee internal security, law enforcement, tax collection, and the royal palace guard for a secure, comfortable life.'
+    },
+    yeagerists: {
+      id: 'yeagerists',
+      name: 'The Yeagerists',
+      fullName: 'The Yeagerists',
+      japanese: 'イェーガー派',
+      motto: 'Dedicate Your Hearts to the Eldian Empire • Absolute Survival',
+      icon: '🔥',
+      accentColor: '#E63946',
+      badgeBg: 'rgba(230, 57, 70, 0.12)',
+      borderColor: '#E63946',
+      description: 'A radical military insurrectionist vanguard dedicated to supporting Eren Yeager. Rejecting compromises, they seek absolute sovereignty and survival for Paradis Island at any cost.'
+    }
+  };
+
+  const QUESTIONS = [
+    {
+      id: 1,
+      question: 'What is your primary motivation for joining the military?',
+      options: [
+        { label: 'A', text: 'To explore the unknown world beyond the walls and fight for true freedom.', faction: 'scouts' },
+        { label: 'B', text: 'To protect my home town, family, and local community from immediate threats.', faction: 'garrison' },
+        { label: 'C', text: 'To earn a comfortable, secure life in the inner capital away from danger.', faction: 'police' },
+        { label: 'D', text: 'To defeat all external enemies and secure our nation\'s survival at any cost.', faction: 'yeagerists' }
+      ]
+    },
+    {
+      id: 2,
+      question: 'How do you handle an unprecedented crisis or sudden breach?',
+      options: [
+        { label: 'A', text: 'Charge directly into the fight, adapt quickly, and exploit the enemy\'s weakness.', faction: 'scouts' },
+        { label: 'B', text: 'Evacuate civilians immediately and fortify structural defenses to hold the line.', faction: 'garrison' },
+        { label: 'C', text: 'Secure critical leaders, protect high-value assets, and enforce internal order.', faction: 'police' },
+        { label: 'D', text: 'Launch an aggressive, uncompromising counter-attack to annihilate the threat.', faction: 'yeagerists' }
+      ]
+    },
+    {
+      id: 3,
+      question: 'What is your philosophy regarding rules and authority?',
+      options: [
+        { label: 'A', text: 'Rules are secondary to progress; results matter more than protocol.', faction: 'scouts' },
+        { label: 'B', text: 'Order is essential, but flexibility is required during local emergencies.', faction: 'garrison' },
+        { label: 'C', text: 'Absolute compliance with law and order prevents society from falling into chaos.', faction: 'police' },
+        { label: 'D', text: 'Weak leadership must be replaced if they fail to take decisive action.', faction: 'yeagerists' }
+      ]
+    },
+    {
+      id: 4,
+      question: 'Which environment do you thrive in?',
+      options: [
+        { label: 'A', text: 'High-risk, uncharted territories where every decision counts.', faction: 'scouts' },
+        { label: 'B', text: 'A steady, vigilant routine maintaining perimeter safety.', faction: 'garrison' },
+        { label: 'C', text: 'Comfortable, influential surroundings with low direct physical risk.', faction: 'police' },
+        { label: 'D', text: 'The frontlines of a revolution, shaping the political and military future.', faction: 'yeagerists' }
+      ]
+    },
+    {
+      id: 5,
+      question: 'What value do you prioritize most?',
+      options: [
+        { label: 'A', text: 'Discovery & Freedom', faction: 'scouts' },
+        { label: 'B', text: 'Defense & Duty', faction: 'garrison' },
+        { label: 'C', text: 'Security & Status', faction: 'police' },
+        { label: 'D', text: 'Power & Survival', faction: 'yeagerists' }
+      ]
+    }
+  ];
+
+  // Sound Synthesizer via Web Audio API
+  function playAptitudeTone(type) {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      if (type === 'click') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.11);
+      } else if (type === 'fanfare') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(261.63, ctx.currentTime);
+        osc.frequency.setValueAtTime(329.63, ctx.currentTime + 0.15);
+        osc.frequency.setValueAtTime(392.00, ctx.currentTime + 0.3);
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime + 0.45);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.85);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.9);
+      }
+    } catch (e) {
+      // Audio not supported or blocked
+    }
+  }
+
+  // Restore saved session theme to document
+  const savedReg = sessionStorage.getItem('aot_session_regiment') || localStorage.getItem('aot_session_regiment');
+  if (savedReg && FACTIONS[savedReg]) {
+    document.documentElement.setAttribute('data-regiment', savedReg);
+  }
+
+  // Inject Navbar Regiment Badge across all pages
+  const navControls = document.querySelector('.nav-controls');
+  if (navControls && !document.getElementById('regiment-nav-badge-btn')) {
+    const regBadge = document.createElement('a');
+    regBadge.id = 'regiment-nav-badge-btn';
+    regBadge.className = 'regiment-nav-badge';
+    regBadge.href = 'index.html#regiment-onboarding';
+    regBadge.setAttribute('role', 'button');
+    regBadge.setAttribute('aria-label', 'Join Regiment Sorting Quiz');
+    regBadge.title = "Take the 104th Cadet Aptitude Sorting Quiz";
+    regBadge.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.openRegimentQuiz();
+    });
+    updateNavbarRegimentBadge();
+    navControls.prepend(regBadge);
+  }
+
+  function updateNavbarRegimentBadge() {
+    const badge = document.getElementById('regiment-nav-badge-btn');
+    if (!badge) return;
+    const current = sessionStorage.getItem('aot_session_regiment') || localStorage.getItem('aot_session_regiment');
+    if (current && FACTIONS[current]) {
+      const reg = FACTIONS[current];
+      badge.innerHTML = `<span>${reg.icon}</span> <span>${reg.name}</span>`;
+      badge.style.borderColor = reg.borderColor;
+      badge.style.color = reg.accentColor;
+    } else {
+      badge.innerHTML = `<i class="fa-solid fa-award"></i> <span>JOIN REGIMENT</span>`;
+      badge.style.borderColor = 'var(--theme-faction-accent, #06D6A0)';
+      badge.style.color = 'var(--theme-faction-accent, #06D6A0)';
+    }
+  }
+
+  const container = document.getElementById('regiment-onboarding');
+  if (!container) return;
+
+  let currentStep = 0;
+  let userSelections = [];
+  let userTally = JSON.parse(sessionStorage.getItem('aot_session_tally') || localStorage.getItem('aot_session_tally') || 'null');
+  let currentFaction = sessionStorage.getItem('aot_session_regiment') || localStorage.getItem('aot_session_regiment') || null;
+
+  function renderQuiz() {
+    const factionData = currentFaction ? FACTIONS[currentFaction] : null;
+
+    let html = `
+      <section class="regiment-section">
+        <div class="regiment-header-center reveal-on-scroll">
+          <span class="section-tag" style="color: var(--accent-gold); border-color: rgba(255, 209, 102, 0.4);"><i class="fa-solid fa-award"></i> Military Enlistment & Faction Sorting</span>
+          <h2 class="section-title">Join a Military Regiment</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">
+            Take the 5-question personality sorting quiz to discover your ideal military faction, unlock custom session UI accents, and receive your official regiment badge.
+          </p>
+        </div>
+
+        <div class="regiment-box reveal-on-scroll">
+    `;
+
+    if (factionData) {
+      // Show Results Screen
+      const tally = userTally || {
+        scouts: currentFaction === 'scouts' ? 5 : 0,
+        garrison: currentFaction === 'garrison' ? 5 : 0,
+        police: currentFaction === 'police' ? 5 : 0,
+        yeagerists: currentFaction === 'yeagerists' ? 5 : 0
+      };
+
+      html += `
+        <div class="regiment-result-card">
+          <div class="regiment-banner-top" style="background: ${factionData.badgeBg}; border-color: ${factionData.borderColor};">
+            <div class="regiment-banner-left">
+              <div class="regiment-symbol-lg" style="border-color: ${factionData.borderColor}; color: ${factionData.accentColor};">
+                ${factionData.icon}
+              </div>
+              <div>
+                <span style="color: ${factionData.accentColor}; font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+                  ENLISTMENT CONFIRMED • ${factionData.japanese}
+                </span>
+                <h3 class="regiment-banner-title">${factionData.fullName}</h3>
+                <div class="regiment-motto-text">&ldquo;${factionData.motto}&rdquo;</div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-secondary" id="regiment-retake-btn" style="padding: 0.6rem 1.2rem; font-size: 0.88rem;">
+                <i class="fa-solid fa-rotate-right"></i> Retake Quiz
+              </button>
+            </div>
+          </div>
+
+          <div class="regiment-details-grid">
+            <!-- Description Box -->
+            <div class="regiment-desc-box">
+              <div style="font-family: var(--font-tech); font-size: 0.82rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem;">
+                <i class="fa-solid fa-shield-halved"></i> Assigned Faction Doctrine
+              </div>
+              <p style="font-size: 0.98rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 1.2rem;">
+                ${factionData.description}
+              </p>
+              <div>
+                <div class="session-theme-badge" style="border-color: ${factionData.borderColor}; color: ${factionData.accentColor};">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Session Theme Active: ${factionData.name}
+                </div>
+              </div>
+            </div>
+
+            <!-- Score Breakdown Box -->
+            <div class="regiment-scores-box">
+              <div style="font-family: var(--font-tech); font-size: 0.82rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.08em;">
+                <i class="fa-solid fa-chart-simple"></i> Aptitude Tally Breakdown (Out of 5)
+              </div>
+              ${Object.keys(FACTIONS).map(fKey => {
+                const fac = FACTIONS[fKey];
+                const pts = tally[fKey] || 0;
+                const pct = Math.round((pts / 5) * 100);
+                return `
+                  <div class="regiment-score-row">
+                    <div class="regiment-score-info">
+                      <span>${fac.icon} ${fac.name}</span>
+                      <span style="color: ${fac.accentColor};">${pts} / 5 pts (${pct}%)</span>
+                    </div>
+                    <div class="regiment-score-bar">
+                      <div class="regiment-score-fill" style="width: ${pct}%; background: ${fac.accentColor};"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- Quick Theme Override -->
+          <div class="regiment-override-section">
+            <span style="font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; display: block;">
+              Switch Session Faction Theme:
+            </span>
+            <div class="regiment-override-grid">
+              ${Object.keys(FACTIONS).map(key => {
+                const fac = FACTIONS[key];
+                const isSel = currentFaction === key;
+                return `
+                  <button class="regiment-override-btn ${isSel ? 'active' : ''}" data-fac-key="${key}" style="color: ${fac.accentColor}; ${isSel ? 'border-color: ' + fac.borderColor + ';' : ''}">
+                    <span>${fac.icon}</span>
+                    <span>${fac.name}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      // Show Question Step
+      const q = QUESTIONS[currentStep];
+      const progressPct = Math.round(((currentStep + 1) / QUESTIONS.length) * 100);
+
+      html += `
+        <div class="regiment-quiz-step">
+          <div class="regiment-progress-bar-wrap">
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">
+              <span>QUESTION ${currentStep + 1} OF ${QUESTIONS.length}</span>
+              <span style="color: var(--accent-gold);">${progressPct}% COMPLETE</span>
+            </div>
+            <div class="regiment-progress-bar">
+              <div class="regiment-progress-fill" style="width: ${progressPct}%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <span style="font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
+              Question #${q.id}
+            </span>
+            <h3 class="regiment-question-title">${q.question}</h3>
+          </div>
+
+          <div class="regiment-choices-list">
+            ${q.options.map(opt => `
+              <button class="regiment-choice-btn" data-faction="${opt.faction}">
+                <div style="display: flex; align-items: center; gap: 0.9rem;">
+                  <span class="regiment-choice-badge">${opt.label}</span>
+                  <span>${opt.text}</span>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.85rem;"></i>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    html += `
+        </div>
+      </section>
+    `;
+
+    container.innerHTML = html;
+    bindEvents();
+    if (window.reobserveScrollElements) window.reobserveScrollElements();
+  }
+
+  function bindEvents() {
+    // Retake Quiz Button
+    const retakeBtn = document.getElementById('regiment-retake-btn');
+    if (retakeBtn) {
+      retakeBtn.addEventListener('click', () => {
+        currentStep = 0;
+        userSelections = [];
+        currentFaction = null;
+        userTally = null;
+        sessionStorage.removeItem('aot_session_regiment');
+        sessionStorage.removeItem('aot_session_tally');
+        localStorage.removeItem('aot_session_regiment');
+        localStorage.removeItem('aot_session_tally');
+        document.documentElement.removeAttribute('data-regiment');
+        updateNavbarRegimentBadge();
+        playAptitudeTone('click');
+        renderQuiz();
+      });
+    }
+
+    // Option Buttons
+    container.querySelectorAll('.regiment-choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosenFaction = btn.getAttribute('data-faction');
+        userSelections.push(chosenFaction);
+        playAptitudeTone('click');
+
+        if (currentStep + 1 < QUESTIONS.length) {
+          currentStep++;
+          renderQuiz();
+        } else {
+          // Calculate winning faction from tally
+          const tally = { scouts: 0, garrison: 0, police: 0, yeagerists: 0 };
+          userSelections.forEach(f => {
+            tally[f] = (tally[f] || 0) + 1;
+          });
+
+          let winner = 'scouts';
+          let maxPts = -1;
+          Object.keys(tally).forEach(k => {
+            if (tally[k] > maxPts) {
+              maxPts = tally[k];
+              winner = k;
+            }
+          });
+
+          userTally = tally;
+          sessionStorage.setItem('aot_session_tally', JSON.stringify(tally));
+          localStorage.setItem('aot_session_tally', JSON.stringify(tally));
+          playAptitudeTone('fanfare');
+          setFaction(winner);
+        }
+      });
+    });
+
+    // Faction Override Buttons
+    container.querySelectorAll('.regiment-override-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const facKey = btn.getAttribute('data-fac-key');
+        playAptitudeTone('click');
+        setFaction(facKey);
+      });
+    });
+  }
+
+  function setFaction(facKey) {
+    currentFaction = facKey;
+    sessionStorage.setItem('aot_session_regiment', facKey);
+    localStorage.setItem('aot_session_regiment', facKey);
+    document.documentElement.setAttribute('data-regiment', facKey);
+    updateNavbarRegimentBadge();
+    renderQuiz();
+  }
+
+  renderQuiz();
 }
 
 

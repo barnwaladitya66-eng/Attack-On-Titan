@@ -1547,4 +1547,351 @@
   color: #06d6a0;
 }
 
+/* ==========================================================================
+   FEATURE: "JOIN A REGIMENT" ONBOARDING QUIZ & FACTION SYSTEM
+   ========================================================================== */
+.regiment-section {
+  padding: 4.5rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.regiment-header-center {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.regiment-box {
+  background: radial-gradient(circle at 50% 0%, rgba(20, 8, 12, 0.96) 0%, rgba(7, 8, 10, 0.98) 100%);
+  border: 1px solid rgba(230, 57, 70, 0.35);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), inset 0 0 30px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Quiz Steps & Questions */
+.regiment-quiz-step {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: regimentFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes regimentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.regiment-progress-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.regiment-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #080204;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.regiment-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-gold, #ffd166), var(--accent-red, #e63946));
+  transition: width 0.35s ease;
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+.regiment-question-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.45;
+  letter-spacing: 0.5px;
+}
+
+.regiment-choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.regiment-choice-btn {
+  background: rgba(12, 5, 8, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  padding: 1.1rem 1.3rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  transition: all 0.25s ease;
+}
+
+.regiment-choice-btn:hover {
+  border-color: var(--accent-gold, #ffd166);
+  background: rgba(255, 209, 102, 0.08);
+  transform: translateX(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.regiment-choice-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-family: var(--font-tech, 'Rajdhani', sans-serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-gold, #ffd166);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.regiment-choice-btn:hover .regiment-choice-badge {
+  background: var(--accent-gold, #ffd166);
+  color: #000;
+  box-shadow: 0 0 10px var(--accent-gold, #ffd166);
+}
+
+/* Results Screen */
+.regiment-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: regimentFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.regiment-banner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.8rem;
+  border-radius: 10px;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.regiment-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.regiment-symbol-lg {
+  font-size: 3.5rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 25px currentColor;
+  animation: emblemPulse 2.5s infinite alternate;
+}
+
+@keyframes emblemPulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.05); filter: brightness(1.25); }
+}
+
+.regiment-banner-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0.2rem 0;
+  letter-spacing: 1px;
+}
+
+.regiment-motto-text {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.95rem;
+  color: var(--accent-gold, #ffd166);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.session-theme-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid;
+  font-family: var(--font-tech, 'Rajdhani', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.regiment-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .regiment-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.regiment-desc-box {
+  background: #080204;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.regiment-scores-box {
+  background: #080204;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.regiment-score-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.regiment-score-info {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-tech, 'Rajdhani', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.regiment-score-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.regiment-score-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.regiment-override-section {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 1.2rem;
+}
+
+.regiment-override-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.regiment-override-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-family: var(--font-tech, 'Rajdhani', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.regiment-override-btn:hover, .regiment-override-btn.active {
+  background: #080204;
+  color: #fff;
+  border-color: currentColor;
+}
+
+/* Navbar Regiment Badge */
+.regiment-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.85rem;
+  border-radius: 20px;
+  font-family: var(--font-tech, 'Rajdhani', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--theme-faction-accent, #06d6a0);
+  color: var(--theme-faction-accent, #06d6a0);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.regiment-nav-badge:hover {
+  box-shadow: 0 0 15px currentColor;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Global Faction Session Theming via [data-regiment] */
+[data-regiment="scouts"] {
+  --theme-faction-accent: #06D6A0;
+}
+[data-regiment="garrison"] {
+  --theme-faction-accent: #FF4D6D;
+}
+[data-regiment="police"] {
+  --theme-faction-accent: #8338EC;
+}
+[data-regiment="yeagerists"] {
+  --theme-faction-accent: #E63946;
+}
+
 
